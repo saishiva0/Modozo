@@ -231,11 +231,7 @@ const WorkflowCard = ({ index, x, rotation, scale, isActive }) => {
         </div>
       </div>
       
-      {/* Visual Indicator of the bottom accent */}
-      <div 
-        className="absolute bottom-0 inset-x-0 h-1"
-        style={{ backgroundColor: accentColor }}
-      />
+      
     </motion.div>
   );
 };

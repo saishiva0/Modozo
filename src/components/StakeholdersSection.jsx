@@ -2,667 +2,587 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import logoImg from '../assets/logo-new.png';
 
+/* ═══════════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════════ */
 const stakeholders = [
-  { title: "Designers", id: "designers" },
-  { title: "Brand Teams", id: "brand" },
-  { title: "Sourcing\nManagers", id: "sourcing" },
-  { title: "Vendors", id: "vendors" },
-  { title: "QA Teams", id: "qa" },
-  { title: "Tech Teams", id: "tech" }
+  { title: "Designers", id: "designers", desc: "Techpack creation" },
+  { title: "Brand Teams", id: "brand", desc: "Review & approvals" },
+  { title: "Sourcing\nManagers", id: "sourcing", desc: "Vendor coordination" },
+  { title: "Vendors", id: "vendors", desc: "Production briefs" },
+  { title: "QA Teams", id: "qa", desc: "Quality assurance" },
+  { title: "Tech Teams", id: "tech", desc: "System integration" }
 ];
 
-/* ─── Card ─── */
-const ServiceCard = ({ item, index, isInView, isTicked, isPulsing }) => {
-  const [isHovered, setIsHovered] = useState(false);
+/* Node positions (% of container) — organic arc layout */
+const nodePositions = [
+  { x: 10, y: 18 },   // Designers — far left
+  { x: 27, y: 8 },    // Brand Teams — upper-left
+  { x: 46, y: 4 },    // Sourcing — top center-left
+  { x: 54, y: 4 },    // Vendors — top center-right
+  { x: 73, y: 8 },    // QA Teams — upper-right
+  { x: 90, y: 18 },   // Tech Teams — far right
+];
+
+const CENTER = { x: 50, y: 78 }; // Logo center position
+
+/* ═══════════════════════════════════════════════════════
+   NETWORK NODE — Glowing dot + floating label
+═══════════════════════════════════════════════════════ */
+const NetworkNode = ({ item, index, pos, isInView, isTicked, isLoading, isHovered, onHover, onLeave }) => {
+  const labelLeft = pos.x < 50;
 
   return (
     <motion.div
-      className="sh-card"
-      initial={{ opacity: 0, y: 30, scale: 0.95 }}
-      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-      transition={{ duration: 0.5, delay: 0.15 + index * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      className="nw-node"
+      style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={isInView ? { opacity: 1, scale: 1 } : {}}
+      transition={{ duration: 0.7, delay: 0.3 + index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+      onMouseEnter={() => onHover(index)}
+      onMouseLeave={onLeave}
     >
-      {/* Notch */}
-      <div className={`sh-card-notch ${isTicked ? 'sh-card-notch--ticked' : ''}`} />
+      {/* Floating animation wrapper */}
+      <div className="nw-node-float" style={{ animationDelay: `${index * 0.8}s` }}>
 
-      {/* Tick / Dot indicator */}
-      <div className="sh-card-indicator">
-        <AnimatePresence mode="wait">
-          {isTicked ? (
+        {/* Outer pulse ring on activation */}
+        <AnimatePresence>
+          {(isLoading || isTicked) && (
             <motion.div
-              key="tick"
-              className="sh-card-tick"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <circle cx="8" cy="8" r="7" fill="#FFD700" />
-                <motion.path
-                  d="M4.5 8.2L7 10.5L11.5 5.5"
-                  stroke="#0A2540"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}
-                />
-              </svg>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="dot"
-              className="sh-card-dot-wrap"
-              initial={{ scale: 0.8, opacity: 0.5 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ duration: 0.25 }}
-            >
-              <span className={`sh-card-dot ${isHovered ? 'sh-card-dot--active' : ''}`} />
-            </motion.div>
+              className="nw-pulse-ring"
+              initial={{ scale: 0.5, opacity: 0.8 }}
+              animate={{ scale: 2.5, opacity: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.2, ease: 'easeOut' }}
+            />
           )}
         </AnimatePresence>
+
+        {/* The dot itself */}
+        <div className={`nw-dot ${isTicked ? 'nw-dot--active' : ''} ${isLoading ? 'nw-dot--loading' : ''} ${isHovered ? 'nw-dot--hover' : ''}`}>
+          {/* Loading spinner */}
+          {isLoading && (
+            <motion.svg className="nw-spinner" width="28" height="28" viewBox="0 0 28 28"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+            >
+              <motion.circle cx="14" cy="14" r="11" fill="none" stroke="#7B61FF" strokeWidth="2"
+                strokeLinecap="round" strokeDasharray="69" strokeDashoffset="52" />
+            </motion.svg>
+          )}
+
+          {/* Checkmark */}
+          <AnimatePresence>
+            {isTicked && (
+              <motion.svg width="14" height="14" viewBox="0 0 16 16" fill="none"
+                initial={{ scale: 0 }} animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 500, damping: 18 }}
+              >
+                <motion.path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="white" strokeWidth="2"
+                  strokeLinecap="round" strokeLinejoin="round"
+                  initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
+                  transition={{ duration: 0.4, delay: 0.05 }}
+                />
+              </motion.svg>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Floating label */}
+        <div className={`nw-label ${labelLeft ? 'nw-label--left' : 'nw-label--right'}`}>
+          <span className={`nw-label-title ${isTicked ? 'nw-label-title--active' : ''}`}>
+            {item.title}
+          </span>
+          <span className="nw-label-desc">{item.desc}</span>
+        </div>
       </div>
-
-      {/* Title */}
-      <span className="sh-card-title">{item.title}</span>
-
-      {/* Active border glow */}
-      <div className={`sh-card-border-glow ${isTicked ? 'sh-card-border-glow--active' : ''}`} />
-
-      {/* Hover glow */}
-      <div className={`sh-card-glow ${isHovered || isTicked ? 'sh-card-glow--visible' : ''}`} />
-
-      {/* Pulse burst when being activated */}
-      <AnimatePresence>
-        {isPulsing && (
-          <motion.div
-            className="sh-card-pulse-ring"
-            initial={{ scale: 0.5, opacity: 0.8 }}
-            animate={{ scale: 2.5, opacity: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.7, ease: 'easeOut' }}
-          />
-        )}
-      </AnimatePresence>
     </motion.div>
   );
 };
 
-/* ─── SVG Wiring with animated pulses ─── */
-const WiringLines = ({ isInView, activePulseCard, showFinalPulse, allTicked }) => {
-  /* 6 card centers at x: 80, 240, 400, 560, 720, 880 in viewBox 0 0 960 200 */
+/* ═══════════════════════════════════════════════════════
+   SVG CONNECTIONS — Lines from nodes to center
+═══════════════════════════════════════════════════════ */
+const ConnectionLines = ({ isInView, activePulseCard, allTicked, hoveredCard, showFinalPulse }) => {
+  /* Generate curved paths from each node to center */
+  const generatePath = (from, to) => {
+    const fx = from.x * 9.6; // Scale % to viewBox (960 wide)
+    const fy = from.y * 5.5; // Scale % to viewBox (550 tall)
+    const tx = to.x * 9.6;
+    const ty = to.y * 5.5;
+    const midY = fy + (ty - fy) * 0.65;
+    return `M ${fx} ${fy} C ${fx} ${midY}, ${tx} ${midY}, ${tx} ${ty}`;
+  };
 
-  const paths = [
-    "M 80 0 L 80 55 Q 80 75 100 75 L 460 75 Q 480 75 480 95 L 480 148",
-    "M 240 0 L 240 35 Q 240 55 260 55 L 460 55 Q 480 55 480 75 L 480 148",
-    "M 400 0 L 400 18 Q 400 38 420 38 L 460 38 Q 480 38 480 58 L 480 148",
-    "M 560 0 L 560 18 Q 560 38 540 38 L 500 38 Q 480 38 480 58 L 480 148",
-    "M 720 0 L 720 35 Q 720 55 700 55 L 500 55 Q 480 55 480 75 L 480 148",
-    "M 880 0 L 880 55 Q 880 75 860 75 L 500 75 Q 480 75 480 95 L 480 148",
-  ];
+  const paths = nodePositions.map(pos => generatePath(pos, CENTER));
 
   return (
-    <svg
-      className="sh-wiring"
-      viewBox="0 0 960 200"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="xMidYMeet meet"
-    >
+    <svg className="nw-svg" viewBox="0 0 960 550" fill="none" preserveAspectRatio="none">
       <defs>
-        <linearGradient id="wireGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="rgba(10,37,64,0.15)" />
-          <stop offset="100%" stopColor="rgba(10,37,64,0.05)" />
+        <linearGradient id="nwLineGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(255,255,255,0.1)" />
+          <stop offset="100%" stopColor="rgba(255,255,255,0.03)" />
         </linearGradient>
-        <linearGradient id="wireGradActive" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#FFD700" />
-          <stop offset="100%" stopColor="rgba(255,215,0,0.4)" />
+        <linearGradient id="nwLineActive" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#22C55E" />
+          <stop offset="50%" stopColor="rgba(34,197,94,0.5)" />
+          <stop offset="100%" stopColor="rgba(34,197,94,0.15)" />
         </linearGradient>
-        <filter id="wireGlow">
-          <feGaussianBlur stdDeviation="1.5" result="b" />
-          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-        </filter>
-        <filter id="pulseGlow">
+        <linearGradient id="nwLineHover" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#7B61FF" />
+          <stop offset="100%" stopColor="rgba(123,97,255,0.2)" />
+        </linearGradient>
+        <filter id="nwGlow">
           <feGaussianBlur stdDeviation="3" result="b" />
           <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
-        {/* Animated pulse circle for offset animation */}
-        <radialGradient id="pulseDot">
-          <stop offset="0%" stopColor="#FFD700" />
-          <stop offset="100%" stopColor="rgba(255,215,0,0)" />
-        </radialGradient>
+        <filter id="nwPulseGlow">
+          <feGaussianBlur stdDeviation="5" result="b" />
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
       </defs>
 
-      {/* Static wire paths */}
+      {/* Connection paths */}
       {paths.map((d, i) => (
         <React.Fragment key={i}>
-          {/* Base dim wire */}
+          {/* Base dim line */}
           <motion.path
             d={d}
-            stroke="url(#wireGrad)"
-            strokeWidth="1.2"
+            stroke="url(#nwLineGrad)"
+            strokeWidth="1"
             fill="none"
-            filter="url(#wireGlow)"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={isInView ? { pathLength: 1, opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.5 + i * 0.08 }}
+            transition={{ duration: 1.2, delay: 0.6 + i * 0.1 }}
           />
-          
-          {/* Bright overlay when that card's pulse is active */}
+
+          {/* Hover highlight */}
+          {hoveredCard === i && (
+            <motion.path d={d} stroke="url(#nwLineHover)" strokeWidth="1.5" fill="none"
+              filter="url(#nwGlow)"
+              initial={{ opacity: 0 }} animate={{ opacity: 0.9 }}
+              transition={{ duration: 0.3 }}
+            />
+          )}
+
+          {/* Active pulse line */}
           {activePulseCard === i && (
-            <motion.path
-              d={d}
-              stroke="url(#wireGradActive)"
-              strokeWidth="2"
-              fill="none"
-              filter="url(#pulseGlow)"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 0.6, ease: 'easeInOut' }}
+            <motion.path d={d} stroke="url(#nwLineActive)" strokeWidth="2" fill="none"
+              filter="url(#nwGlow)"
+              initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
+              transition={{ duration: 0.7, ease: 'easeInOut' }}
             />
           )}
         </React.Fragment>
       ))}
 
-      {/* Animated pulse dot traveling along the active path */}
+      {/* Traveling pulse dot */}
       {activePulseCard !== null && activePulseCard >= 0 && activePulseCard < 6 && (
-        <motion.circle
-          r="5"
-          fill="#FFD700"
-          filter="url(#pulseGlow)"
+        <motion.circle r="4" fill="#22C55E" filter="url(#nwPulseGlow)"
           initial={{ offsetDistance: '0%', opacity: 1 }}
-          animate={{ offsetDistance: '100%', opacity: [1, 1, 0.6] }}
-          transition={{ duration: 0.6, ease: 'easeInOut' }}
-          style={{
-            offsetPath: `path("${paths[activePulseCard]}")`,
-          }}
-        />
-      )}
-
-      {/* Junction dot */}
-      <motion.circle
-        cx="480" cy="148" r={allTicked ? 6 : 4}
-        fill="#FFD700"
-        filter="url(#pulseGlow)"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={isInView ? { 
-          scale: allTicked ? [1, 1.4, 1] : 1, 
-          opacity: 1 
-        } : {}}
-        transition={allTicked ? { duration: 0.5, ease: 'easeInOut' } : { duration: 0.3, delay: 1.2 }}
-      />
-
-      {/* Trunk line to logo */}
-      <motion.line
-        x1="480" y1="152" x2="480" y2="200"
-        stroke="url(#wireGrad)"
-        strokeWidth="1.5"
-        filter="url(#wireGlow)"
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={isInView ? { pathLength: 1, opacity: 1 } : {}}
-        transition={{ duration: 0.4, delay: 1.3 }}
-      />
-
-      {/* Final pulse traveling to logo */}
-      {showFinalPulse && (
-        <motion.circle
-          cx="480"
-          r="5"
-          fill="#FFD700"
-          filter="url(#pulseGlow)"
-          initial={{ cy: 152, opacity: 1 }}
-          animate={{ cy: 200, opacity: [1, 1, 0.5] }}
-          transition={{ duration: 0.4, ease: 'easeIn' }}
+          animate={{ offsetDistance: '100%', opacity: [1, 1, 0.4] }}
+          transition={{ duration: 0.7, ease: 'easeInOut' }}
+          style={{ offsetPath: `path("${paths[activePulseCard]}")` }}
         />
       )}
     </svg>
   );
 };
 
-/* ─── Main Section ─── */
+/* ═══════════════════════════════════════════════════════
+   MAIN SECTION
+═══════════════════════════════════════════════════════ */
 const StakeholdersSection = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.15 });
 
   const [tickedCards, setTickedCards] = useState([]);
+  const [loadingCard, setLoadingCard] = useState(null);
   const [activePulseCard, setActivePulseCard] = useState(null);
   const [showFinalPulse, setShowFinalPulse] = useState(false);
   const [logoPulse, setLogoPulse] = useState(false);
   const [animating, setAnimating] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState(null);
 
   const allTicked = tickedCards.length === 6;
 
-  /* Sequential tick animation loop */
   const runSequence = useCallback(() => {
     if (animating) return;
     setAnimating(true);
 
-    // Reset
     setTickedCards([]);
+    setLoadingCard(null);
     setActivePulseCard(null);
     setShowFinalPulse(false);
     setLogoPulse(false);
 
-    const cardDelay = 700; // ms between each card tick
-    const pulseDelay = 500; // ms for pulse travel
-    const finalDelay = 400;
+    const cardDelay = 1100;
+    const loadDur = 700;
+    const pulseDur = 650;
 
     stakeholders.forEach((_, i) => {
-      // Tick card
+      setTimeout(() => setLoadingCard(i), i * cardDelay);
       setTimeout(() => {
+        setLoadingCard(null);
         setTickedCards(prev => [...prev, i]);
         setActivePulseCard(i);
-      }, i * cardDelay);
-
-      // Clear pulse after it travels
+      }, i * cardDelay + loadDur);
       setTimeout(() => {
-        if (i < 5) {
-          setActivePulseCard(null);
-        }
-      }, i * cardDelay + pulseDelay);
+        if (i < 5) setActivePulseCard(null);
+      }, i * cardDelay + loadDur + pulseDur);
     });
 
-    // After all cards ticked, send final pulse to logo
-    const allDoneTime = 6 * cardDelay;
-    setTimeout(() => {
-      setActivePulseCard(null);
-    }, allDoneTime + 200);
+    const allDoneTime = 6 * cardDelay + loadDur;
 
-    setTimeout(() => {
-      setShowFinalPulse(true);
-    }, allDoneTime + 400);
-
-    setTimeout(() => {
-      setLogoPulse(true);
-      setShowFinalPulse(false);
-    }, allDoneTime + 400 + finalDelay);
-
-    // Reset and loop after pause
+    setTimeout(() => setActivePulseCard(null), allDoneTime + 300);
+    setTimeout(() => setShowFinalPulse(true), allDoneTime + 500);
+    setTimeout(() => { setShowFinalPulse(false); setLogoPulse(true); }, allDoneTime + 950);
     setTimeout(() => {
       setLogoPulse(false);
       setTickedCards([]);
+      setLoadingCard(null);
       setActivePulseCard(null);
       setShowFinalPulse(false);
       setAnimating(false);
-    }, allDoneTime + 2500);
+    }, allDoneTime + 3500);
   }, [animating]);
 
-  /* Start sequence when in view, loop */
   useEffect(() => {
     if (!isInView) {
       setAnimating(false);
       setTickedCards([]);
+      setLoadingCard(null);
       setActivePulseCard(null);
       setShowFinalPulse(false);
       setLogoPulse(false);
       return;
     }
-
-    // Initial delay before first run
-    const startTimer = setTimeout(() => {
-      runSequence();
-    }, 800);
-
-    return () => clearTimeout(startTimer);
+    const t = setTimeout(() => runSequence(), 800);
+    return () => clearTimeout(t);
   }, [isInView]);
 
-  /* Loop: restart after each sequence ends */
   useEffect(() => {
     if (isInView && !animating) {
-      const loopTimer = setTimeout(() => {
-        runSequence();
-      }, 600);
-      return () => clearTimeout(loopTimer);
+      const t = setTimeout(() => runSequence(), 800);
+      return () => clearTimeout(t);
     }
   }, [animating, isInView, runSequence]);
 
   return (
-    <section ref={sectionRef} className="sh-section" id="stakeholders">
+    <section ref={sectionRef} className="nw-section" id="stakeholders">
+      {/* Ambient glow */}
+      <div className="nw-bg-orb nw-bg-orb--1" />
+      <div className="nw-bg-orb nw-bg-orb--2" />
+      <div className="nw-bg-orb nw-bg-orb--3" />
+
       {/* Heading */}
       <motion.div
-        className="sh-heading"
+        className="nw-heading"
         initial={{ opacity: 0, y: 24 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
       >
-
-        <h2 className="sh-title">One Platform. All Stakeholders.</h2>
-        <p className="sh-sub">
+        <h2 className="nw-title">One Platform. All Stakeholders.</h2>
+        <p className="nw-sub">
           A single source of truth that aligns every team seamlessly across the entire supply chain.
         </p>
       </motion.div>
 
-      {/* Big dark container */}
-      <motion.div
-        className="sh-box"
-        initial={{ opacity: 0, y: 40 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.7, delay: 0.15 }}
-      >
-        {/* Single row of cards & Wiring wrapped for mobile scroll */}
-        <div className="sh-row-wrapper hide-scrollbar">
-          <div className="sh-row-container">
-            <div className="sh-row">
-              {stakeholders.map((item, i) => (
-                <ServiceCard
-                  key={item.id}
-                  item={item}
-                  index={i}
-                  isInView={isInView}
-                  isTicked={tickedCards.includes(i)}
-                  isPulsing={activePulseCard === i}
-                />
-              ))}
-            </div>
+      {/* Network canvas */}
+      <div className="nw-canvas">
+        {/* SVG connections layer (background) */}
+        <ConnectionLines
+          isInView={isInView}
+          activePulseCard={activePulseCard}
+          allTicked={allTicked}
+          hoveredCard={hoveredCard}
+          showFinalPulse={showFinalPulse}
+        />
 
-            {/* Wiring lines */}
-            <WiringLines
-              isInView={isInView}
-              activePulseCard={activePulseCard}
-              showFinalPulse={showFinalPulse}
-              allTicked={allTicked}
-            />
-          </div>
-        </div>
+        {/* Nodes layer (foreground) */}
+        {stakeholders.map((item, i) => (
+          <NetworkNode
+            key={item.id}
+            item={item}
+            index={i}
+            pos={nodePositions[i]}
+            isInView={isInView}
+            isTicked={tickedCards.includes(i)}
+            isLoading={loadingCard === i}
+            isHovered={hoveredCard === i}
+            onHover={setHoveredCard}
+            onLeave={() => setHoveredCard(null)}
+          />
+        ))}
 
-        {/* Logo pill */}
+        {/* Central logo node */}
         <motion.div
-          className={`sh-pill ${logoPulse ? 'sh-pill--pulse' : ''}`}
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={isInView ? { opacity: 1, scale: logoPulse ? 1.08 : 1 } : {}}
-          transition={{ duration: 0.4 }}
+          className={`nw-logo-node ${logoPulse ? 'nw-logo-node--pulse' : ''}`}
+          style={{ left: `${CENTER.x}%`, top: `${CENTER.y}%` }}
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={isInView ? {
+            opacity: 1,
+            scale: logoPulse ? 1.12 : 1
+          } : {}}
+          transition={{ duration: 0.6, delay: 0.5 }}
         >
-          <img src={logoImg} alt="Modozo" className="sh-pill-logo" />
+          <img src={logoImg} alt="Modozo" className="nw-logo-img" />
         </motion.div>
-      </motion.div>
+      </div>
 
-      {/* ── Scoped Styles ── */}
+      {/* ═══════ STYLES ═══════ */}
       <style>{`
-        /* ═══════ SECTION ═══════ */
-        .sh-section {
-          background: #F0F4F8;
-          min-height: calc(100vh - 40px);
+        .nw-section {
+          background: #060610;
+          min-height: 100vh;
           margin: 20px;
+          padding: 70px 32px 40px;
           border-radius: 32px;
-          border: 1px solid rgba(10,37,64,0.08);
-          padding: 60px 32px;
+          border: 1px solid rgba(255,255,255,0.06);
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
           position: relative;
           overflow: hidden;
-          box-shadow: 0 10px 40px rgba(0,0,0,0.05), inset 0 0 60px rgba(255,255,255,0.3);
-          z-index: 60; /* Higher than header's z-50 */
-        }
-        .sh-section::before {
-          content: '';
-          position: absolute;
-          top: -250px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 1000px;
-          height: 1000px;
-          background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 65%);
-          pointer-events: none;
+          box-shadow: 0 0 80px rgba(0,0,0,0.4);
         }
 
+        /* Ambient background orbs */
+        .nw-bg-orb {
+          position: absolute;
+          border-radius: 50%;
+          pointer-events: none;
+          filter: blur(120px);
+        }
+        .nw-bg-orb--1 { width: 500px; height: 500px; top: -150px; left: -100px; background: rgba(123,97,255,0.05); }
+        .nw-bg-orb--2 { width: 400px; height: 400px; bottom: -100px; right: -80px; background: rgba(34,197,94,0.04); }
+        .nw-bg-orb--3 { width: 300px; height: 300px; top: 40%; left: 40%; background: rgba(255,255,255,0.015); }
+
         /* ═══════ HEADING ═══════ */
-        .sh-heading {
+        .nw-heading {
           text-align: center;
-          margin-bottom: 48px;
+          margin-bottom: 20px;
           position: relative;
-          z-index: 1;
+          z-index: 10;
         }
-        .sh-badge {
-          display: inline-block;
-          font-size: 12px;
-          font-weight: 600;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: #0A2540;
-          border: 1px solid rgba(10,37,64,0.15);
-          border-radius: 100px;
-          padding: 6px 22px;
-          margin-bottom: 22px;
-          background: rgba(255,215,0,0.2);
-        }
-        .sh-title {
+        .nw-title {
           font-family: 'Cormorant Garamond', serif;
           font-size: clamp(2rem, 5vw, 3.5rem);
           font-weight: 700;
-          color: #0A2540;
+          color: #FFFFFF;
           margin: 0 0 14px;
           line-height: 1.12;
           letter-spacing: -0.02em;
         }
-        .sh-sub {
-          font-size: clamp(0.88rem, 1.4vw, 1.05rem);
-          color: rgba(10,37,64,0.6);
-          max-width: 520px;
+        .nw-sub {
+          font-size: clamp(0.85rem, 1.3vw, 1rem);
+          color: rgba(255,255,255,0.4);
+          max-width: 480px;
           margin: 0 auto;
           line-height: 1.6;
         }
 
-        /* ═══════ BIG DARK CONTAINER ═══════ */
-        .sh-box {
+        /* ═══════ NETWORK CANVAS ═══════ */
+        .nw-canvas {
           position: relative;
           width: 100%;
-          max-width: 1100px;
-          border: 1px solid rgba(10,37,64,0.06);
-          border-radius: 24px;
-          padding: 48px 36px 36px;
-          background: #FFFFFF;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          z-index: 1;
-          box-shadow: 0 8px 32px rgba(0,0,0,0.03);
-        }
-
-        /* ═══════ SINGLE ROW ═══════ */
-        .sh-row-wrapper {
-          width: 100%;
-          overflow-x: auto;
-          overflow-y: hidden;
-          padding-bottom: 16px;
-          /* Smooth momentum scrolling on iOS */
-          -webkit-overflow-scrolling: touch;
-        }
-        
-        .sh-row-container {
-          position: relative;
-          width: 100%;
-          min-width: 800px; /* Force min-width so SVG doesn't break */
-          max-width: 960px;
+          max-width: 1000px;
+          aspect-ratio: 1.75;
           margin: 0 auto;
         }
 
-        .sh-row {
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
+        /* SVG layer — sits behind everything */
+        .nw-svg {
+          position: absolute;
+          inset: 0;
           width: 100%;
-          justify-items: center;
+          height: 100%;
+          z-index: 1;
         }
 
-        /* ═══════ CARD ═══════ */
-        .sh-card {
-          position: relative;
-          width: 100%;
-          min-width: 0;
-          aspect-ratio: 0.85;
-          max-width: 100px;
-          background: #FAFAFA;
-          border: 1px solid rgba(10,37,64,0.08);
-          border-radius: 12px;
-          padding: 16px 10px 12px;
+        /* ═══════ NODE ═══════ */
+        .nw-node {
+          position: absolute;
+          transform: translate(-50%, -50%);
+          z-index: 5;
+          cursor: pointer;
+        }
+
+        .nw-node-float {
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
-          cursor: pointer;
-          transition: border-color 0.5s ease-out, background 0.5s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease-out;
-          overflow: visible;
-        }
-        .sh-card:hover {
-          border-color: #FFD700;
-          background: #FFFFFF;
-          transform: translateY(-3px);
-          box-shadow: 0 8px 24px rgba(255,215,0,0.15);
+          align-items: center;
+          position: relative;
+          animation: nw-float 7s ease-in-out infinite;
         }
 
-        /* Active border glow */
-        .sh-card-border-glow {
-          position: absolute;
-          inset: -1px;
-          border-radius: 14px;
-          border: 1.5px solid transparent;
-          pointer-events: none;
-          transition: border-color 0.4s, box-shadow 0.4s;
-        }
-        .sh-card-border-glow--active {
-          border-color: #FFD700;
-          box-shadow: 0 0 15px rgba(255,215,0,0.3);
+        @keyframes nw-float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-6px); }
         }
 
-        /* Notch */
-        .sh-card-notch {
-          position: absolute;
-          top: -1px;
-          right: 16px;
-          width: 24px;
-          height: 12px;
-          background: #FFFFFF;
-          border-left: 1px solid rgba(10,37,64,0.08);
-          border-right: 1px solid rgba(10,37,64,0.08);
-          border-bottom: 1px solid rgba(10,37,64,0.08);
-          border-radius: 0 0 6px 6px;
-          transition: border-color 0.35s;
-          z-index: 2;
-        }
-        .sh-card-notch--ticked {
-          border-color: #FFD700;
-        }
-        .sh-card:hover .sh-card-notch {
-          border-color: #FFD700;
-        }
-
-        /* Indicator container */
-        .sh-card-indicator {
-          width: 24px;
-          height: 24px;
+        /* ═══════ DOT ═══════ */
+        .nw-dot {
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.08);
+          border: 1.5px solid rgba(255,255,255,0.12);
           display: flex;
           align-items: center;
           justify-content: center;
           position: relative;
+          z-index: 6;
+          transition: all 0.4s ease;
+          box-shadow: 0 0 0 rgba(255,255,255,0);
+        }
+        .nw-dot--hover {
+          background: rgba(123,97,255,0.25);
+          border-color: rgba(123,97,255,0.6);
+          box-shadow: 0 0 20px rgba(123,97,255,0.3);
+          transform: scale(1.3);
+        }
+        .nw-dot--loading {
+          background: rgba(123,97,255,0.1);
+          border-color: transparent;
+        }
+        .nw-dot--active {
+          background: #22C55E;
+          border-color: rgba(34,197,94,0.8);
+          box-shadow: 0 0 18px rgba(34,197,94,0.4), 0 0 40px rgba(34,197,94,0.15);
         }
 
-        /* Tick */
-        .sh-card-tick {
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        .nw-spinner {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
         }
 
-        /* Glowing dot */
-        .sh-card-dot-wrap {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .sh-card-dot {
-          width: 9px;
-          height: 9px;
+        .nw-pulse-ring {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 18px;
+          height: 18px;
           border-radius: 50%;
-          background: rgba(255,215,0,0.4);
-          border: 1.5px solid rgba(255,215,0,0.8);
-          box-shadow: 0 0 8px rgba(255,215,0,0.2);
-          transition: all 0.3s;
-        }
-        .sh-card-dot--active {
-          background: #FFD700;
-          box-shadow: 0 0 12px rgba(255,215,0,0.6);
+          background: rgba(34,197,94,0.3);
+          pointer-events: none;
+          z-index: 4;
         }
 
-        /* Card title */
-        .sh-card-title {
-          font-size: 11px;
+        /* ═══════ LABEL ═══════ */
+        .nw-label {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          white-space: pre-line;
+          pointer-events: none;
+          z-index: 7;
+        }
+        .nw-label--left {
+          right: calc(100% + 14px);
+          text-align: right;
+          align-items: flex-end;
+        }
+        .nw-label--right {
+          left: calc(100% + 14px);
+          text-align: left;
+          align-items: flex-start;
+        }
+        .nw-label-title {
+          font-size: 13px;
           font-weight: 600;
-          color: #0A2540;
+          color: rgba(255,255,255,0.75);
           letter-spacing: 0.01em;
           line-height: 1.2;
-          white-space: pre-line;
-          margin-top: auto;
-          text-align: center;
+          transition: color 0.4s, text-shadow 0.4s;
+        }
+        .nw-label-title--active {
+          color: rgba(255,255,255,0.95);
+          text-shadow: 0 0 12px rgba(34,197,94,0.3);
+        }
+        .nw-label-desc {
+          font-size: 10px;
+          font-weight: 400;
+          color: rgba(255,255,255,0.25);
+          line-height: 1.3;
         }
 
-        /* Hover / active glow */
-        .sh-card-glow { display: none; }
-
-        /* Pulse ring effect */
-        .sh-card-pulse-ring {
+        /* ═══════ CENTRAL LOGO ═══════ */
+        .nw-logo-node {
           position: absolute;
-          top: 20px;
-          left: 16px;
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          background: rgba(255,215,0,0.4);
-          pointer-events: none;
-          z-index: 3;
-        }
-
-        /* ═══════ WIRING ═══════ */
-        .sh-wiring {
-          width: 100%;
-          max-width: 960px;
-          height: auto;
-          margin-top: -2px;
-        }
-
-        /* ═══════ LOGO PILL ═══════ */
-        .sh-pill {
+          transform: translate(-50%, -50%);
+          z-index: 8;
+          padding: 14px 32px;
+          border-radius: 100px;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.08);
+          transition: all 0.5s ease;
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #FFFFFF;
-          border: 1px solid rgba(10,37,64,0.1);
-          border-radius: 100px;
-          padding: 10px 30px;
-          margin-top: -2px;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-          transition: border-color 0.4s, box-shadow 0.4s;
         }
-        .sh-pill--pulse {
-          border-color: #FFD700;
-          box-shadow: 0 0 20px rgba(255,215,0,0.3), 0 0 40px rgba(255,215,0,0.15);
+        .nw-logo-node--pulse {
+          border-color: rgba(34,197,94,0.5);
+          box-shadow: 0 0 30px rgba(34,197,94,0.15), 0 0 60px rgba(34,197,94,0.05);
+          background: rgba(34,197,94,0.05);
         }
-        .sh-pill-logo {
-          height: 42px;
+        .nw-logo-img {
+          height: 34px;
           width: auto;
-          opacity: 1;
-          transition: transform 0.3s;
+          opacity: 0.85;
+          filter: brightness(1.1);
+          transition: all 0.4s;
         }
-        .sh-pill--pulse .sh-pill-logo {
-          transform: scale(1.05);
+        .nw-logo-node--pulse .nw-logo-img {
+          opacity: 1;
+          filter: brightness(1.4);
         }
 
         /* ═══════ RESPONSIVE ═══════ */
-        @media (max-width: 900px) {
-          .sh-section { padding: 40px 20px; min-height: calc(100vh - 24px); margin: 12px; border-radius: 24px; }
-          .sh-box { padding: 32px 20px 28px; border-radius: 18px; }
-          .sh-pill { margin-top: 24px; }
+        @media (max-width: 1024px) {
+          .nw-section { padding: 50px 20px 30px; }
+          .nw-canvas { aspect-ratio: 1.5; }
         }
-
-        @media (max-width: 550px) {
-          .sh-section { padding: 30px 14px; min-height: calc(100vh - 16px); margin: 8px; border-radius: 20px; }
-          .sh-box { padding: 24px 14px 20px; border-radius: 14px; }
-          .sh-pill { padding: 8px 22px; }
-          .sh-pill-logo { height: 24px; }
+        @media (max-width: 900px) {
+          .nw-section { padding: 40px 16px 24px; margin: 12px; border-radius: 24px; }
+          .nw-canvas { aspect-ratio: 1.3; }
+          .nw-label-title { font-size: 11px; }
+          .nw-label-desc { font-size: 9px; }
+          .nw-dot { width: 14px; height: 14px; }
+          .nw-logo-img { height: 26px; }
+          .nw-logo-node { padding: 10px 24px; }
+          .nw-title { margin-bottom: 10px; }
+        }
+        @media (max-width: 600px) {
+          .nw-section { padding: 32px 10px 20px; margin: 6px; border-radius: 18px; min-height: auto; }
+          .nw-canvas { aspect-ratio: 1.0; min-height: 320px; }
+          .nw-label-title { font-size: 9px; }
+          .nw-label-desc { display: none; }
+          .nw-dot { width: 12px; height: 12px; }
+          .nw-label--left { right: calc(100% + 6px); }
+          .nw-label--right { left: calc(100% + 6px); }
+          .nw-logo-img { height: 20px; }
+          .nw-logo-node { padding: 8px 18px; }
+          .nw-heading { margin-bottom: 10px; }
+          .nw-sub { font-size: 0.8rem; }
+        }
+        @media (max-width: 420px) {
+          .nw-section { padding: 24px 8px 16px; margin: 4px; border-radius: 14px; }
+          .nw-canvas { aspect-ratio: 0.9; min-height: 280px; }
+          .nw-label-title { font-size: 8px; }
+          .nw-dot { width: 10px; height: 10px; }
+          .nw-label--left { right: calc(100% + 4px); }
+          .nw-label--right { left: calc(100% + 4px); }
+          .nw-logo-img { height: 16px; }
+          .nw-logo-node { padding: 6px 14px; }
+          .nw-title { font-size: 1.5rem; }
+          .nw-sub { font-size: 0.75rem; max-width: 280px; }
         }
       `}</style>
     </section>
