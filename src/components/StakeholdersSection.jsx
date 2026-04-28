@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import logoImg from '../assets/logo3.png';
+import logoImg from '../assets/logo4.png';
 
 /* ═══════════════════════════════════════════════════════
    DATA

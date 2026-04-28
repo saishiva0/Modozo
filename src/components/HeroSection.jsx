@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, useSpring, useTransform, useMotionValue, AnimatePresence } from 'framer-motion';
 
 // Import images from assets
-import logoNew from '../assets/logo3.png';
+import logoNew from '../assets/logo4.png';
 import techpackImg from '../assets/Techpack.png';
 import approvalsImg from '../assets/Approvals.png';
 import vendorsImg from '../assets/vendors.png';
