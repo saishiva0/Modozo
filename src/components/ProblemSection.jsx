@@ -31,7 +31,7 @@ const BlinkingDelayTracker = () => {
       style={alignments[position]}
     >
       <span className="w-1.5 h-1.5 rounded-full bg-[#FFD700] shadow-[0_0_8px_rgba(255,215,0,0.5)]" />
-      <span className="text-[10px] text-gray-500 font-medium tracking-wide">
+      <span className="text-[10px] text-[#8FA3C8] font-medium tracking-wide">
         Silent delay detected
       </span>
     </motion.div>
@@ -64,7 +64,7 @@ const HiddenFrictionVisual = ({ scrollYProgress }) => {
   ];
 
   return (
-    <div className="relative w-full h-[300px] sm:h-[350px] flex items-center justify-between py-6 bg-gray-50/50 rounded-3xl border border-gray-100 shadow-sm overflow-hidden px-4 sm:px-10">
+    <div className="relative w-full h-[300px] sm:h-[350px] flex items-center justify-between py-6 bg-[#163563]/50 rounded-3xl border border-white/10 shadow-sm overflow-hidden px-4 sm:px-10">
       
       {/* LAGGING CONNECTIONS & FLOW INTERRUPTION with 8-second Fade Disruption */}
       <motion.div 
@@ -79,7 +79,7 @@ const HiddenFrictionVisual = ({ scrollYProgress }) => {
         className="absolute inset-0 w-full h-full z-0 overflow-visible pointer-events-none"
       >
         {/* Intended Perfect Pipeline (Static grey background axis) */}
-        <div className="absolute left-10 right-10 top-1/2 -translate-y-1/2 h-[2px] bg-gray-200 z-0 rounded-full" />
+        <div className="absolute left-10 right-10 top-1/2 -translate-y-1/2 h-[2px] bg-white/10 z-0 rounded-full" />
         
         <svg className="w-full h-full relative" fill="none">
           {[0, 1].map((i) => (
@@ -88,7 +88,7 @@ const HiddenFrictionVisual = ({ scrollYProgress }) => {
               x1="3%" y1="50%" x2="97%" y2="50%"
               strokeWidth="3"
               strokeLinecap="round"
-              stroke="#111827"
+              stroke="#B8C7E0"
               animate={{
                 pathLength: [0, 0.25, 0.25, 0.25, 0.25, 0],
                 // Brief pause in flow at 40% to communicate interruption
@@ -136,12 +136,12 @@ const HiddenFrictionVisual = ({ scrollYProgress }) => {
                 y: periodicDrifts[i].y,
                 x: periodicDrifts[i].x,
                 rotate: periodicDrifts[i].r,
-                borderColor: ["#e5e7eb", "#e5e7eb", "#fca5a5", "#e5e7eb"],
+                borderColor: ["rgba(255,255,255,0.1)", "rgba(255,255,255,0.1)", "#fca5a5", "rgba(255,255,255,0.1)"],
                 boxShadow: [
-                  "0px 4px 6px rgba(0,0,0,0.05)", 
-                  "0px 4px 6px rgba(0,0,0,0.05)", 
+                  "0px 4px 6px rgba(0,0,0,0.2)", 
+                  "0px 4px 6px rgba(0,0,0,0.2)", 
                   "0px 8px 15px rgba(239,68,68,0.15)", 
-                  "0px 4px 6px rgba(0,0,0,0.05)"
+                  "0px 4px 6px rgba(0,0,0,0.2)"
                 ]
               }}
               transition={{
@@ -151,14 +151,14 @@ const HiddenFrictionVisual = ({ scrollYProgress }) => {
                 times: [0, 0.625, 0.8125, 1],
                 delay: 1.2 + (i * 0.1) // Start roughly when entrance shakes finish
               }}
-              className="w-full aspect-[4/3] flex items-center justify-center bg-white rounded-lg border shadow-sm relative cursor-default transition-colors duration-300"
+              className="w-full aspect-[4/3] flex items-center justify-center bg-[#FFFDE7] rounded-lg border shadow-sm relative cursor-default transition-colors duration-300"
             >
-              <span className="text-[10px] sm:text-xs font-semibold text-gray-700 whitespace-nowrap">{block.label}</span>
+              <span className="text-[10px] sm:text-xs font-semibold text-[#4A5568] whitespace-nowrap">{block.label}</span>
               
               {/* HOVER INTERACTION: Expansion Info Box */}
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[130px] bg-[#111827] text-white text-[9px] sm:text-[10px] py-2 px-3 rounded-md opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 pointer-events-none z-50 text-center shadow-lg">
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[130px] bg-[#FFFDE7] text-[#4A5568] text-[9px] sm:text-[10px] py-2 px-3 rounded-md opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 pointer-events-none z-50 text-center shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
                 <span className="leading-snug">{block.info}</span>
-                <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 border-x-[5px] border-x-transparent border-b-[6px] border-b-[#111827]"></div>
+                <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 border-x-[5px] border-x-transparent border-b-[6px] border-b-[#FFFDE7]"></div>
               </div>
             </motion.div>
           </motion.div>
@@ -191,13 +191,13 @@ const ProblemSection = () => {
   return (
     <section 
       ref={containerRef} 
-      className="relative bg-white rounded-t-[2rem] md:rounded-t-[3rem] shadow-sm py-16 md:py-24 px-4 sm:px-6 md:px-20 overflow-hidden w-full max-w-[100vw]"
+      className="relative bg-[#122E54] rounded-t-[2rem] md:rounded-t-[3rem] shadow-sm py-16 md:py-24 px-4 sm:px-6 md:px-20 overflow-hidden w-full max-w-[100vw]"
     >
 
       {/* Subtle Tension Background Grid */}
-      <div className="absolute inset-0 opacity-[0.025] pointer-events-none"
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
-          backgroundImage: "repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%)",
+          backgroundImage: "repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)",
           backgroundSize: "12px 12px"
         }}
       />
@@ -212,7 +212,7 @@ const ProblemSection = () => {
             whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "0px 0px -50px 0px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-black relative z-10 font-serif leading-tight pr-4"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-white relative z-10 font-serif leading-tight pr-4"
           >
             Everything Looks Fine Until It Doesn’t
           </motion.h2>
@@ -222,7 +222,7 @@ const ProblemSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "0px 0px -50px 0px" }}
             transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
-            className="text-base md:text-xl text-gray-600 mb-10 max-w-lg mx-auto lg:mx-0 font-medium relative z-10"
+            className="text-base md:text-xl text-[#B8C7E0] mb-10 max-w-lg mx-auto lg:mx-0 font-medium relative z-10"
           >
             The problem isn’t visible at first. It builds up across every step.
           </motion.p>
@@ -249,7 +249,7 @@ const ProblemSection = () => {
                 <div className="mt-[6px] flex-shrink-0 w-4 h-4 rounded-full border-2 border-red-300 flex items-center justify-center">
                   <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
                 </div>
-                <span className="text-gray-700 font-medium text-base md:text-lg">{text}</span>
+                <span className="text-[#B8C7E0] font-medium text-base md:text-lg">{text}</span>
               </motion.li>
             ))}
           </motion.ul>

@@ -2,35 +2,40 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-bg-blue: #F0F4F8;
-  --color-brand-yellow: #FFD700;
-  --color-brand-navy: #0A2540;
+  --color-brand-bg-blue: #0E2545;
+  --color-brand-yellow: #FFD84D;
+  --color-brand-navy: #122E54;
+  --color-brand-card: #163563;
+  --color-brand-card-light: #1D4073;
+  --color-brand-text: #FFFFFF;
+  --color-brand-text-secondary: #B8C7E0;
+  --color-brand-text-muted: #8FA3C8;
   --font-sans: 'Outfit', system-ui, sans-serif;
   --font-serif: 'Cormorant Garamond', serif;
-  
-  --color-nav-bg: rgba(240, 244, 248, 0.8);
+
+  --color-nav-bg: rgba(14, 37, 69, 0.85);
 }
 
 @layer utilities {
   .bg-brand-gradient {
-    background: linear-gradient(135deg, #FFD700, #F4C542, #E6B800);
+    background: linear-gradient(135deg, #FFD84D, #F4C542, #E6B800);
   }
   .text-brand-gradient {
-    background: linear-gradient(135deg, #FFD700, #F4C542, #E6B800);
+    background: linear-gradient(135deg, #FFD84D, #F4C542, #E6B800);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .bg-hero-gradient {
-    background: linear-gradient(135deg, #FFD700, #F4C542);
+    background: linear-gradient(135deg, #FFD84D, #F4C542);
   }
   .border-brand-gradient {
-    border-image: linear-gradient(135deg, #FFD700, #F4C542, #E6B800) 1;
+    border-image: linear-gradient(135deg, #FFD84D, #F4C542, #E6B800) 1;
   }
 }
 @layer base {
   body {
-    @apply bg-[var(--color-brand-bg-blue)] text-[var(--color-brand-navy)] font-sans antialiased overflow-x-hidden;
+    @apply bg-[var(--color-brand-bg-blue)] text-white font-sans antialiased overflow-x-hidden;
   }
 }
 
@@ -39,10 +44,10 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #132E54;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(255,255,255,0.15);
   border-radius: 10px;
 }
 

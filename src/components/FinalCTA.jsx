@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const FinalCTA = () => {
   return (
-    <section id="contact" className="py-16 md:py-32 px-4 sm:px-6 bg-brand-navy text-white border-t border-white/5 overflow-hidden w-full max-w-[100vw]">
+    <section id="contact" className="py-16 md:py-32 px-4 sm:px-6 bg-[#0E2545] text-white border-t border-white/5 overflow-hidden w-full max-w-[100vw]">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 lg:gap-8 w-full px-2">
         
         {/* CENTER COLUMN: Main CTA (Order 1 on Mobile, Order 2 on Desktop) */}

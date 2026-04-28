@@ -33,12 +33,12 @@ const DisconnectedAnimation = () => {
       className="relative w-full h-24 mt-4 overflow-visible"
     >
       {/* Soft yellow background glow */}
-      <div className="absolute inset-0 bg-[#FFF6CC]/50 rounded-full blur-xl pointer-events-none" />
+      <div className="absolute inset-0 bg-[#FFD84D]/10 rounded-full blur-xl pointer-events-none" />
 
       {nodes.map((n, i) => (
         <motion.div
           key={i}
-          className="absolute rounded-full bg-white border border-[#EAEAEA] shadow-[0_4px_12px_rgba(0,0,0,0.06)] flex items-center justify-center transform-gpu z-10"
+          className="absolute rounded-full bg-[#163563] border border-white/10 shadow-[0_4px_12px_rgba(0,0,0,0.2)] flex items-center justify-center transform-gpu z-10"
           style={{ left: n.x, top: n.y, width: n.size, height: n.size }}
           animate={{ x: [0, n.dx, 0, -n.dx*0.6, 0], y: [0, n.dy, 0, -n.dy*0.6, 0] }}
           transition={{
@@ -123,16 +123,16 @@ const ScatteredCommAnimation = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
-      className="relative w-full h-24 mt-4 overflow-hidden rounded-xl bg-[#FAFAFA] border border-gray-100 flex items-center justify-center"
+      className="relative w-full h-24 mt-4 overflow-hidden rounded-xl bg-[#163563] border border-white/10 flex items-center justify-center"
     >
-      <div className="absolute inset-0 pointer-events-none bg-[#FFD54F]/[0.08]" />
+      <div className="absolute inset-0 pointer-events-none bg-[#FFD84D]/[0.05]" />
 
       <svg className="absolute w-full h-full" viewBox="0 0 800 240" preserveAspectRatio="xMidYMid meet">
         {/* Render Users */}
         {NODES.map((n) => (
           <g key={`node-${n.id}`} transform={`translate(${n.x}, ${n.y})`}>
-            <circle cx="0" cy="-6" r="8" fill="#2C2C2C" />
-            <path d="M-14 14 C-14 2, 14 2, 14 14" stroke="#2C2C2C" strokeWidth="3" strokeLinecap="round" fill="none" />
+            <circle cx="0" cy="-6" r="8" fill="#B8C7E0" />
+            <path d="M-14 14 C-14 2, 14 2, 14 14" stroke="#B8C7E0" strokeWidth="3" strokeLinecap="round" fill="none" />
           </g>
         ))}
 
@@ -225,7 +225,7 @@ const VisibilityAnimation = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
-      className="relative w-full h-24 mt-4 overflow-hidden rounded-xl bg-[#FAFAFA] border border-gray-100 p-2"
+      className="relative w-full h-24 mt-4 overflow-hidden rounded-xl bg-[#163563] border border-white/10 p-2"
     >
       <div className="grid grid-cols-3 grid-rows-2 gap-[6px] h-full">
          {cards.map((_, i) => {
@@ -263,8 +263,8 @@ const VisibilityAnimation = () => {
                animate={{
                   opacity,
                   filter: blurValues.length > 1 ? blurValues : blurValues[0],
-                  borderColor: isActive ? "rgba(255, 213, 79, 0.4)" : "rgba(234, 234, 234, 1)",
-                  backgroundColor: isActive ? "rgba(255, 213, 79, 0.05)" : "rgba(255, 255, 255, 1)"
+                  borderColor: isActive ? "rgba(255, 213, 79, 0.4)" : "rgba(255,255,255,0.1)",
+                  backgroundColor: isActive ? "rgba(255, 213, 79, 0.1)" : "rgba(19,47,91,1)"
                }}
                transition={{ 
                   duration: 1.2, 
@@ -274,9 +274,9 @@ const VisibilityAnimation = () => {
                className={`rounded-lg border p-1.5 flex flex-col gap-[3px] relative overflow-hidden justify-center ${yOffset}`}
              >
                 {/* Data blocks mimicking lines of text */}
-                <div className={`h-[3px] rounded-full transition-colors duration-1000 w-3/4 ${isActive || isReset ? (isActive ? 'bg-[#FFD54F]' : 'bg-[#D1D5DB]') : 'bg-[#D1D5DB]'}`} />
-                <div className={`h-[3px] rounded-full transition-colors duration-1000 w-full ${isActive || isReset ? (isActive ? 'bg-[#FFD54F]/50' : 'bg-[#D1D5DB]') : 'bg-[#D1D5DB]'}`} />
-                <div className={`h-[3px] rounded-full transition-colors duration-1000 w-1/2 ${isActive || isReset ? (isActive ? 'bg-[#FFD54F]/50' : 'bg-[#D1D5DB]') : 'bg-[#D1D5DB]'}`} />
+                <div className={`h-[3px] rounded-full transition-colors duration-1000 w-3/4 ${isActive || isReset ? (isActive ? 'bg-[#FFD84D]' : 'bg-white/20') : 'bg-white/20'}`} />
+                <div className={`h-[3px] rounded-full transition-colors duration-1000 w-full ${isActive || isReset ? (isActive ? 'bg-[#FFD84D]/50' : 'bg-white/20') : 'bg-white/20'}`} />
+                <div className={`h-[3px] rounded-full transition-colors duration-1000 w-1/2 ${isActive || isReset ? (isActive ? 'bg-[#FFD84D]/50' : 'bg-white/20') : 'bg-white/20'}`} />
              </motion.div>
            );
          })}
@@ -348,17 +348,17 @@ const ProblemCard = ({ card, isHovered, onHover, onLeave }) => {
           y: isHovered ? -4 : 0,
         }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className="bg-white border-2 rounded-2xl px-7 py-6 cursor-default select-none relative z-10"
+        className="bg-[#FFFDE7] border-2 rounded-2xl px-7 py-6 cursor-default select-none relative z-10"
       >
         {/* Title */}
         <div className="mb-2">
-          <h3 className="text-[17px] font-semibold text-black">{card.title}</h3>
+          <h3 className="text-[17px] font-semibold text-[#1A1A1A]">{card.title}</h3>
         </div>
-        <p className="text-sm text-gray-500">{card.brief}</p>
+        <p className="text-sm text-[#4A5568]">{card.brief}</p>
 
         {/* Yellow accent line */}
         <motion.div
-          className="absolute bottom-0 left-6 right-6 h-[3px] rounded-full bg-[#FFD700] origin-left"
+          className="absolute bottom-0 left-6 right-6 h-[3px] rounded-full bg-[#FFD84D] origin-left"
           animate={{ scaleX: isHovered ? 1 : 0 }}
           transition={{ duration: 0.35, ease: 'easeInOut' }}
         />
@@ -373,7 +373,7 @@ const ProblemCard = ({ card, isHovered, onHover, onLeave }) => {
             animate={{ scaleY: 1, opacity: 1 }}
             exit={{ scaleY: 0, opacity: 0 }}
             transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className="w-px bg-[#FFD700] mx-auto origin-top"
+            className="w-px bg-[#FFD84D] mx-auto origin-top"
             style={{ height: 12 }}
           />
         )}
@@ -388,11 +388,11 @@ const ProblemCard = ({ card, isHovered, onHover, onLeave }) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.97 }}
             transition={{ duration: 0.35, ease: 'easeInOut' }}
-            className="bg-[#FFFEF5] border-2 border-[#FFD700] rounded-2xl px-6 py-5 shadow-[0_6px_32px_rgba(255,215,0,0.18)] relative z-20"
+            className="bg-white border-2 border-[#FFD84D] rounded-2xl px-6 py-5 shadow-[0_6px_32px_rgba(255,215,0,0.1)] relative z-20"
           >
             {/* Arrow tip */}
             <div
-              className="absolute -top-[9px] left-1/2 -translate-x-1/2 w-4 h-4 bg-[#FFFEF5] border-l-2 border-t-2 border-[#FFD700] rotate-45"
+              className="absolute -top-[9px] left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-l-2 border-t-2 border-[#FFD84D] rotate-45"
               style={{ borderRadius: '2px 0 0 0' }}
             />
 
@@ -404,9 +404,9 @@ const ProblemCard = ({ card, isHovered, onHover, onLeave }) => {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 + i * 0.07, duration: 0.3, ease: 'easeOut' }}
-                  className="flex items-start gap-2 text-sm text-gray-700"
+                  className="flex items-start gap-2 text-sm text-[#4A5568]"
                 >
-                  <span className="mt-0.5 text-[#FFD700] text-xs">▸</span>
+                  <span className="mt-0.5 text-[#FFD84D] text-xs">▸</span>
                   {point}
                 </motion.li>
               ))}
@@ -428,7 +428,7 @@ const BreakdownSection = () => {
   const [hovered, setHovered] = useState(null);
 
   return (
-    <section className="py-16 md:py-24 px-4 sm:px-6 md:px-12 bg-brand-bg-blue overflow-visible">
+    <section className="py-16 md:py-24 px-4 sm:px-6 md:px-12 bg-[#0E2545] overflow-visible">
       <div className="max-w-5xl mx-auto text-center w-full">
 
         {/* Heading */}
@@ -437,7 +437,7 @@ const BreakdownSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7, ease: 'easeInOut' }}
-          className="text-3xl md:text-5xl font-bold mb-4 text-black font-serif"
+          className="text-3xl md:text-5xl font-bold mb-4 text-white font-serif"
         >
           It&apos;s Not Just Delay<br className="hidden md:block" /> It&apos;s Lack of Structure
         </motion.h2>
@@ -447,7 +447,7 @@ const BreakdownSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.7, delay: 0.15, ease: 'easeInOut' }}
-          className="text-gray-500 text-base md:text-lg mb-14 max-w-xl mx-auto font-light"
+          className="text-[#8FA3C8] text-base md:text-lg mb-14 max-w-xl mx-auto font-light"
         >
           Hover on a problem to explore what's really breaking your workflow.
         </motion.p>

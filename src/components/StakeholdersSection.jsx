@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import logoImg from '../assets/logo-new.png';
+import logoImg from '../assets/logo3.png';
 
 /* ═══════════════════════════════════════════════════════
    DATA
@@ -24,7 +24,7 @@ const nodePositions = [
   { x: 90, y: 18 },   // Tech Teams — far right
 ];
 
-const CENTER = { x: 50, y: 78 }; // Logo center position
+const CENTER = { x: 48, y: 78 }; // Logo center position — shifted left to align with line convergence
 
 /* ═══════════════════════════════════════════════════════
    NETWORK NODE — Glowing dot + floating label
@@ -124,9 +124,9 @@ const ConnectionLines = ({ isInView, activePulseCard, allTicked, hoveredCard, sh
           <stop offset="100%" stopColor="rgba(255,255,255,0.03)" />
         </linearGradient>
         <linearGradient id="nwLineActive" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#22C55E" />
-          <stop offset="50%" stopColor="rgba(34,197,94,0.5)" />
-          <stop offset="100%" stopColor="rgba(34,197,94,0.15)" />
+          <stop offset="0%" stopColor="#FFF59D" />
+          <stop offset="50%" stopColor="rgba(255,245,157,0.5)" />
+          <stop offset="100%" stopColor="rgba(255,245,157,0.15)" />
         </linearGradient>
         <linearGradient id="nwLineHover" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#7B61FF" />
@@ -333,7 +333,7 @@ const StakeholdersSection = () => {
       {/* ═══════ STYLES ═══════ */}
       <style>{`
         .nw-section {
-          background: #060610;
+          background: #163563;
           min-height: 100vh;
           margin: 20px;
           padding: 70px 32px 40px;
@@ -355,7 +355,7 @@ const StakeholdersSection = () => {
           filter: blur(120px);
         }
         .nw-bg-orb--1 { width: 500px; height: 500px; top: -150px; left: -100px; background: rgba(123,97,255,0.05); }
-        .nw-bg-orb--2 { width: 400px; height: 400px; bottom: -100px; right: -80px; background: rgba(34,197,94,0.04); }
+        .nw-bg-orb--2 { width: 400px; height: 400px; bottom: -100px; right: -80px; background: rgba(255,245,157,0.04); }
         .nw-bg-orb--3 { width: 300px; height: 300px; top: 40%; left: 40%; background: rgba(255,255,255,0.015); }
 
         /* ═══════ HEADING ═══════ */
@@ -447,9 +447,9 @@ const StakeholdersSection = () => {
           border-color: transparent;
         }
         .nw-dot--active {
-          background: #22C55E;
-          border-color: rgba(34,197,94,0.8);
-          box-shadow: 0 0 18px rgba(34,197,94,0.4), 0 0 40px rgba(34,197,94,0.15);
+          background: #FFF59D;
+          border-color: rgba(255,245,157,0.8);
+          box-shadow: 0 0 18px rgba(255,245,157,0.4), 0 0 40px rgba(255,245,157,0.15);
         }
 
         .nw-spinner {
@@ -467,7 +467,7 @@ const StakeholdersSection = () => {
           width: 18px;
           height: 18px;
           border-radius: 50%;
-          background: rgba(34,197,94,0.3);
+          background: rgba(255,245,157,0.3);
           pointer-events: none;
           z-index: 4;
         }
@@ -504,7 +504,7 @@ const StakeholdersSection = () => {
         }
         .nw-label-title--active {
           color: rgba(255,255,255,0.95);
-          text-shadow: 0 0 12px rgba(34,197,94,0.3);
+          text-shadow: 0 0 12px rgba(255,245,157,0.3);
         }
         .nw-label-desc {
           font-size: 10px;
@@ -528,20 +528,18 @@ const StakeholdersSection = () => {
           justify-content: center;
         }
         .nw-logo-node--pulse {
-          border-color: rgba(34,197,94,0.5);
-          box-shadow: 0 0 30px rgba(34,197,94,0.15), 0 0 60px rgba(34,197,94,0.05);
-          background: rgba(34,197,94,0.05);
+          border-color: rgba(255,245,157,0.5);
+          box-shadow: 0 0 30px rgba(255,245,157,0.15), 0 0 60px rgba(255,245,157,0.05);
+          background: rgba(255,245,157,0.05);
         }
         .nw-logo-img {
           height: 34px;
           width: auto;
           opacity: 0.85;
-          filter: brightness(1.1);
           transition: all 0.4s;
         }
         .nw-logo-node--pulse .nw-logo-img {
           opacity: 1;
-          filter: brightness(1.4);
         }
 
         /* ═══════ RESPONSIVE ═══════ */
