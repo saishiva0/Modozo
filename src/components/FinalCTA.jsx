@@ -3,17 +3,17 @@ import { motion } from 'framer-motion';
 
 const FinalCTA = () => {
   return (
-    <section id="contact" className="py-16 md:py-32 px-4 sm:px-6 bg-[#0E2545] text-white border-t border-white/5 overflow-hidden w-full max-w-[100vw]">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 lg:gap-8 w-full px-2">
+    <section id="contact" className="pt-16 md:pt-32 pb-6 md:pb-8 px-4 sm:px-6 bg-[#0E2545] text-white border-t border-white/5 overflow-hidden w-full max-w-[100vw]">
+      <div className="max-w-[90rem] mx-auto flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 lg:gap-4 w-full px-4 lg:px-8">
         
         {/* CENTER COLUMN: Main CTA (Order 1 on Mobile, Order 2 on Desktop) */}
-        <div className="order-1 lg:order-2 flex flex-col items-center text-center max-w-2xl lg:max-w-xl">
+        <div className="order-1 lg:order-2 flex flex-col items-center text-center max-w-2xl lg:max-w-2xl lg:w-1/2">
           <motion.h2 
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-3xl md:text-5xl lg:text-5xl font-bold mb-8 tracking-tight font-serif text-white mx-auto leading-tight relative lg:-translate-x-4 xl:-translate-x-6"
+            className="text-3xl md:text-5xl lg:text-5xl font-bold mb-8 tracking-tight font-serif text-white mx-auto leading-tight relative"
           >
             Launch Collections Faster <br className="hidden md:block" />
             With Less Chaos
@@ -46,7 +46,7 @@ const FinalCTA = () => {
         </div>
 
         {/* LEFT COLUMN: Company Details (Order 2 on Mobile, Order 1 on Desktop) */}
-        <div className="order-2 lg:order-1 flex flex-col items-center lg:items-start text-center lg:text-left pt-4">
+        <div className="order-2 lg:order-1 flex flex-col items-center lg:items-start text-center lg:text-left pt-4 lg:w-1/4">
           <h3 className="text-xl md:text-2xl font-bold tracking-tighter uppercase mb-6 font-serif">
             MODOZO
           </h3>
@@ -71,7 +71,7 @@ const FinalCTA = () => {
         </div>
 
         {/* RIGHT COLUMN: Links (Order 3 on Mobile & Desktop) */}
-        <div className="order-3 lg:order-3 flex flex-col items-center lg:items-end text-center lg:text-right pt-4">
+        <div className="order-3 lg:order-3 flex flex-col items-center lg:items-end text-center lg:text-right pt-4 lg:w-1/4">
           <h4 className="text-lg font-semibold text-white/90 mb-6 tracking-tight">
             Do you know us?
           </h4>
@@ -90,8 +90,8 @@ const FinalCTA = () => {
       </div>
 
       {/* Copyright Line */}
-      <div className="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-[10px] md:text-xs text-gray-500 font-medium tracking-widest uppercase text-center">
+      <div className="max-w-[90rem] mx-auto px-6 mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-center items-center gap-4">
+        <p className="text-[10px] md:text-xs text-gray-500 font-medium tracking-widest uppercase text-center w-full">
           © {new Date().getFullYear()} Modozo — The Operating System for Fashion Supply Chains
         </p>
       </div>

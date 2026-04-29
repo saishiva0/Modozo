@@ -432,7 +432,7 @@ const StakeholdersSection = () => {
           min-width: 0;
           aspect-ratio: 0.85;
           max-width: 130px;
-          background: #0E2545;
+          background: #FFFFFF;
           border: 1px solid rgba(14,37,69,0.1);
           border-radius: 12px;
           padding: 10px 8px 8px;
@@ -445,7 +445,7 @@ const StakeholdersSection = () => {
         }
         .sh-card:hover {
           border-color: #FFD700;
-          background: #122E54;
+          background: #F8F9FA;
           transform: translateY(-3px);
           box-shadow: 0 8px 24px rgba(255,215,0,0.15);
         }
