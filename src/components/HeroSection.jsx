@@ -116,12 +116,13 @@ const CarouselItem = ({ src, index, total, baseX }) => {
     return raw;
   });
 
-  // Map the normalized position to 3D transformations with a slight vertical curve
-  const x = useTransform(xPos, [-50, 0, 50], ["-120vw", "0vw", "120vw"]);
-  const y = useTransform(xPos, [-50, 0, 50], [50, 0, 50]); // Creates a slight upward arc (smile curve)
-  const rotateY = useTransform(xPos, [-50, 0, 50], [65, 0, -65]);
-  const scale = useTransform(xPos, [-50, 0, 50], [0.45, 1, 0.45]);
-  const opacity = useTransform(xPos, [-50, -35, 0, 35, 50], [0, 1, 1, 1, 0]);
+  // Map the normalized position to a tighter 3D orbit with overlapping cards
+  const x = useTransform(xPos, [-50, 0, 50], ["-50vw", "0vw", "50vw"]);
+  const y = useTransform(xPos, [-50, 0, 50], [30, 0, 30]); 
+  const z = useTransform(xPos, [-50, 0, 50], [-400, 0, -400]); // Adds significant depth for the orbit feel
+  const rotateY = useTransform(xPos, [-50, 0, 50], [75, 0, -75]); // Sharper rotation for a cylindrical wrap
+  const scale = useTransform(xPos, [-50, 0, 50], [0.65, 1, 0.65]);
+  const opacity = useTransform(xPos, [-50, -40, 0, 40, 50], [0, 1, 1, 1, 0]);
   const zIndex = useTransform(xPos, [-50, 0, 50], [0, 10, 0]);
 
   return (

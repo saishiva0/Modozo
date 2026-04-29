@@ -345,21 +345,24 @@ const ImpactSection = () => {
                 variants={cardVariants}
                 initial="chaos"
                 animate={phase}
-                className={`relative flex-1 p-5 lg:p-8 rounded-[1.5rem] bg-[#163563]/50 border transition-all duration-1000 flex flex-col items-center text-center backdrop-blur-xl shadow-xl ${phase === 'ordered' ? 'border-yellow-400/50 shadow-yellow-400/10' : 'border-white/5 shadow-black/20'
-                  }`}
+                className={`relative flex-1 p-5 lg:p-8 rounded-[1.5rem] bg-[#163563]/50 border transition-all duration-500 flex flex-col items-center text-center backdrop-blur-xl shadow-xl cursor-pointer group ${
+                  phase === 'ordered' 
+                    ? 'border-yellow-400/50 shadow-yellow-400/10 hover:border-yellow-400 hover:bg-[#1C417A]/80 hover:-translate-y-2 hover:shadow-yellow-400/20' 
+                    : 'border-white/5 shadow-black/20'
+                }`}
               >
-                <div className="w-full mb-6">
+                <div className="w-full mb-6 transition-transform duration-300 group-hover:scale-110">
                   <item.Animation active={phase === 'ordered'} />
                 </div>
 
                 <div className="mb-2">
-                  <span className={`text-4xl lg:text-5xl font-black tracking-tighter transition-colors duration-1000 ${phase === 'ordered' ? 'text-yellow-400 drop-shadow-sm' : 'text-gray-500'}`}>
+                  <span className={`text-4xl lg:text-5xl font-black tracking-tighter transition-colors duration-300 ${phase === 'ordered' ? 'text-yellow-400 drop-shadow-sm group-hover:text-yellow-300' : 'text-gray-500'}`}>
                     <AnimatedCounter value={item.value} delay={i * 0.15} active={phase === 'ordered'} />
                   </span>
-                  <span className={`text-xl lg:text-2xl font-bold ml-1 transition-colors duration-1000 ${phase === 'ordered' ? 'text-white' : 'text-gray-500'}`}>{item.suffix}</span>
+                  <span className={`text-xl lg:text-2xl font-bold ml-1 transition-colors duration-300 ${phase === 'ordered' ? 'text-white' : 'text-gray-500'}`}>{item.suffix}</span>
                 </div>
 
-                <p className={`text-xs lg:text-sm font-bold uppercase tracking-widest transition-colors duration-1000 ${phase === 'ordered' ? 'text-white/80' : 'text-gray-500'}`}>
+                <p className={`text-xs lg:text-sm font-bold uppercase tracking-widest transition-colors duration-300 ${phase === 'ordered' ? 'text-white/80 group-hover:text-white' : 'text-gray-500'}`}>
                   {item.title}
                 </p>
 
