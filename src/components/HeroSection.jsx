@@ -52,9 +52,9 @@ const Navbar = () => {
       <div className="flex items-center min-w-[150px]">
         <a href="#home" className="flex items-center">
           <div className="relative flex flex-col items-start">
-            <img 
-              src={logoNew} 
-              alt="Modozo" 
+            <img
+              src={logoNew}
+              alt="Modozo"
               onLoad={() => setLogoLoaded(true)}
               className={`h-[45px] md:h-[55px] w-auto object-contain transition-transform hover:scale-105 ${!logoLoaded ? 'absolute opacity-0' : 'opacity-100'}`}
             />
@@ -142,9 +142,9 @@ const Arrow = ({ delay }) => (
 
 const WorkflowItem = ({ src, label, idx, phase, isMobile }) => {
   const circularPos = [
-    { x: 0,    y: -220 }, // Techpack
-    { x: 230,  y: -20 },  // Approvals
-    { x: 180,  y: 180 },  // Vendors
+    { x: 0, y: -220 }, // Techpack
+    { x: 230, y: -20 },  // Approvals
+    { x: 180, y: 180 },  // Vendors
     { x: -180, y: 180 },  // Samples
     { x: -230, y: -20 },  // Production
   ][idx];
@@ -187,7 +187,7 @@ const WorkflowItem = ({ src, label, idx, phase, isMobile }) => {
     >
       <div className="flex flex-col items-center gap-2">
         <img src={src} alt={label} className="w-full h-auto object-contain drop-shadow-md" style={{ filter: 'sepia(0.6) hue-rotate(5deg) saturate(2.5) brightness(1.2)' }} />
-        <motion.span 
+        <motion.span
           animate={{ opacity: labelOpacity }}
           className="text-[10px] md:text-[11px] font-bold text-white/40 uppercase tracking-widest text-center whitespace-nowrap"
         >
@@ -211,8 +211,8 @@ const HeroSection = () => {
 
     const startSequence = () => {
       setPhase(0);
-      timer1 = setTimeout(() => setPhase(1), 3500); 
-      timer2 = setTimeout(() => setPhase(2), 5200); 
+      timer1 = setTimeout(() => setPhase(1), 3500);
+      timer2 = setTimeout(() => setPhase(2), 5200);
       timer3 = setTimeout(() => startSequence(), 11000);
     };
 
@@ -241,7 +241,7 @@ const HeroSection = () => {
       <Navbar />
 
       <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 z-10">
-        
+
         <div className="flex-1 text-center lg:text-left w-full lg:max-w-[620px] flex flex-col items-center lg:items-start gap-5 pt-8 lg:pt-0">
           <motion.div
             initial={{ y: 20, opacity: 0 }}
@@ -249,14 +249,14 @@ const HeroSection = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-bold tracking-tight text-white leading-[1.1] mb-6 font-serif">
-              Supercharge Your Fashion Supply Chain with Modozo
+              Supercharge Your Fashion Supply Chain with MODOZO
             </h1>
             <p className="text-lg md:text-xl text-[#B8C7E0] leading-relaxed font-medium mb-4 max-w-xl mx-auto lg:mx-0">
               From techpacks and approvals to vendors, samples, and production tracking with Modozo brings your entire fashion workflow into one connected system.
             </p>
-            <p className="text-base text-[#8FA3C8] leading-relaxed font-light max-w-lg mx-auto lg:mx-0 mb-8">
+            {/* <p className="text-base text-[#8FA3C8] leading-relaxed font-light max-w-lg mx-auto lg:mx-0 mb-8">
               Built for fashion brands that want to move faster, stay aligned, and launch collections without operational chaos.
-            </p>
+            </p> */}
           </motion.div>
 
           <motion.div
@@ -275,12 +275,12 @@ const HeroSection = () => {
         </div>
 
         <div className="flex-1 w-full relative h-[600px] lg:h-[800px] flex items-center justify-center mt-12 lg:mt-0">
-          
+
           <div className="relative w-full h-full flex items-center justify-center">
-            
+
             <AnimatePresence>
               {phase === 0 && !isMobile && items.map((_, i) => {
-                const pos = [ { x: 0, y: -220 }, { x: 230, y: -20 }, { x: 180, y: 180 }, { x: -180, y: 180 }, { x: -230, y: -20 } ][i];
+                const pos = [{ x: 0, y: -220 }, { x: 230, y: -20 }, { x: 180, y: 180 }, { x: -180, y: 180 }, { x: -230, y: -20 }][i];
                 const width = Math.sqrt(pos.x ** 2 + pos.y ** 2);
                 const angle = Math.atan2(pos.y, pos.x);
                 return (
@@ -308,9 +308,9 @@ const HeroSection = () => {
               transition={{ duration: 1, ease: "easeInOut" }}
               className="relative z-10 pointer-events-none"
             >
-              <img 
-                src={logoNew} 
-                alt="Modozo Central" 
+              <img
+                src={logoNew}
+                alt="Modozo Central"
                 className="w-[180px] md:w-[240px] lg:w-[320px] h-auto object-contain drop-shadow-2xl"
               />
             </motion.div>
