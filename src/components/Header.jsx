@@ -1,6 +1,28 @@
+import React, { useState } from 'react';
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import logo from '../assets/logo4.png';
 
 const Header = () => {
+  const [isHidden, setIsHidden] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious();
+    
+    // Most users mean "scrolling down the page" when they say "scroll down". 
+    // Usually, we HIDE the nav when reading down, and SHOW it when scrolling back up.
+    if (latest > previous && latest > 100) {
+      // Scrolling down the page -> hide
+      setIsHidden(true);
+    } else if (latest < previous) {
+      // Scrolling up the page -> visible
+      setIsHidden(false);
+    } else if (latest <= 100) {
+      // Top of page -> visible
+      setIsHidden(false);
+    }
+  });
+
   const navLinks = [
     { name: "Home", href: "#home" },
     { name: "Workflow Challenges", href: "#challenges" },
@@ -11,7 +33,15 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 w-full px-6 md:px-8 py-3 md:py-4 bg-brand-bg-blue/90 backdrop-blur-md z-50 flex items-center justify-between border-b border-black/5">
+    <motion.header 
+      variants={{
+        visible: { y: 0 },
+        hidden: { y: "-100%" }
+      }}
+      animate={isHidden ? "hidden" : "visible"}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      className="fixed top-0 left-0 w-full px-6 md:px-8 py-3 md:py-4 bg-brand-bg-blue/90 backdrop-blur-md z-50 flex items-center justify-between border-b border-black/5"
+    >
       {/* Left: Logo */}
       <div className="w-1/4 flex justify-start items-center h-8 cursor-pointer">
         <img 
@@ -21,8 +51,8 @@ const Header = () => {
         />
       </div>
 
-      {/* Center: Navigation Links */}
-      <nav className="hidden lg:flex flex-1 justify-center items-center gap-6 xl:gap-8">
+      {/* Center: Navigation Links (Absolutely Centered) */}
+      <nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2 justify-center items-center gap-6 xl:gap-8">
         {navLinks.map((link) => (
           <a
             key={link.name}
@@ -50,7 +80,7 @@ const Header = () => {
           </svg>
         </button>
       </div>
-    </header>
+    </motion.header>
   );
 };
 

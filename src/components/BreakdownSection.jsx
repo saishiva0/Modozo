@@ -342,19 +342,19 @@ const ProblemCard = ({ card, isHovered, onHover, onLeave }) => {
         layout
         animate={{
           boxShadow: isHovered
-            ? '0 8px 40px rgba(255, 215, 0, 0.25), 0 2px 12px rgba(0,0,0,0.08)'
-            : '0 2px 12px rgba(0,0,0,0.06)',
-          borderColor: isHovered ? '#FFD700' : '#e5e7eb',
+            ? '0 8px 40px rgba(255, 215, 0, 0.25), 0 2px 12px rgba(0,0,0,0.2)'
+            : '0 2px 12px rgba(0,0,0,0.1)',
+          borderColor: isHovered ? '#FFD700' : 'rgba(234, 241, 250, 0.2)',
           y: isHovered ? -4 : 0,
         }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className="bg-[#FFFDE7] border-2 rounded-2xl px-7 py-6 cursor-default select-none relative z-10"
+        className="bg-[#EAF1FA]/10 backdrop-blur-md border rounded-2xl px-7 py-6 cursor-default select-none relative z-10"
       >
         {/* Title */}
         <div className="mb-2">
-          <h3 className="text-[17px] font-semibold text-[#1A1A1A]">{card.title}</h3>
+          <h3 className="text-[17px] font-semibold text-white">{card.title}</h3>
         </div>
-        <p className="text-sm text-[#4A5568]">{card.brief}</p>
+        <p className="text-sm text-[#B8C7E0]">{card.brief}</p>
 
         {/* Yellow accent line */}
         <motion.div
@@ -388,11 +388,11 @@ const ProblemCard = ({ card, isHovered, onHover, onLeave }) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.97 }}
             transition={{ duration: 0.35, ease: 'easeInOut' }}
-            className="bg-white border-2 border-[#FFD84D] rounded-2xl px-6 py-5 shadow-[0_6px_32px_rgba(255,215,0,0.1)] relative z-20"
+            className="bg-[#0E2545]/90 backdrop-blur-xl border border-[#FFD84D]/50 rounded-2xl px-6 py-5 shadow-[0_6px_32px_rgba(255,215,0,0.1)] relative z-20"
           >
             {/* Arrow tip */}
             <div
-              className="absolute -top-[9px] left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-l-2 border-t-2 border-[#FFD84D] rotate-45"
+              className="absolute -top-[9px] left-1/2 -translate-x-1/2 w-4 h-4 bg-[#0E2545] border-l border-t border-[#FFD84D]/50 rotate-45"
               style={{ borderRadius: '2px 0 0 0' }}
             />
 
@@ -404,7 +404,7 @@ const ProblemCard = ({ card, isHovered, onHover, onLeave }) => {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 + i * 0.07, duration: 0.3, ease: 'easeOut' }}
-                  className="flex items-start gap-2 text-sm text-[#4A5568]"
+                  className="flex items-start gap-2 text-sm text-[#B8C7E0]"
                 >
                   <span className="mt-0.5 text-[#FFD84D] text-xs">▸</span>
                   {point}

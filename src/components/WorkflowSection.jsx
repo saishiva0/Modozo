@@ -20,8 +20,8 @@ const workflowColors = [
 ];
 
 /* ══════════════════════════════════════════════
-   ANIMATIONS (KEPT FROM ORIGINAL)
-══════════════════════════════════════════════ */
+   ANIMATIONS
+   ══════════════════════════════════════════════ */
 
 const TechpackAnim = ({ active, accentColor }) => (
   <div className="flex flex-col items-center w-full mt-2 gap-4">
@@ -46,18 +46,6 @@ const TechpackAnim = ({ active, accentColor }) => (
         transition={{ duration: 1.5, ease: "easeInOut" }}
       />
     </div>
-    <div className="flex flex-col gap-2 w-full px-8">
-      {[1, 2, 3].map((i) => (
-        <div key={i} className="h-1.5 bg-white/10 rounded-full w-full relative overflow-hidden">
-          <motion.div 
-            className="absolute inset-0 opacity-40"
-            style={{ backgroundColor: accentColor }}
-            animate={active ? { x: ["-100%", "100%"] } : {}}
-            transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.1 }}
-          />
-        </div>
-      ))}
-    </div>
   </div>
 );
 
@@ -77,18 +65,6 @@ const ReviewAnim = ({ active, accentColor }) => (
         </motion.div>
       ))}
     </div>
-    <div className="flex flex-col gap-2 w-full px-6">
-      {[0, 1].map(i => (
-        <div key={i} className="flex items-center justify-between bg-white/5 p-1.5 rounded-lg border border-white/5">
-          <div className="h-1 bg-white/15 rounded-full w-20" />
-          <motion.div animate={active ? { scale: 1, opacity: 1 } : { scale: 0.5, opacity: 0.3 }}>
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke={accentColor} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-          </motion.div>
-        </div>
-      ))}
-    </div>
     <motion.div
       animate={active ? { opacity: 1, y: 0 } : { opacity: 0.3, y: 5 }}
       style={{ backgroundColor: accentColor, color: "white" }}
@@ -102,22 +78,8 @@ const ReviewAnim = ({ active, accentColor }) => (
 const SourcingAnim = ({ active, accentColor }) => (
   <div className="relative w-full h-24 mt-2 flex items-center justify-center px-4">
     <div className="w-full h-px bg-white/10 absolute top-1/2 left-0" />
-    <div className="absolute left-2 top-1/2 -translate-y-1/2 flex flex-col items-center gap-1">
-      <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10" style={{ borderColor: `${accentColor}44` }}>
-        <svg viewBox="0 0 24 24" width="16" height="16" stroke={accentColor} strokeWidth="2" fill="none" className="opacity-80">
-          <path d="M3 21h18M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7M4 7l2-4h12l2 4" />
-        </svg>
-      </div>
-    </div>
-    <div className="absolute right-2 top-1/2 -translate-y-1/2 flex flex-col items-center gap-1">
-      <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10" style={{ borderColor: `${accentColor}44` }}>
-        <svg viewBox="0 0 24 24" width="16" height="16" stroke={accentColor} strokeWidth="2" fill="none" className="opacity-80">
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><polyline points="16 11 18 13 22 9" />
-        </svg>
-      </div>
-    </div>
     <motion.div
-      animate={active ? { x: [ -60, 60 ], opacity: [0, 1, 1, 0] } : { opacity: 0 }}
+      animate={active ? { x: [ -40, 40 ], opacity: [0, 1, 1, 0] } : { opacity: 0 }}
       transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
       style={{ backgroundColor: accentColor }}
       className="z-20 w-8 h-8 rounded-lg shadow-lg flex items-center justify-center"
@@ -130,16 +92,8 @@ const SourcingAnim = ({ active, accentColor }) => (
 );
 
 const VendorAnim = ({ active, accentColor }) => (
-  <div className="flex flex-col items-center w-full mt-4 gap-6">
-    <div className="flex items-center gap-8 relative">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 flex flex-col gap-1.5 overflow-hidden">
-        <motion.div animate={active ? { x: [-20, 20] } : {}} transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }} className="flex gap-4">
-          {[1, 2].map(i => <svg key={i} viewBox="0 0 24 24" width="10" height="10" stroke={accentColor} fill="none" className="opacity-70"><polyline points="13 17 18 12 13 7" /><line x1="6" y1="12" x2="18" y2="12" /></svg>)}
-        </motion.div>
-      </div>
-      <div className="w-10 h-10 rounded-full bg-white/5 border-2 border-dashed flex items-center justify-center" style={{ borderColor: `${accentColor}44` }}>
-         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke={accentColor} strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l4-4V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2z" /></svg>
-      </div>
+  <div className="flex flex-col items-center w-full mt-4 gap-4">
+    <div className="flex items-center gap-6 relative">
       <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border-2" style={{ borderColor: accentColor }}>
          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke={accentColor} strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /></svg>
       </div>
@@ -153,19 +107,11 @@ const VendorAnim = ({ active, accentColor }) => (
 );
 
 const SampleAnim = ({ active, accentColor }) => (
-  <div className="w-full mt-6 flex flex-col gap-5 px-4">
+  <div className="w-full mt-6 flex flex-col gap-4 px-4">
     <div className="relative h-1 bg-white/10 rounded-full">
-      <div className="absolute inset-0 flex justify-between items-center -top-2">
-        {[0, 1, 2].map((i) => (
-          <motion.div key={i} animate={active && (i === 0 || i === 1) ? { backgroundColor: accentColor, scale: 1.1 } : { backgroundColor: "rgba(0,0,0,0.1)", scale: 1 }} className="w-4 h-4 rounded-full border-2" />
-        ))}
-      </div>
-      <motion.div animate={active ? { width: "50%" } : { width: "10%" }} style={{ backgroundColor: accentColor }} className="absolute h-full rounded-full" />
+      <motion.div animate={active ? { width: "100%" } : { width: "10%" }} style={{ backgroundColor: accentColor }} className="absolute h-full rounded-full" />
     </div>
-    <div className="flex items-center justify-center gap-3 bg-white/5 py-2 rounded-xl border border-white/5">
-       <motion.div animate={active ? { x: [-2, 2, -2] } : {}} transition={{ duration: 1, repeat: Infinity }}>
-         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" strokeWidth="1.5"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" /></svg>
-       </motion.div>
+    <div className="flex items-center justify-center gap-2 bg-white/5 py-1.5 rounded-lg border border-white/5">
        <span className="text-[9px] font-extrabold">DHL PKG #4829</span>
     </div>
   </div>
@@ -180,12 +126,8 @@ const ProductionAnim = ({ active, accentColor }) => {
   }, [active]);
 
   return (
-    <div className="w-full mt-4 flex flex-col gap-4 px-6">
-      <div className="flex items-center justify-between">
-        <motion.div animate={active ? { rotate: 360 } : {}} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} className="w-5 h-5 border-2 border-white/10 rounded-full flex items-center justify-center" style={{ borderTopColor: accentColor }} />
-        <span className="px-2 py-0.5 bg-[#0E2545] rounded text-[7px] font-bold" style={{ color: accentColor }}>LIVE</span>
-      </div>
-      <div className="flex flex-col gap-2">
+    <div className="w-full mt-4 flex flex-col gap-3 px-4">
+      <div className="flex flex-col gap-1.5">
         {[ { label: "Fabrication", p: 92 }, { label: "Construction", p: percent } ].map((item, i) => (
           <div key={i} className="flex flex-col gap-1">
             <div className="flex justify-between text-[7px] font-bold opacity-60"><span>{item.label}</span><span>{item.p}%</span></div>
@@ -201,137 +143,131 @@ const ProductionAnim = ({ active, accentColor }) => {
 
 const STEP_ANIMATIONS = [ TechpackAnim, ReviewAnim, SourcingAnim, VendorAnim, SampleAnim, ProductionAnim ];
 
-/* ═════════════════════════════════════════════
-   WORKFLOW CARD (REPLACING CUBE FACE)
-═════════════════════════════════════════════ */
-
-const WorkflowCard = ({ index, x, rotation, scale, isActive }) => {
+const WorkflowCard = ({ index, x, y, scale, opacity, isActive, isMobile }) => {
   const content = workflowSteps[index];
   const accentColor = workflowColors[index];
   const Anim = STEP_ANIMATIONS[index];
 
   return (
     <motion.div
-      style={{ x, scale, zIndex: 50 - index }}
-      className="absolute flex flex-col items-center justify-start py-8 px-6 rounded-[2.5rem] bg-[#FFFDE7] border-2 border-[#FFD84D]/30 shadow-2xl w-[220px] md:w-[260px] h-[400px] md:h-[460px] shrink-0"
+      style={{ x, y, scale, opacity, zIndex: 50 - index }}
+      className={`absolute flex flex-col items-center justify-start py-6 px-5 rounded-[2rem] bg-[#EAF1FA]/10 backdrop-blur-md border border-[#EAF1FA]/20 shadow-2xl ${
+        isMobile ? 'w-[200px] h-[320px]' : 'w-[260px] h-[460px]'
+      } shrink-0`}
     >
       <div className="relative z-10 flex flex-col items-center w-full">
-        <span className="font-extrabold text-[10px] uppercase tracking-[0.2em] mb-4 block text-[#718096]">
+        <span className="font-extrabold text-[9px] uppercase tracking-[0.2em] mb-2 md:mb-4 block text-[#B8C7E0]">
           Step {index + 1}
         </span>
-        <h3 className="text-xl md:text-2xl font-extrabold text-[#1A1A1A] leading-tight mb-3 text-center tracking-tight">
+        <h3 className="text-lg md:text-2xl font-extrabold text-white leading-tight mb-2 md:mb-3 text-center tracking-tight">
           {content.title}
         </h3>
-        <p className="text-[#4A5568] font-medium text-[11px] leading-relaxed text-center px-2">
+        <p className="text-[#B8C7E0] font-medium text-[10px] md:text-[11px] leading-relaxed text-center px-1">
           {content.desc}
         </p>
 
-        <div className="w-full flex-1 flex items-center justify-center min-h-[160px] mt-4">
+        <div className="w-full flex-1 flex items-center justify-center min-h-[100px] md:min-h-[160px] mt-2 md:mt-4">
           <Anim active={isActive} accentColor={accentColor} />
         </div>
       </div>
-      
-      
     </motion.div>
   );
 };
 
-/* ═════════════════════════════════════════════
-   MAIN SECTION
-═════════════════════════════════════════════ */
-
 const WorkflowSection = () => {
   const containerRef = useRef(null);
+  const [windowSize, setWindowSize] = useState({ width: 1200, height: 800 });
+  const isMobile = windowSize.width < 1024;
+  const isSmallMobile = windowSize.width < 640;
+
+  useEffect(() => {
+    const handleResize = () => setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
 
-  // Use smooth spring for the expansion
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
+    stiffness: 80,
+    damping: 25,
     restDelta: 0.001
   });
 
-  // Custom cubic-bezier(0.22, 1, 0.36, 1) easing function for smooth dispersion
-  const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
-
-  // Dispersion effect mapped with custom easing
-  const dispersion = useTransform(smoothProgress, [0.1, 0.75], [0, 1], {
-    ease: easeOutQuart,
-    clamp: true
-  });
-
-  // Responsive values for layout calculation
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const dispersion = useTransform(smoothProgress, [0.1, 0.8], [0, 1]);
 
   return (
     <section ref={containerRef} className="relative h-[400vh] bg-[#0E2545]">
-      <div className="sticky top-0 h-[100svh] w-full flex flex-col items-center justify-start overflow-hidden px-4 md:px-6 pt-20 md:pt-24">
+      <div className="sticky top-0 h-[100svh] w-full flex flex-col items-center justify-start overflow-hidden pt-20 md:pt-24 px-4">
         
         {/* Header */}
-        <div className="text-center z-50 w-full px-4 mb-10 md:mb-12 relative">
+        <div className="text-center z-50 w-full px-4 mb-8 md:mb-16 relative">
           <motion.h2 
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 md:mb-4 tracking-tighter font-serif px-2"
+            className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tighter font-serif"
           >
             A Clear Flow From Design to Production
           </motion.h2>
-          <p className="text-[#8FA3C8] text-sm md:text-lg font-medium max-w-2xl mx-auto">
+          <p className="text-[#8FA3C8] text-xs sm:text-sm md:text-lg font-medium max-w-2xl mx-auto">
             Experience a synchronized workflow where every transition is seamless and every step is visible.
           </p>
         </div>
 
         {/* Cards Container */}
-        <div className="relative w-full h-[500px] flex items-center justify-center mt-2 md:mt-4">
+        <div className={`relative w-full ${isSmallMobile ? 'h-[750px]' : isMobile ? 'h-[600px]' : 'h-[500px]'} flex items-center justify-center`}>
           {workflowSteps.map((_, i) => {
-            // Cards are approx 220-260px wide. We ensure they fit in the viewport.
-            // Calculate layout based on window width and specified gaps
-            const baseCardWidth = windowWidth < 768 ? 200 : 260;
-            const targetGap = windowWidth < 768 ? 16 : 24;
+            // X & Y logic for three different states: Row (Desktop), 2x3 Grid (Tablet), 1x6 Stack (Small Mobile)
+            let targetX, targetY, endScale = 1;
             
-            // maxStepSize ensures they fit within screen (40px padding)
-            const maxTotalWidth = windowWidth - 40;
-            const maxStepSize = maxTotalWidth / 6;
+            if (isSmallMobile) {
+              targetX = 0;
+              targetY = (i - 2.5) * 280; // Single column stack
+            } else if (isMobile) {
+              targetX = (i % 2 - 0.5) * 220; // 2 column grid
+              targetY = (Math.floor(i / 2) - 1) * 340;
+            } else {
+              // Desktop dynamic scaling
+              const baseCardWidth = 260;
+              const targetGap = 24;
+              const maxTotalWidth = windowSize.width - 80; // 40px padding on each side
+              const maxStepSize = maxTotalWidth / 6;
+              const finalStepSize = Math.min(baseCardWidth + targetGap, maxStepSize);
+              
+              targetX = (i - 2.5) * finalStepSize;
+              targetY = 0;
+              
+              // Scale down card if screen is too narrow to fit them all
+              const availableWidthPerCard = finalStepSize - 12; // ensure at least 12px gap
+              endScale = Math.min(1, availableWidthPerCard / baseCardWidth);
+            }
             
-            // finalStepSize is the distance between card centers
-            const finalStepSize = Math.min(baseCardWidth + targetGap, maxStepSize);
+            // All cards start stacked exactly in the center.
+            // Opacity keeps the hidden cards invisible to prevent glassmorphic bleed-through on the face card.
+            const startY = 0;
+            const startX = 0;
             
-            // If the cards are too wide to fit with the gap, we must scale them down
-            const availableWidthPerCard = finalStepSize - targetGap;
-            const sizeScaleFactor = Math.min(1, availableWidthPerCard / baseCardWidth);
+            const x = useTransform(dispersion, [0, 1], [startX, targetX]);
+            const y = useTransform(dispersion, [0, 1], [startY, targetY]);
             
-            const targetX = (i - 2.5) * finalStepSize;
-            
-            // X position transformation (uses translateX via framer-motion 'x' prop)
-            const x = useTransform(dispersion, [0, 1], [0, targetX]);
-            
-            // No rotation - cards remain flat as per user request
-            const rotation = 0;
-            
-            // Scale enhancement: blend the spread scale with the size constraint scale
-            const spreadScale = useTransform(dispersion, [0, 1], [0.85, 1]);
-            const scale = useTransform(spreadScale, (s) => s * sizeScaleFactor);
-            
-            // Activate cards once they are mostly spread
-            const isActive = true;
+            // Hidden cards fade in as they disperse from the stack
+            const opacity = useTransform(dispersion, [0, 0.15], [i === 0 ? 1 : 0, 1]);
+            const scale = useTransform(dispersion, [0, 1], [isMobile ? 0.5 : (endScale * 0.85), endScale]);
 
             return (
               <WorkflowCard 
                 key={i} 
                 index={i} 
                 x={x} 
-                rotation={rotation} 
+                y={y}
                 scale={scale}
-                isActive={isActive}
+                opacity={opacity}
+                isActive={true}
+                isMobile={isMobile}
               />
             );
           })}

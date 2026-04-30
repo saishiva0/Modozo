@@ -248,17 +248,17 @@ const FeatureStrip = ({ feature, index }) => {
       transition={{ duration: 0.5, delay: index * 0.05 }}
       className={`
         flex items-center w-full px-6 md:px-10 h-[90px] md:h-[105px]
-        bg-[#FFFDE7] rounded-[20px] shadow-[0_4px_16px_rgba(0,0,0,0.2)]
-        group cursor-default transition-all duration-400 border border-transparent
-        ${isHovered ? 'shadow-[0_12px_24px_rgba(0,0,0,0.3)] border-brand-yellow/30' : ''}
+        bg-[#EAF1FA]/10 backdrop-blur-md rounded-[20px] shadow-[0_4px_16px_rgba(0,0,0,0.2)]
+        group cursor-default transition-all duration-400 border border-[#EAF1FA]/20
+        ${isHovered ? 'shadow-[0_12px_24px_rgba(0,0,0,0.3)] border-brand-yellow/50' : ''}
         ${isEven ? 'flex-row' : 'flex-row-reverse'}
       `}
     >
       <div className={`w-1/2 flex flex-col ${isEven ? 'items-start text-left' : 'items-end text-right'}`}>
-        <h3 className="text-[14px] md:text-[16px] font-bold text-[#1A1A1A] tracking-tight leading-tight mb-1">
+        <h3 className="text-[14px] md:text-[16px] font-bold text-white tracking-tight leading-tight mb-1">
           {feature.title}
         </h3>
-        <p className="text-[11px] md:text-[12px] text-[#4A5568] font-medium leading-tight max-w-[280px]">
+        <p className="text-[11px] md:text-[12px] text-[#B8C7E0] font-medium leading-tight max-w-[280px]">
           {feature.desc}
         </p>
       </div>
