@@ -63,7 +63,7 @@ const Navbar = () => {
               src={logoNew}
               alt="Modozo"
               onLoad={() => setLogoLoaded(true)}
-              className={`h-[35px] sm:h-[45px] md:h-[55px] w-auto object-contain transition-transform hover:scale-105 ${!logoLoaded ? 'absolute opacity-0' : 'opacity-100'}`}
+              className={`h-[55px] sm:h-[70px] md:h-[90px] w-auto object-contain transition-transform hover:scale-105 ${!logoLoaded ? 'absolute opacity-0' : 'opacity-100'}`}
             />
             {!logoLoaded && <span className="text-lg md:text-xl font-bold tracking-tighter text-white uppercase">Modozo</span>}
           </div>
