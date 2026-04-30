@@ -201,7 +201,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section id="home" className="relative min-h-[100svh] flex flex-col justify-center items-center overflow-hidden bg-gradient-to-br from-[#0E2545] to-[#122E54]">
+    <section id="home" className="relative min-h-[100svh] flex flex-col justify-center items-center overflow-hidden bg-transparent">
       <Navbar />
 
       {/* 3D Cylindrical Carousel Background */}

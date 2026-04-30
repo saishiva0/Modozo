@@ -46,7 +46,7 @@ const AmbientBackground = () => {
   if (!isMounted) return null;
 
   return (
-    <div className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden bg-[#0a192f]">
+    <div className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden bg-transparent">
       {/* Base Noise Texture for premium feel */}
       <div 
         className="absolute inset-0 opacity-[0.03] mix-blend-overlay"

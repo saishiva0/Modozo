@@ -191,7 +191,7 @@ const ProblemSection = () => {
   return (
     <section 
       ref={containerRef} 
-      className="relative bg-[#122E54]/70 backdrop-blur-xl rounded-t-[2rem] md:rounded-t-[3rem] shadow-sm py-16 md:py-24 px-4 sm:px-6 md:px-20 overflow-hidden w-full max-w-[100vw]"
+      className="relative bg-[#122E54] rounded-t-[2rem] md:rounded-t-[3rem] shadow-sm py-16 md:py-24 px-4 sm:px-6 md:px-20 overflow-hidden w-full max-w-[100vw]"
     >
 
       {/* Subtle Tension Background Grid */}

@@ -35,7 +35,7 @@
 }
 @layer base {
   body {
-    @apply bg-transparent text-white font-sans antialiased overflow-x-hidden;
+    @apply bg-[var(--color-brand-bg-blue)] text-white font-sans antialiased overflow-x-hidden;
   }
 }
 
