@@ -151,18 +151,18 @@ const WorkflowCard = ({ index, x, y, scale, opacity, isActive, isMobile }) => {
   return (
     <motion.div
       style={{ x, y, scale, opacity, zIndex: 50 - index }}
-      className={`absolute flex flex-col items-center justify-start py-6 px-5 rounded-[2rem] bg-[#EAF1FA]/10 backdrop-blur-md border border-[#EAF1FA]/20 shadow-2xl ${
+      className={`absolute flex flex-col items-center justify-start py-6 px-5 rounded-[2rem] bg-[#FFFDE7] border-2 border-[#FFD84D]/30 shadow-2xl ${
         isMobile ? 'w-[200px] h-[320px]' : 'w-[260px] h-[460px]'
       } shrink-0`}
     >
       <div className="relative z-10 flex flex-col items-center w-full">
-        <span className="font-extrabold text-[9px] uppercase tracking-[0.2em] mb-2 md:mb-4 block text-[#B8C7E0]">
+        <span className="font-extrabold text-[9px] uppercase tracking-[0.2em] mb-2 md:mb-4 block text-[#718096]">
           Step {index + 1}
         </span>
-        <h3 className="text-lg md:text-2xl font-extrabold text-white leading-tight mb-2 md:mb-3 text-center tracking-tight">
+        <h3 className="text-lg md:text-2xl font-extrabold text-[#1A1A1A] leading-tight mb-2 md:mb-3 text-center tracking-tight">
           {content.title}
         </h3>
-        <p className="text-[#B8C7E0] font-medium text-[10px] md:text-[11px] leading-relaxed text-center px-1">
+        <p className="text-[#4A5568] font-medium text-[10px] md:text-[11px] leading-relaxed text-center px-1">
           {content.desc}
         </p>
 
@@ -201,7 +201,7 @@ const WorkflowSection = () => {
   const dispersion = useTransform(smoothProgress, [0.1, 0.8], [0, 1]);
 
   return (
-    <section ref={containerRef} className="relative h-[400vh] bg-[#0E2545]">
+    <section ref={containerRef} className="relative h-[400vh] bg-transparent">
       <div className="sticky top-0 h-[100svh] w-full flex flex-col items-center justify-start overflow-hidden pt-20 md:pt-24 px-4">
         
         {/* Header */}

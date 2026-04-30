@@ -212,7 +212,7 @@ const StakeholdersSection = () => {
   });
 
   return (
-    <section ref={containerRef} className="relative h-[600vh] bg-[#0E2545]" id="stakeholders">
+    <section ref={containerRef} className="relative h-[600vh] bg-transparent" id="stakeholders">
       {/* Sticky Container - Adjusted padding so header stays visible */}
       <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden px-4 sm:px-6 lg:px-12 py-4 lg:py-8">
         

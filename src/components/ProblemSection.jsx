@@ -151,14 +151,14 @@ const HiddenFrictionVisual = ({ scrollYProgress }) => {
                 times: [0, 0.625, 0.8125, 1],
                 delay: 1.2 + (i * 0.1) // Start roughly when entrance shakes finish
               }}
-              className="w-full aspect-[4/3] flex items-center justify-center bg-[#EAF1FA]/10 backdrop-blur-md rounded-lg border border-[#EAF1FA]/20 shadow-sm relative cursor-default transition-colors duration-300"
+              className="w-full aspect-[4/3] flex items-center justify-center bg-[#FFFDE7] rounded-lg border shadow-sm relative cursor-default transition-colors duration-300"
             >
-              <span className="text-[10px] sm:text-xs font-semibold text-white/90 whitespace-nowrap">{block.label}</span>
+              <span className="text-[10px] sm:text-xs font-semibold text-[#4A5568] whitespace-nowrap">{block.label}</span>
               
               {/* HOVER INTERACTION: Expansion Info Box */}
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[130px] bg-[#0E2545]/90 backdrop-blur-md border border-[#EAF1FA]/20 text-white text-[9px] sm:text-[10px] py-2 px-3 rounded-md opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 pointer-events-none z-50 text-center shadow-[0_8px_30px_rgb(0,0,0,0.3)]">
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[130px] bg-[#FFFDE7] text-[#4A5568] text-[9px] sm:text-[10px] py-2 px-3 rounded-md opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 pointer-events-none z-50 text-center shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
                 <span className="leading-snug">{block.info}</span>
-                <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 border-x-[5px] border-x-transparent border-b-[6px] border-b-[#EAF1FA]/20"></div>
+                <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 border-x-[5px] border-x-transparent border-b-[6px] border-b-[#FFFDE7]"></div>
               </div>
             </motion.div>
           </motion.div>
@@ -191,7 +191,7 @@ const ProblemSection = () => {
   return (
     <section 
       ref={containerRef} 
-      className="relative bg-[#122E54] rounded-t-[2rem] md:rounded-t-[3rem] shadow-sm py-16 md:py-24 px-4 sm:px-6 md:px-20 overflow-hidden w-full max-w-[100vw]"
+      className="relative bg-[#122E54]/70 backdrop-blur-xl rounded-t-[2rem] md:rounded-t-[3rem] shadow-sm py-16 md:py-24 px-4 sm:px-6 md:px-20 overflow-hidden w-full max-w-[100vw]"
     >
 
       {/* Subtle Tension Background Grid */}
