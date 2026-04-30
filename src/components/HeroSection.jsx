@@ -54,7 +54,7 @@ const Navbar = () => {
       }}
       animate={isHidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="fixed top-0 left-0 right-0 z-[1000] flex items-center justify-between px-4 sm:px-6 py-4 bg-[#0E2545]/90 backdrop-blur-lg shadow-sm border-b border-white/5"
+      className="fixed top-0 left-0 right-0 z-[1000] flex items-center justify-between px-4 sm:px-6 py-2 bg-[#071529]/95 backdrop-blur-xl shadow-lg border-b border-white/10"
     >
       <div className="flex items-center min-w-[120px] md:min-w-[150px]">
         <a href="#home" className="flex items-center">
@@ -63,7 +63,7 @@ const Navbar = () => {
               src={logoNew}
               alt="Modozo"
               onLoad={() => setLogoLoaded(true)}
-              className={`h-[55px] sm:h-[70px] md:h-[90px] w-auto object-contain transition-transform hover:scale-105 ${!logoLoaded ? 'absolute opacity-0' : 'opacity-100'}`}
+              className={`h-[48px] sm:h-[58px] md:h-[75px] w-auto object-contain transition-transform hover:scale-105 ${!logoLoaded ? 'absolute opacity-0' : 'opacity-100'}`}
             />
             {!logoLoaded && <span className="text-lg md:text-xl font-bold tracking-tighter text-white uppercase">Modozo</span>}
           </div>
