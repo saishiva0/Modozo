@@ -4,18 +4,18 @@ import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-
 // --- Premium Relevant Animations ---
 
 const DesignersAnim = () => (
-  <div className="w-full h-full bg-[#0B1B33] flex items-center justify-center p-8 relative overflow-hidden rounded-[2rem]">
+  <div className="w-full h-full bg-[#0E2545] flex items-center justify-center p-8 relative overflow-hidden rounded-[2rem]">
     {/* Blueprint Grid */}
     <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
     {/* Techpack Outline (T-shirt) */}
     <motion.svg viewBox="0 0 100 100" className="w-48 h-48 relative z-10" fill="none" stroke="#FFD84D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <motion.path 
         d="M20 30 L40 20 L60 20 L80 30 L90 60 L75 65 L70 90 L30 90 L25 65 L10 60 Z" 
-        initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
+        initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, ease: [0.16, 1, 0.3, 1], repeat: Infinity, repeatType: "reverse" }}
       />
       <motion.path 
         d="M35 25 Q50 35 65 25" 
-        initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, ease: "easeInOut", repeat: Infinity, repeatType: "reverse", delay: 0.5 }}
+        initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, ease: [0.16, 1, 0.3, 1], repeat: Infinity, repeatType: "reverse", delay: 0.5 }}
       />
       {/* Dynamic measurement lines */}
       <motion.line x1="15" y1="95" x2="85" y2="95" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="2 2" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} />
@@ -25,9 +25,9 @@ const DesignersAnim = () => (
 );
 
 const BrandTeamsAnim = () => (
-  <div className="w-full h-full bg-[#0B1B33] flex items-center justify-center p-8 relative overflow-hidden rounded-[2rem]">
+  <div className="w-full h-full bg-[#0E2545] flex items-center justify-center p-8 relative overflow-hidden rounded-[2rem]">
     <motion.div 
-      initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ type: "spring", stiffness: 100 }}
+      initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       className="w-56 h-36 bg-white/5 border border-white/10 rounded-xl backdrop-blur-md flex flex-col p-5 gap-4 relative shadow-2xl"
     >
       <div className="flex gap-3 items-center">
@@ -41,16 +41,16 @@ const BrandTeamsAnim = () => (
       
       <motion.div 
         initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
-        className="absolute -bottom-5 -right-5 w-14 h-14 bg-[#4ADE80] rounded-full border-4 border-[#0B1B33] flex items-center justify-center shadow-[0_0_20px_rgba(74,222,128,0.4)]"
+        className="absolute -bottom-5 -right-5 w-14 h-14 bg-[#FFD84D] rounded-full border-4 border-[#0E2545] flex items-center justify-center shadow-[0_0_20px_rgba(255,216,77,0.4)]"
       >
-        <svg viewBox="0 0 24 24" fill="none" stroke="#0B1B33" strokeWidth="3" className="w-7 h-7"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0E2545" strokeWidth="3" className="w-7 h-7"><polyline points="20 6 9 17 4 12"/></svg>
       </motion.div>
     </motion.div>
   </div>
 );
 
 const SourcingAnim = () => (
-  <div className="w-full h-full bg-[#0B1B33] flex items-end justify-center p-8 gap-4 relative overflow-hidden rounded-[2rem]">
+  <div className="w-full h-full bg-[#0E2545] flex items-end justify-center p-8 gap-4 relative overflow-hidden rounded-[2rem]">
     {/* Background Grid */}
     <div className="absolute inset-x-8 inset-y-12 border-b border-l border-white/10"></div>
     {[
@@ -63,7 +63,7 @@ const SourcingAnim = () => (
         key={i}
         initial={{ height: 0 }}
         animate={{ height: `${item.h}%` }}
-        transition={{ duration: 1, delay: i * 0.1, type: "spring" }}
+        transition={{ duration: 1.2, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
         className={`w-12 rounded-t-md relative z-10 ${item.c}`}
       >
         {i === 2 && (
@@ -80,30 +80,30 @@ const SourcingAnim = () => (
 );
 
 const VendorsAnim = () => (
-  <div className="w-full h-full bg-[#0B1B33] flex flex-col justify-center gap-5 p-6 relative overflow-hidden rounded-[2rem]">
+  <div className="w-full h-full bg-[#0E2545] flex flex-col justify-center gap-5 p-6 relative overflow-hidden rounded-[2rem]">
     <motion.div 
-      initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ type: "spring", stiffness: 100 }}
+      initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       className="w-[85%] bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-sm relative self-start flex flex-col gap-3 shadow-lg"
     >
-      <div className="text-[#8FA3C8] text-[9px] font-bold uppercase tracking-wider mb-1">Production Brief</div>
+      <div className="text-[#B8C7E0] text-[9px] font-bold uppercase tracking-wider mb-1">Production Brief</div>
       <div className="w-1/3 h-2 bg-white/40 rounded-full"></div>
       <div className="w-full h-2 bg-white/20 rounded-full"></div>
       <div className="w-2/3 h-2 bg-white/20 rounded-full"></div>
     </motion.div>
     
     <motion.div 
-      initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
+      initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
       className="w-[70%] bg-[#FFD84D] p-4 rounded-2xl rounded-tr-sm relative self-end shadow-[0_10px_20px_rgba(255,216,77,0.2)] flex flex-col gap-3"
     >
-      <div className="text-[#0B1B33]/70 text-[9px] font-bold uppercase tracking-wider mb-1">Vendor Reply</div>
-      <div className="w-1/2 h-2 bg-[#0B1B33]/60 rounded-full"></div>
-      <div className="w-full h-2 bg-[#0B1B33]/40 rounded-full"></div>
+      <div className="text-[#0E2545]/70 text-[9px] font-bold uppercase tracking-wider mb-1">Vendor Reply</div>
+      <div className="w-1/2 h-2 bg-[#0E2545]/60 rounded-full"></div>
+      <div className="w-full h-2 bg-[#0E2545]/40 rounded-full"></div>
     </motion.div>
   </div>
 );
 
 const QAAnim = () => (
-  <div className="w-full h-full bg-[#0B1B33] flex flex-col items-center justify-center gap-6 p-8 relative overflow-hidden rounded-[2rem]">
+  <div className="w-full h-full bg-[#0E2545] flex flex-col items-center justify-center gap-6 p-8 relative overflow-hidden rounded-[2rem]">
     <div className="flex flex-col gap-4 w-full max-w-[180px] z-10">
       {["Measurements", "Stitching", "Color Match"].map((label, i) => (
         <div key={i} className="flex items-center gap-4 bg-white/5 p-3 rounded-xl border border-white/10">
@@ -114,9 +114,9 @@ const QAAnim = () => (
             <svg viewBox="0 0 24 24" fill="none" stroke="#FFD84D" strokeWidth="3" className="w-4 h-4"><polyline points="20 6 9 17 4 12"/></svg>
           </motion.div>
           <div className="flex flex-col gap-1 w-full">
-            <span className="text-[10px] text-white/60 font-bold uppercase">{label}</span>
+            <span className="text-[10px] text-[#B8C7E0] font-bold uppercase">{label}</span>
             <div className="w-full h-1.5 bg-white/20 rounded-full">
-              <motion.div initial={{ width: 0 }} animate={{ width: "100%" }} transition={{ delay: i * 0.3, duration: 0.4 }} className="h-full bg-[#FFD84D] rounded-full" />
+              <motion.div initial={{ width: 0 }} animate={{ width: "100%" }} transition={{ delay: i * 0.3, duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="h-full bg-[#FFD84D] rounded-full" />
             </div>
           </div>
         </div>
@@ -126,7 +126,7 @@ const QAAnim = () => (
 );
 
 const TechAnim = () => (
-  <div className="w-full h-full bg-[#0B1B33] flex items-center justify-center p-8 relative overflow-hidden rounded-[2rem]">
+  <div className="w-full h-full bg-[#0E2545] flex items-center justify-center p-8 relative overflow-hidden rounded-[2rem]">
     {/* ERP Node (Left) */}
     <motion.div 
       animate={{ y: [-5, 5, -5] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}

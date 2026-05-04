@@ -4,7 +4,7 @@
 @theme {
   --color-brand-bg-blue: #0E2545;
   --color-brand-yellow: #FFD84D;
-  --color-brand-navy: #122E54;
+  --color-brand-navy: #0E2545; /* Unified from 122E54 */
   --color-brand-card: #163563;
   --color-brand-card-light: #1D4073;
   --color-brand-text: #FFFFFF;
@@ -14,6 +14,9 @@
   --font-serif: 'Cormorant Garamond', serif;
 
   --color-nav-bg: rgba(14, 37, 69, 0.85);
+  
+  /* Majestic Animation Physics */
+  --ease-majestic: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer utilities {

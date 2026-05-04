@@ -303,12 +303,22 @@ const ImpactSection = () => {
         {/* ── HEADER WITH TOP-RIGHT INDICATOR ── */}
         <div className="relative w-full flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 px-2">
           <div className="max-w-2xl text-left">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight font-serif text-white">
-              Your Supply Chain, Before and After
-            </h2>
-            <p className="text-[#8FA3C8] text-sm md:text-lg font-light">
+            <motion.h2 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 tracking-tighter font-serif text-white leading-[1.1]"
+            >
+              Your Supply Chain,<br />Before and After
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.3 }}
+              className="text-[#B8C7E0] text-sm md:text-xl font-medium leading-relaxed"
+            >
               Replace scattered spreadsheets and email threads with a single live workspace — and watch approvals, visibility, and velocity transform overnight.
-            </p>
+            </motion.p>
           </div>
 
           {/* Status Badge */}

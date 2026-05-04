@@ -2,11 +2,11 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 
 const workflowSteps = [
-  { title: "Techpack Upload",     desc: "Structured techpacks are uploaded to begin the workflow." },
-  { title: "Review & Approval",   desc: "Brand teams align and approve swiftly." },
-  { title: "Sourcing Handoff",    desc: "Sourcing managers coordinate seamlessly." },
+  { title: "Techpack Upload", desc: "Structured techpacks are uploaded to begin the workflow." },
+  { title: "Review & Approval", desc: "Brand teams align and approve swiftly." },
+  { title: "Sourcing Handoff", desc: "Sourcing managers coordinate seamlessly." },
   { title: "Vendor Coordination", desc: "Vendors get clear, actionable briefs." },
-  { title: "Sample Tracking",     desc: "Samples are tracked without endless emails." },
+  { title: "Sample Tracking", desc: "Samples are tracked without endless emails." },
   { title: "Production Tracking", desc: "Live production visibility from anywhere." },
 ];
 
@@ -73,7 +73,7 @@ const ReviewAnim = ({ active }) => (
       {/* Sending Animation */}
       {active && (
         <motion.div
-          animate={{ 
+          animate={{
             x: [-60, 60],
             opacity: [0, 1, 1, 0]
           }}
@@ -161,7 +161,7 @@ const VendorAnim = ({ active }) => (
         <span className="text-lg">📋</span>
         <span className="text-[10px] font-black text-black/80 uppercase tracking-tight">Technical Brief</span>
       </div>
-      
+
       {[
         { label: 'Materials Match', val: 'PREMIUM SILK' },
         { label: 'Quantity Check', val: '1,200 UNITS' },
@@ -179,7 +179,7 @@ const VendorAnim = ({ active }) => (
             <span className="text-[8px] font-bold text-black/70">{item.val}</span>
           </div>
           <motion.div
-            animate={active ? { 
+            animate={active ? {
               backgroundColor: "#22c55e",
               borderColor: "#22c55e",
               scale: [1, 1.2, 1]
@@ -188,7 +188,7 @@ const VendorAnim = ({ active }) => (
             className="w-4 h-4 rounded border-2 border-white/10 flex items-center justify-center"
           >
             {active && (
-              <motion.span 
+              <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="text-[8px] text-white font-bold"
@@ -218,7 +218,7 @@ const SampleAnim = ({ active }) => {
         {stages.map((stage, i) => (
           <div key={i} className="flex flex-col items-center gap-2 z-10 relative">
             <motion.div
-              animate={active && i <= 2 ? { 
+              animate={active && i <= 2 ? {
                 backgroundColor: i === 2 ? '#FFD700' : 'rgba(34, 197, 94, 0.4)',
                 borderColor: i === 2 ? '#FFD700' : '#22c55e',
                 boxShadow: i === 2 ? '0 0 15px rgba(255,215,0,0.3)' : 'none'
@@ -303,7 +303,7 @@ const ProductionAnim = ({ active }) => (
   </div>
 );
 
-const STEP_ANIMATIONS = [ TechpackAnim, ReviewAnim, SourcingAnim, VendorAnim, SampleAnim, ProductionAnim ];
+const STEP_ANIMATIONS = [TechpackAnim, ReviewAnim, SourcingAnim, VendorAnim, SampleAnim, ProductionAnim];
 
 const WorkflowCard = ({ index, x, y, scale, opacity, isActive, isMobile }) => {
   const content = workflowSteps[index];
@@ -313,16 +313,15 @@ const WorkflowCard = ({ index, x, y, scale, opacity, isActive, isMobile }) => {
   return (
     <motion.div
       style={{ x, y, scale, opacity, zIndex: 50 - index }}
-      className={`absolute flex flex-col items-center justify-start py-6 px-5 rounded-[2.5rem] shadow-2xl backdrop-blur-xl ${
-        isMobile ? 'w-[200px] h-[320px]' : 'w-[260px] h-[460px]'
-      } shrink-0 overflow-hidden`}
+      className={`absolute flex flex-col items-center justify-start py-6 px-5 rounded-[2.5rem] shadow-2xl backdrop-blur-xl ${isMobile ? 'w-[200px] h-[320px]' : 'w-[260px] h-[460px]'
+        } shrink-0 overflow-hidden`}
     >
       {/* Premium Glass Background with Gradient Border */}
       <div className="absolute inset-0 bg-[#FFFDE7]/95" />
       <div className="absolute inset-0 border-2 border-[#FFD84D]/30 rounded-[2.5rem] pointer-events-none" />
-      
+
       {/* Scroll-Triggered Shimmer Effect */}
-      <motion.div 
+      <motion.div
         animate={{ x: ['-100%', '200%'] }}
         transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 pointer-events-none z-20"
@@ -334,11 +333,11 @@ const WorkflowCard = ({ index, x, y, scale, opacity, isActive, isMobile }) => {
             Step {index + 1}
           </span>
         </div>
-        
+
         <h3 className="text-lg md:text-2xl font-black text-black leading-tight mb-2 md:mb-3 text-center tracking-tighter">
           {content.title}
         </h3>
-        
+
         <p className="text-black font-semibold text-[10px] md:text-[11px] leading-relaxed text-center px-1 h-12 flex items-center justify-center">
           {content.desc}
         </p>
@@ -380,10 +379,10 @@ const WorkflowSection = () => {
   return (
     <section ref={containerRef} className="relative h-[400vh] bg-transparent">
       <div className="sticky top-0 h-[100svh] w-full flex flex-col items-center justify-start overflow-hidden pt-20 md:pt-24 px-4">
-        
+
         {/* Header */}
         <div className="text-center z-50 w-full px-4 mb-8 md:mb-16 relative">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tighter font-serif"
@@ -399,12 +398,12 @@ const WorkflowSection = () => {
         <div className={`relative w-full ${isSmallMobile ? 'h-[750px]' : isMobile ? 'h-[600px]' : 'h-[500px]'} flex items-center justify-center`}>
           {workflowSteps.map((_, i) => {
             let targetX, targetY, endScale = 1;
-            
+
             if (isSmallMobile) {
               targetX = 0;
-              targetY = (i - 2.5) * 280; 
+              targetY = (i - 2.5) * 280;
             } else if (isMobile) {
-              targetX = (i % 2 - 0.5) * 220; 
+              targetX = (i % 2 - 0.5) * 220;
               targetY = (Math.floor(i / 2) - 1) * 340;
             } else {
               const baseCardWidth = 260;
@@ -412,28 +411,28 @@ const WorkflowSection = () => {
               const maxTotalWidth = windowSize.width - 80;
               const maxStepSize = maxTotalWidth / 6;
               const finalStepSize = Math.min(baseCardWidth + targetGap, maxStepSize);
-              
+
               targetX = (i - 2.5) * finalStepSize;
               targetY = 0;
-              
+
               const availableWidthPerCard = finalStepSize - 12;
               endScale = Math.min(1, availableWidthPerCard / baseCardWidth);
             }
-            
+
             const startY = 0;
             const startX = 0;
-            
+
             const x = useTransform(dispersion, [0, 1], [startX, targetX]);
             const y = useTransform(dispersion, [0, 1], [startY, targetY]);
-            
+
             const opacity = useTransform(dispersion, [0, 0.15], [i === 0 ? 1 : 0, 1]);
             const scale = useTransform(dispersion, [0, 1], [isMobile ? 0.5 : (endScale * 0.85), endScale]);
 
             return (
-              <WorkflowCard 
-                key={i} 
-                index={i} 
-                x={x} 
+              <WorkflowCard
+                key={i}
+                index={i}
+                x={x}
                 y={y}
                 scale={scale}
                 opacity={opacity}

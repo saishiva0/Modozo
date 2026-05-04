@@ -191,18 +191,18 @@ const ProblemSection = () => {
   return (
     <section 
       ref={containerRef} 
-      className="relative bg-[#122E54] rounded-t-[2rem] md:rounded-t-[3rem] shadow-sm py-16 md:py-24 px-4 sm:px-6 md:px-20 overflow-hidden w-full max-w-[100vw]"
+      className="relative bg-[#0E2545] rounded-t-[2rem] md:rounded-t-[3rem] shadow-sm py-24 md:py-32 px-4 sm:px-6 md:px-20 overflow-hidden w-full max-w-[100vw]"
     >
 
       {/* Subtle Tension Background Grid */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+      <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
         style={{
           backgroundImage: "repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)",
-          backgroundSize: "12px 12px"
+          backgroundSize: "16px 16px"
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
         
         {/* LEFT SIDE: Subtle Disconnect Text Content */}
         <div className="w-full lg:w-1/2 flex flex-col text-center lg:text-left">
@@ -211,20 +211,20 @@ const ProblemSection = () => {
             initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
             whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "0px 0px -50px 0px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-white relative z-10 font-serif leading-tight pr-4"
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-3xl sm:text-4xl md:text-6xl font-bold mb-8 text-white relative z-10 font-serif leading-tight pr-4 tracking-tighter"
           >
-            Everything Looks Fine Until It Doesn’t
+            Everything Looks Fine<br />Until It Doesn’t
           </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "0px 0px -50px 0px" }}
-            transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
-            className="text-base md:text-xl text-[#B8C7E0] mb-10 max-w-lg mx-auto lg:mx-0 font-medium relative z-10"
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="text-lg md:text-2xl text-[#B8C7E0] mb-12 max-w-xl mx-auto lg:mx-0 font-medium relative z-10 leading-relaxed"
           >
-            The problem isn’t visible at first. It builds up across every step.
+            The problem isn’t visible at first. It builds up across every step until the system reaches its breaking point.
           </motion.p>
 
           <motion.ul 
