@@ -345,11 +345,10 @@ const ImpactSection = () => {
                 variants={cardVariants}
                 initial="chaos"
                 animate={phase}
-                className={`relative flex-1 p-5 lg:p-8 rounded-[1.5rem] bg-[#163563]/50 border transition-all duration-500 flex flex-col items-center text-center backdrop-blur-xl shadow-xl cursor-pointer group ${
-                  phase === 'ordered' 
-                    ? 'border-yellow-400/50 shadow-yellow-400/10 hover:border-yellow-400 hover:bg-[#1C417A]/80 hover:-translate-y-2 hover:shadow-yellow-400/20' 
+                className={`relative flex-1 p-5 lg:p-8 rounded-[1.5rem] bg-[#163563]/50 border transition-all duration-500 flex flex-col items-center text-center backdrop-blur-xl shadow-xl cursor-pointer group ${phase === 'ordered'
+                    ? 'border-yellow-400/50 shadow-yellow-400/10 hover:border-yellow-400 hover:bg-[#1C417A]/80 hover:-translate-y-2 hover:shadow-yellow-400/20'
                     : 'border-white/5 shadow-black/20'
-                }`}
+                  }`}
               >
                 <div className="w-full mb-6 transition-transform duration-300 group-hover:scale-110">
                   <item.Animation active={phase === 'ordered'} />

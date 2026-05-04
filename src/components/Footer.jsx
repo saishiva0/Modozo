@@ -48,7 +48,7 @@ const Footer = () => {
               </a>
               
               <a 
-                href="https://linkedin.com" 
+                href="https://www.linkedin.com/company/modozo/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-base font-normal hover:text-brand-yellow hover:underline underline-offset-8 decoration-1 transition-all duration-300"

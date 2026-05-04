@@ -1,5 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
+
+// Import Feature-specific premium assets provided by designer
+import featureWorkflow from '../assets/feature_workflow_new.png';
+import featureCommunication from '../assets/feature_communication_new.png';
+import featureVisibility from '../assets/feature_visibility_new.png';
+import featureCollaboration from '../assets/feature_collaboration_new.png';
+import featureControl from '../assets/feature_control_new.png';
 import logo4 from '../assets/logo4.png';
 
 /** 
@@ -273,35 +280,35 @@ const featureData = [
     id: "workflow",
     title: "Unified Workflow",
     desc: "Seamless synchronization from design techpacks to production floors.",
-    image: "/features/workflow.png",
+    image: featureWorkflow,
     Animation: FashionWorkflowAnimation
   },
   {
     id: "communication",
     title: "Communication",
     desc: "Eliminate email chains. Every update and file in a single thread.",
-    image: "/features/communication.png",
+    image: featureCommunication,
     Animation: FashionCommAnimation
   },
   {
     id: "visibility",
     title: "Real-time Visibility",
     desc: "Instant live updates on status changes across your supply chain.",
-    image: "/features/visibility.png",
+    image: featureVisibility,
     Animation: FashionVisibilityAnimation
   },
   {
     id: "collaboration",
     title: "Dynamic Collaboration",
     desc: "Connect your entire design team and global vendor ecosystem.",
-    image: "/features/collaboration.png",
+    image: featureCollaboration,
     Animation: FashionCollabAnimation
   },
   {
     id: "control",
     title: "Precision Control",
     desc: "Maintain strict quality standards with automated checks and live oversight.",
-    image: "/features/control.png",
+    image: featureControl,
     Animation: FashionControlAnimation
   }
 ];
@@ -311,36 +318,74 @@ const FeatureCard = ({ feature, index, isActive, onHover, radius }) => {
   const x = Math.cos(angle) * radius;
   const y = Math.sin(angle) * radius;
 
+  // 3D Tilt Effect on Hover
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+    setTilt({ x: (py - 0.5) * 20, y: (px - 0.5) * -20 });
+  };
+
   return (
     <motion.div
       onMouseEnter={() => onHover(feature)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => setTilt({ x: 0, y: 0 })}
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ 
         opacity: 1, 
-        scale: isActive ? 1.1 : 1,
+        scale: isActive ? 1.15 : 1,
         x: x,
         y: y,
-        zIndex: isActive ? 50 : 10
+        zIndex: isActive ? 100 : 10,
+        rotateX: tilt.x,
+        rotateY: tilt.y
       }}
+      transition={{ type: "spring", stiffness: 100, damping: 15 }}
       className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
+      style={{ perspective: "1000px" }}
     >
-      <div className={`
-        relative w-32 h-18 md:w-48 md:h-28 rounded-lg overflow-hidden border transition-all duration-500
-        ${isActive ? 'border-brand-yellow shadow-[0_0_20px_rgba(255,215,0,0.2)]' : 'border-white/10 grayscale-[0.2] opacity-80'}
-        group-hover:grayscale-0 group-hover:opacity-100 group-hover:border-brand-yellow/50
-      `}>
-        <img 
-          src={feature.image} 
-          alt={feature.title} 
-          className="w-full h-full object-cover"
+      {/* Ambient Glow behind active card */}
+      {isActive && (
+        <motion.div 
+          layoutId="ambient-glow"
+          className="absolute inset-0 bg-brand-yellow/20 blur-[40px] rounded-full scale-150 z-0"
         />
-        <div className={`absolute inset-0 bg-brand-navy/30 transition-opacity duration-300 ${isActive ? 'opacity-0' : 'opacity-100'}`} />
+      )}
+
+      <div className={`
+        relative w-32 h-24 md:w-64 md:h-44 rounded-2xl overflow-hidden border bg-[#163563]/20 backdrop-blur-sm transition-all duration-500 z-10
+        ${isActive 
+          ? 'border-brand-yellow/50 shadow-[0_20px_50px_rgba(0,0,0,0.5)] scale-[1.05]' 
+          : 'border-white/10 grayscale-[0.4] opacity-70 group-hover:grayscale-0 group-hover:opacity-100'
+        }
+      `}>
+        {/* The Image Container with padding to ensure fit */}
+        <div className="absolute inset-0 p-1 bg-gradient-to-b from-white/5 to-transparent flex items-center justify-center">
+          <img 
+            src={feature.image} 
+            alt={feature.title} 
+            className="w-full h-full object-contain transform transition-transform duration-700 group-hover:scale-105"
+          />
+        </div>
         
-        <div className="absolute bottom-0 left-0 right-0 p-1.5 bg-brand-navy/90 backdrop-blur-sm border-t border-white/10">
-          <span className="text-[9px] md:text-[10px] font-bold text-white/90 uppercase tracking-widest block text-center">
+        {/* Atmospheric Overlays (Reduced opacity to keep image clear) */}
+        <div className={`absolute inset-0 bg-gradient-to-t from-[#0E2545]/60 via-transparent to-transparent transition-opacity duration-300 ${isActive ? 'opacity-40' : 'opacity-80'}`} />
+        
+        {/* Card Header (Light Theme / High Contrast) */}
+        <div className="absolute bottom-0 left-0 right-0 p-2 bg-[#FFFDE7]/95 backdrop-blur-md border-t border-[#FFD84D]/30">
+          <span className="text-[9px] md:text-[11px] font-black text-black uppercase tracking-widest block text-center">
             {feature.title}
           </span>
         </div>
+
+        {/* Premium Shimmer */}
+        <motion.div 
+          animate={{ x: ['-100%', '200%'] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 pointer-events-none"
+        />
       </div>
     </motion.div>
   );
@@ -401,11 +446,11 @@ const FeaturesSection = () => {
       const h = window.innerHeight;
       const w = window.innerWidth;
       if (w < 768) {
-        setRadius(210); // Increased from 185
+        setRadius(240); // Increased from 210 to prevent collision
       } else {
-        // Increased multipliers for more spacing
-        const baseW = w * 0.34; // Increased from 0.3125
-        const baseH = h * 0.46; // Increased from 0.4375
+        // Increased multipliers further to accommodate larger cards and prevent overlap with CentralHub
+        const baseW = w * 0.40; // Increased from 0.34
+        const baseH = h * 0.55; // Increased from 0.46
         setRadius(Math.min(baseW, baseH));
       }
     };

@@ -77,13 +77,26 @@ const FinalCTA = () => {
           </h4>
           
           <div className="flex flex-col gap-4 text-gray-400">
-            <span className="text-sm md:text-base font-normal text-gray-400">
+            <a 
+              href="#home" 
+              className="text-sm md:text-base font-normal text-gray-400 hover:text-brand-yellow hover:underline underline-offset-8 transition-all duration-300"
+            >
               About Us
-            </span>
+            </a>
             
-            <span className="text-sm md:text-base font-normal text-gray-400">
+            <a 
+              href="https://www.linkedin.com/company/modozo/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-sm md:text-base font-normal text-gray-400 hover:text-brand-yellow hover:underline underline-offset-8 transition-all duration-300 flex items-center gap-2 group"
+            >
               LinkedIn
-            </span>
+              <motion.span
+                initial={{ scale: 0 }}
+                whileHover={{ scale: 1 }}
+                className="w-1 h-1 bg-brand-yellow rounded-full hidden group-hover:block"
+              />
+            </a>
           </div>
         </div>
 
