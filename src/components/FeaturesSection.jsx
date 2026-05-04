@@ -461,11 +461,11 @@ const FeaturesSection = () => {
 
   return (
     <section 
-      className="relative min-h-[90vh] md:min-h-screen pt-16 md:pt-24 pb-8 md:pb-12 bg-transparent flex flex-col justify-center overflow-hidden" 
+      className="relative min-h-[90vh] md:min-h-screen pt-24 md:pt-32 pb-16 md:pb-24 bg-transparent flex flex-col justify-center overflow-hidden" 
       ref={containerRef}
     >
       <div className="max-w-[1400px] mx-auto px-6 w-full">
-        <div className="mb-12 md:mb-16 text-center z-20">
+        <div className="mb-24 md:mb-40 text-center z-20">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
