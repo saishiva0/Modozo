@@ -213,26 +213,26 @@ const BreakdownSection = () => {
   }, []);
 
   const handleActivate = (id) => {
+    // Clear any pending activation or deactivation
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     
     if (isMobile) {
       setActive(prev => prev === id ? null : id);
     } else {
-      // Intentional Hover Check: 
-      // 1. Don't trigger if the page is currently scrolling
-      // 2. Add a 300ms delay to ensure the mouse is "resting" on the card intentionally
       if (isScrolling) return;
 
+      // Responsive but intentional delay
       hoverTimeoutRef.current = setTimeout(() => {
         setActive(id);
-      }, 300); 
+      }, 150); 
     }
   };
 
   const handleDeactivate = () => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     if (!isMobile) {
-      hoverTimeoutRef.current = setTimeout(() => setActive(null), 200);
+      // Small delay before closing to allow moving between cards
+      hoverTimeoutRef.current = setTimeout(() => setActive(null), 150);
     }
   };
 
@@ -302,8 +302,8 @@ const BreakdownSection = () => {
           <motion.div
             className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0E2545]/98 backdrop-blur-3xl"
             initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1, pointerEvents: 'auto' }}
+            exit={{ opacity: 0, scale: 1.05, pointerEvents: 'none' }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }} // Majestic "Slow-Fast-Slow" curve
             onMouseEnter={() => hoverTimeoutRef.current && clearTimeout(hoverTimeoutRef.current)}
             onMouseLeave={handleDeactivate}
