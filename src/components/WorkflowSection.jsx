@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, memo } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 
 const workflowSteps = [
@@ -24,8 +24,8 @@ const workflowColors = [
    ══════════════════════════════════════════════ */
 
 // 1. Techpack: File to Data Breakdown
-const TechpackAnim = ({ active }) => (
-  <div className="relative w-full h-full flex flex-col items-center justify-center">
+const TechpackAnim = memo(({ active }) => (
+  <div className="relative w-full h-full flex flex-col items-center justify-center will-change-transform">
     <div className="relative w-24 h-24 flex items-center justify-center">
       <motion.div
         animate={active ? { y: [-5, 0, -5] } : {}}
@@ -52,22 +52,22 @@ const TechpackAnim = ({ active }) => (
       ))}
     </div>
     <div className="mt-2 flex gap-1 items-center">
-      <div className="w-1 h-1 rounded-full bg-brand-yellow animate-pulse" />
-      <span className="text-[7px] font-black text-black/40 tracking-[0.2em]">STRUCTURED EXTRACTION</span>
+      <div className="w-1.5 h-1.5 rounded-full bg-brand-yellow animate-pulse" />
+      <span className="text-[9px] font-black text-black tracking-[0.2em]">STRUCTURED EXTRACTION</span>
     </div>
   </div>
-);
+));
 
 // 2. Review: Designer to Vendor Approval
-const ReviewAnim = ({ active }) => (
-  <div className="relative w-full h-full flex flex-col items-center justify-center p-4">
+const ReviewAnim = memo(({ active }) => (
+  <div className="relative w-full h-full flex flex-col items-center justify-center p-4 will-change-transform">
     <div className="w-full h-32 bg-white/5 rounded-2xl border border-white/10 relative overflow-hidden flex items-center justify-between px-6">
       {/* Designer Node */}
       <div className="flex flex-col items-center gap-1 z-10">
         <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
           <span className="text-xl">🎨</span>
         </div>
-        <span className="text-[7px] text-black/50 font-black uppercase">DESIGNER</span>
+        <span className="text-[9px] text-black font-black uppercase">DESIGNER</span>
       </div>
 
       {/* Sending Animation */}
@@ -104,17 +104,17 @@ const ReviewAnim = ({ active }) => (
             )}
           </AnimatePresence>
         </div>
-        <span className="text-[7px] text-black/50 font-black uppercase">VENDOR</span>
+        <span className="text-[9px] text-black font-black uppercase">VENDOR</span>
       </div>
 
       <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.02)_0%,transparent_70%)] pointer-events-none" />
     </div>
   </div>
-);
+));
 
 // 3. Sourcing: Global Handshake
-const SourcingAnim = ({ active }) => (
-  <div className="relative w-full h-full flex flex-col items-center justify-center p-4">
+const SourcingAnim = memo(({ active }) => (
+  <div className="relative w-full h-full flex flex-col items-center justify-center p-4 will-change-transform">
     <div className="w-full h-32 bg-white/5 rounded-2xl border border-white/10 relative overflow-hidden flex items-center justify-center">
       <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
       <div className="flex items-center gap-6 z-10 relative">
@@ -122,7 +122,7 @@ const SourcingAnim = ({ active }) => (
           <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shadow-inner">
             <span className="text-lg">📍</span>
           </div>
-          <span className="text-[7px] font-black text-black/40 uppercase">BRAND</span>
+          <span className="text-[9px] font-black text-black uppercase">BRAND</span>
         </div>
         <div className="relative w-10 h-px bg-black/10">
           <motion.div
@@ -136,7 +136,7 @@ const SourcingAnim = ({ active }) => (
           <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shadow-inner">
             <span className="text-lg">🏭</span>
           </div>
-          <span className="text-[7px] font-black text-black/40 uppercase">VENDOR</span>
+          <span className="text-[9px] font-black text-black uppercase">VENDOR</span>
         </div>
         {active && (
           <motion.div
@@ -151,15 +151,15 @@ const SourcingAnim = ({ active }) => (
       </div>
     </div>
   </div>
-);
+));
 
 // 4. Vendor: Actionable Checklist (Understandable Specs)
-const VendorAnim = ({ active }) => (
-  <div className="relative w-full h-full flex flex-col items-center justify-center p-4">
+const VendorAnim = memo(({ active }) => (
+  <div className="relative w-full h-full flex flex-col items-center justify-center p-4 will-change-transform">
     <div className="w-full bg-white/5 rounded-2xl border border-white/10 p-4 flex flex-col gap-3 relative">
       <div className="flex items-center gap-2 mb-2 pb-2 border-b border-white/5">
         <span className="text-lg">📋</span>
-        <span className="text-[10px] font-black text-black/80 uppercase tracking-tight">Technical Brief</span>
+        <span className="text-[12px] font-black text-black uppercase tracking-tight">Technical Brief</span>
       </div>
 
       {[
@@ -175,8 +175,8 @@ const VendorAnim = ({ active }) => (
           className="flex items-center justify-between"
         >
           <div className="flex flex-col">
-            <span className="text-[6px] font-black text-black/30 uppercase tracking-tighter">{item.label}</span>
-            <span className="text-[8px] font-bold text-black/70">{item.val}</span>
+            <span className="text-[8px] font-black text-black uppercase tracking-tighter">{item.label}</span>
+            <span className="text-[10px] font-bold text-black">{item.val}</span>
           </div>
           <motion.div
             animate={active ? {
@@ -201,10 +201,10 @@ const VendorAnim = ({ active }) => (
       ))}
     </div>
   </div>
-);
+));
 
 // 5. Sample: The Stage-by-Stage Journey
-const SampleAnim = ({ active }) => {
+const SampleAnim = memo(({ active }) => {
   const stages = [
     { label: 'REQ', icon: '📝' },
     { label: 'QC', icon: '🔍' },
@@ -227,7 +227,7 @@ const SampleAnim = ({ active }) => {
             >
               <span className="text-[10px]">{stage.icon}</span>
             </motion.div>
-            <span className={`text-[6px] font-black uppercase tracking-widest ${active && i === 2 ? 'text-black' : 'text-black/30'}`}>
+            <span className={`text-[8px] font-black uppercase tracking-widest ${active && i === 2 ? 'text-black' : 'text-black'}`}>
               {stage.label}
             </span>
             {active && i === 2 && (
@@ -244,16 +244,16 @@ const SampleAnim = ({ active }) => {
       </div>
       {active && (
         <div className="px-3 py-1 bg-black/5 rounded border border-black/10">
-          <span className="text-[9px] font-bold text-black uppercase tracking-widest">In-House Review</span>
+          <span className="text-[11px] font-bold text-black uppercase tracking-widest">In-House Review</span>
         </div>
       )}
     </div>
   );
-};
+});
 
 // 6. Production: Advanced Factory Visibility (Dashboard Style)
-const ProductionAnim = ({ active }) => (
-  <div className="relative w-full h-full flex flex-col items-center justify-center p-4">
+const ProductionAnim = memo(({ active }) => (
+  <div className="relative w-full h-full flex flex-col items-center justify-center p-4 will-change-transform">
     <div className="w-full bg-white/5 rounded-2xl border border-white/10 p-4 flex flex-col gap-4 relative overflow-hidden">
       {/* Real-time Stage Indicators */}
       <div className="grid grid-cols-3 gap-2">
@@ -265,7 +265,7 @@ const ProductionAnim = ({ active }) => (
           <div key={i} className="flex flex-col gap-2 p-2 bg-white/5 rounded-lg border border-white/5">
             <div className="flex justify-between items-center">
               <span className="text-[10px]">{stage.icon}</span>
-              <span className="text-[8px] font-black text-brand-yellow">{stage.val}%</span>
+              <span className="text-[10px] font-black text-brand-navy">{stage.val}%</span>
             </div>
             <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
               <motion.div
@@ -275,7 +275,7 @@ const ProductionAnim = ({ active }) => (
                 className="h-full bg-brand-yellow/60"
               />
             </div>
-            <span className="text-[6px] font-black text-black/40 text-center uppercase tracking-tighter">{stage.label}</span>
+            <span className="text-[8px] font-black text-black text-center uppercase tracking-tighter">{stage.label}</span>
           </div>
         ))}
       </div>
@@ -284,7 +284,7 @@ const ProductionAnim = ({ active }) => (
       <div className="w-full h-16 bg-black/40 rounded-lg border border-white/5 relative flex items-center justify-center">
         <div className="absolute top-1 left-1 flex items-center gap-1">
           <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-          <span className="text-[6px] font-black text-black/70 tracking-widest">LIVE FLOOR FEED</span>
+          <span className="text-[8px] font-black text-black tracking-widest">LIVE FLOOR FEED</span>
         </div>
         {/* Weaving/Production Pattern */}
         <div className="flex gap-2">
@@ -299,9 +299,9 @@ const ProductionAnim = ({ active }) => (
         </div>
       </div>
     </div>
-    <div className="mt-2 text-[7px] font-black text-black/30 uppercase tracking-[0.3em]">SUPPLY CHAIN REAL-TIME MONITOR</div>
+    <div className="mt-2 text-[9px] font-black text-black uppercase tracking-[0.3em]">SUPPLY CHAIN REAL-TIME MONITOR</div>
   </div>
-);
+));
 
 const STEP_ANIMATIONS = [TechpackAnim, ReviewAnim, SourcingAnim, VendorAnim, SampleAnim, ProductionAnim];
 
@@ -313,7 +313,7 @@ const WorkflowCard = ({ index, x, y, scale, opacity, isActive, isMobile }) => {
   return (
     <motion.div
       style={{ x, y, scale, opacity, zIndex: 50 - index }}
-      className={`absolute flex flex-col items-center justify-start py-6 px-5 rounded-[2.5rem] shadow-2xl backdrop-blur-xl ${isMobile ? 'w-[200px] h-[320px]' : 'w-[260px] h-[460px]'
+      className={`absolute flex flex-col items-center justify-start py-6 px-5 rounded-[2.5rem] shadow-2xl backdrop-blur-xl will-change-transform ${isMobile ? 'w-[200px] h-[320px]' : 'w-[260px] h-[460px]'
         } shrink-0 overflow-hidden`}
     >
       {/* Premium Glass Background with Gradient Border */}
@@ -329,16 +329,16 @@ const WorkflowCard = ({ index, x, y, scale, opacity, isActive, isMobile }) => {
 
       <div className="relative z-30 flex flex-col items-center w-full h-full">
         <div className="px-3 py-1 bg-brand-navy/5 rounded-full border border-brand-navy/20 mb-2 md:mb-4">
-          <span className="font-black text-[9px] uppercase tracking-[0.2em] text-black">
+          <span className="font-black text-[11px] uppercase tracking-[0.2em] text-black">
             Step {index + 1}
           </span>
         </div>
 
-        <h3 className="text-lg md:text-2xl font-black text-black leading-tight mb-2 md:mb-3 text-center tracking-tighter">
+        <h3 className="text-xl md:text-3xl font-black text-black leading-tight mb-2 md:mb-3 text-center tracking-tighter">
           {content.title}
         </h3>
 
-        <p className="text-black font-semibold text-[10px] md:text-[11px] leading-relaxed text-center px-1 h-12 flex items-center justify-center">
+        <p className="text-black font-semibold text-[12px] md:text-[13px] leading-relaxed text-center px-1 h-12 flex items-center justify-center">
           {content.desc}
         </p>
 

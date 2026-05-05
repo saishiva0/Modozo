@@ -1,10 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, memo } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 
 // --- Premium Relevant Animations ---
 
-const DesignersAnim = () => (
-  <div className="w-full h-full bg-[#0E2545] flex items-center justify-center p-8 relative overflow-hidden rounded-[2rem]">
+const DesignersAnim = memo(() => (
+  <div className="w-full h-full bg-[#0E2545] flex items-center justify-center p-8 relative overflow-hidden rounded-[2rem] will-change-transform">
     {/* Blueprint Grid */}
     <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
     {/* Techpack Outline (T-shirt) */}
@@ -22,10 +22,10 @@ const DesignersAnim = () => (
       <motion.text x="50" y="99" fill="rgba(255,255,255,0.5)" fontSize="4" textAnchor="middle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}>Width: 45cm</motion.text>
     </motion.svg>
   </div>
-);
+));
 
-const BrandTeamsAnim = () => (
-  <div className="w-full h-full bg-[#0E2545] flex items-center justify-center p-8 relative overflow-hidden rounded-[2rem]">
+const BrandTeamsAnim = memo(() => (
+  <div className="w-full h-full bg-[#0E2545] flex items-center justify-center p-8 relative overflow-hidden rounded-[2rem] will-change-transform">
     <motion.div 
       initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       className="w-56 h-36 bg-white/5 border border-white/10 rounded-xl backdrop-blur-md flex flex-col p-5 gap-4 relative shadow-2xl"
@@ -47,10 +47,10 @@ const BrandTeamsAnim = () => (
       </motion.div>
     </motion.div>
   </div>
-);
+));
 
-const SourcingAnim = () => (
-  <div className="w-full h-full bg-[#0E2545] flex items-end justify-center p-8 gap-4 relative overflow-hidden rounded-[2rem]">
+const SourcingAnim = memo(() => (
+  <div className="w-full h-full bg-[#0E2545] flex items-end justify-center p-8 gap-4 relative overflow-hidden rounded-[2rem] will-change-transform">
     {/* Background Grid */}
     <div className="absolute inset-x-8 inset-y-12 border-b border-l border-white/10"></div>
     {[
@@ -77,10 +77,10 @@ const SourcingAnim = () => (
       </motion.div>
     ))}
   </div>
-);
+));
 
-const VendorsAnim = () => (
-  <div className="w-full h-full bg-[#0E2545] flex flex-col justify-center gap-5 p-6 relative overflow-hidden rounded-[2rem]">
+const VendorsAnim = memo(() => (
+  <div className="w-full h-full bg-[#0E2545] flex flex-col justify-center gap-5 p-6 relative overflow-hidden rounded-[2rem] will-change-transform">
     <motion.div 
       initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       className="w-[85%] bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-sm relative self-start flex flex-col gap-3 shadow-lg"
@@ -100,10 +100,10 @@ const VendorsAnim = () => (
       <div className="w-full h-2 bg-[#0E2545]/40 rounded-full"></div>
     </motion.div>
   </div>
-);
+));
 
-const QAAnim = () => (
-  <div className="w-full h-full bg-[#0E2545] flex flex-col items-center justify-center gap-6 p-8 relative overflow-hidden rounded-[2rem]">
+const QAAnim = memo(() => (
+  <div className="w-full h-full bg-[#0E2545] flex flex-col items-center justify-center gap-6 p-8 relative overflow-hidden rounded-[2rem] will-change-transform">
     <div className="flex flex-col gap-4 w-full max-w-[180px] z-10">
       {["Measurements", "Stitching", "Color Match"].map((label, i) => (
         <div key={i} className="flex items-center gap-4 bg-white/5 p-3 rounded-xl border border-white/10">
@@ -123,10 +123,10 @@ const QAAnim = () => (
       ))}
     </div>
   </div>
-);
+));
 
-const TechAnim = () => (
-  <div className="w-full h-full bg-[#0E2545] flex items-center justify-center p-8 relative overflow-hidden rounded-[2rem]">
+const TechAnim = memo(() => (
+  <div className="w-full h-full bg-[#0E2545] flex items-center justify-center p-8 relative overflow-hidden rounded-[2rem] will-change-transform">
     {/* ERP Node (Left) */}
     <motion.div 
       animate={{ y: [-5, 5, -5] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
@@ -153,7 +153,7 @@ const TechAnim = () => (
       <span className="text-[#0B1B33] text-[10px] font-bold">API</span>
     </motion.div>
   </div>
-);
+));
 
 
 const stakeholdersData = [

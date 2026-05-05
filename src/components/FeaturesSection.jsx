@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, memo } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 
 // Import Feature-specific premium assets provided by designer
@@ -13,9 +13,8 @@ import logo4 from '../assets/logo4.png';
  * HIGH-CLARITY INDUSTRY ANIMATIONS
  */
 
-// 1. Fashion Workflow: Sketching & Tech-Pack Sync
-const FashionWorkflowAnimation = ({ active }) => (
-  <div className="relative w-full h-full flex items-center justify-center p-4">
+const FashionWorkflowAnimation = memo(({ active }) => (
+  <div className="relative w-full h-full flex items-center justify-center p-2 will-change-transform">
     <div className="relative w-full h-full bg-white/5 rounded-xl border border-white/10 flex items-center justify-center overflow-hidden">
       <svg className="w-20 h-20 md:w-28 md:h-28" viewBox="0 0 100 100">
         <motion.path
@@ -49,12 +48,12 @@ const FashionWorkflowAnimation = ({ active }) => (
       )}
     </div>
   </div>
-);
+));
 
 // 2. Communication: Unified Thread / Chat Flow
-const FashionCommAnimation = ({ active }) => (
-  <div className="relative w-full h-full flex items-center justify-center p-4">
-    <div className="relative w-full h-full bg-white/5 rounded-xl border border-white/10 flex flex-col p-4 gap-3 overflow-hidden">
+const FashionCommAnimation = memo(({ active }) => (
+  <div className="relative w-full h-full flex items-center justify-center p-2 will-change-transform">
+    <div className="relative w-full h-full bg-white/5 rounded-xl border border-white/10 flex flex-col p-2 gap-1.5 overflow-hidden">
       {[
         { user: 'DES', msg: 'Fabric swatch updated', color: 'bg-brand-yellow/20' },
         { user: 'VND', msg: 'Sample sent for review', color: 'bg-white/5' },
@@ -65,7 +64,7 @@ const FashionCommAnimation = ({ active }) => (
           initial={{ x: -20, opacity: 0 }}
           animate={active ? { x: 0, opacity: 1 } : {}}
           transition={{ delay: i * 0.4 }}
-          className={`flex flex-col gap-1 p-2 rounded border border-white/5 ${chat.color}`}
+          className={`flex flex-col gap-0.5 p-1.5 rounded border border-white/5 ${chat.color}`}
         >
           <div className="flex justify-between items-center">
             <span className="text-[7px] font-bold text-brand-yellow uppercase">{chat.user}</span>
@@ -85,10 +84,10 @@ const FashionCommAnimation = ({ active }) => (
       )}
     </div>
   </div>
-);
+));
 
 // 3. Real-time Visibility: Live Tracking / Status Board
-const FashionVisibilityAnimation = ({ active }) => {
+const FashionVisibilityAnimation = memo(({ active }) => {
   const steps = [
     { label: 'Designing', icon: '✎' },
     { label: 'Sampling', icon: '✂' },
@@ -97,16 +96,16 @@ const FashionVisibilityAnimation = ({ active }) => {
   ];
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center p-4">
-      <div className="w-full h-full bg-white/5 rounded-xl border border-white/10 flex flex-col justify-center p-4 gap-2">
+    <div className="relative w-full h-full flex items-center justify-center p-2 will-change-transform">
+      <div className="w-full h-full bg-white/5 rounded-xl border border-white/10 flex flex-col justify-center p-2 gap-1.5">
         {steps.map((step, i) => (
-          <div key={i} className="flex items-center gap-3">
+          <div key={i} className="flex items-center gap-2">
             <motion.div
               animate={active ? { 
                 backgroundColor: i <= 2 ? '#FFD700' : 'rgba(255,255,255,0.1)',
                 scale: i === 2 ? [1, 1.1, 1] : 1
               } : {}}
-              className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] text-brand-navy font-bold"
+              className="w-4 h-4 rounded-full flex items-center justify-center text-[8px] text-brand-navy font-bold"
             >
               {step.icon}
             </motion.div>
@@ -118,7 +117,7 @@ const FashionVisibilityAnimation = ({ active }) => {
                 className="h-full bg-brand-yellow/60"
               />
             </div>
-            <span className={`text-[9px] uppercase tracking-tighter ${active && i === 2 ? 'text-brand-yellow font-bold' : 'text-white/40'}`}>
+            <span className={`text-[8px] uppercase tracking-tighter ${active && i === 2 ? 'text-brand-yellow font-bold' : 'text-white/40'}`}>
               {step.label}
             </span>
           </div>
@@ -127,80 +126,91 @@ const FashionVisibilityAnimation = ({ active }) => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mt-2 text-center"
+            className="mt-1 text-center"
           >
-            <span className="text-[10px] text-brand-yellow animate-pulse font-mono">● LIVE UPDATING</span>
+            <span className="text-[8px] text-brand-yellow animate-pulse font-mono">● LIVE UPDATING</span>
           </motion.div>
         )}
       </div>
     </div>
   );
-};
+});
 
 // 4. Dynamic Collaboration: MODOZO Active Hub
-const FashionCollabAnimation = ({ active }) => (
-  <div className="relative w-full h-full flex items-center justify-center p-4">
-    <div className="w-full h-full bg-white/5 rounded-xl flex items-center justify-center overflow-hidden">
-      <div className="relative w-32 h-32">
-        {/* Central MODOZO Logo */}
-        <motion.div 
-          animate={active ? { scale: [1, 1.05, 1] } : {}}
-          transition={{ duration: 3, repeat: Infinity }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 z-20 flex items-center justify-center"
-        >
-          <img src={logo4} alt="Modozo" className="w-full h-full object-contain" />
-        </motion.div>
-        
-        {/* Stakeholder Nodes - Increased Spacing (55px radius) */}
-        {[
-          { label: 'DESIGNER', icon: '🎨', angle: -90 },
-          { label: 'VENDOR', icon: '🏢', angle: 30 },
-          { label: 'QA ANALYST', icon: '🔍', angle: 150 }
-        ].map((node, i) => {
-          const rad = node.angle * (Math.PI / 180);
-          const x = Math.cos(rad) * 55;
-          const y = Math.sin(rad) * 55;
-          return (
-            <React.Fragment key={i}>
-              {/* Stakeholder Node */}
-              <motion.div
-                animate={active ? { 
-                  x, y, opacity: 1,
-                  scale: 1
-                } : { x: 0, y: 0, opacity: 0 }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center"
-              >
-                <div className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center mb-1">
-                  <span className="text-[12px]">{node.icon}</span>
-                </div>
-                <span className="text-[7px] text-white/60 font-bold tracking-widest uppercase">{node.label}</span>
-              </motion.div>
-              {/* Simple Connection Lines */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
-                {active && (
-                  <motion.line
-                    x1="50%" y1="50%"
-                    x2={`${50 + (x/1.25)}%`}
-                    y2={`${50 + (y/1.25)}%`}
-                    stroke="rgba(255,215,0,0.4)"
-                    strokeWidth="1"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 1, delay: i * 0.2 }}
-                  />
-                )}
-              </svg>
-            </React.Fragment>
-          );
-        })}
+const collabNodes = [
+  { label: 'DESIGNER', icon: '🎨', angle: -90 },
+  { label: 'VENDOR', icon: '🏢', angle: 30 },
+  { label: 'QA ANALYST', icon: '🔍', angle: 150 }
+];
+
+const FashionCollabAnimation = memo(({ active }) => {
+  const nodeRadius = 50;
+  const center = 64; // half of w-32 (128px)
+
+  const nodePositions = collabNodes.map(node => {
+    const rad = node.angle * (Math.PI / 180);
+    return {
+      ...node,
+      x: Math.cos(rad) * nodeRadius,
+      y: Math.sin(rad) * nodeRadius,
+      cx: center + Math.cos(rad) * nodeRadius,
+      cy: center + Math.sin(rad) * nodeRadius
+    };
+  });
+
+  return (
+    <div className="relative w-full h-full flex items-center justify-center p-2 will-change-transform">
+      <div className="w-full h-full bg-white/5 rounded-xl flex items-center justify-center overflow-hidden">
+        <div className="relative w-32 h-32">
+          {/* Connection Lines — single SVG layer for perfect alignment */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible" viewBox="0 0 128 128">
+            {active && nodePositions.map((node, i) => (
+              <motion.line
+                key={i}
+                x1={center} y1={center}
+                x2={node.cx} y2={node.cy}
+                stroke="rgba(255,215,0,0.4)"
+                strokeWidth="1"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 1, delay: i * 0.2 }}
+              />
+            ))}
+          </svg>
+
+          {/* Central MODOZO Logo */}
+          <motion.div 
+            animate={active ? { scale: [1, 1.05, 1] } : {}}
+            transition={{ duration: 3, repeat: Infinity }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 z-20 flex items-center justify-center"
+          >
+            <img src={logo4} alt="Modozo" className="w-full h-full object-contain" />
+          </motion.div>
+          
+          {/* Stakeholder Nodes */}
+          {nodePositions.map((node, i) => (
+            <motion.div
+              key={i}
+              animate={active ? { 
+                x: node.x, y: node.y, opacity: 1
+              } : { x: 0, y: 0, opacity: 0 }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-7 h-7"
+            >
+              <div className="w-7 h-7 bg-white/5 rounded-full flex items-center justify-center">
+                <span className="text-[11px]">{node.icon}</span>
+              </div>
+              <span className="absolute top-full left-1/2 -translate-x-1/2 mt-0.5 text-[6px] text-white/60 font-bold tracking-wider uppercase whitespace-nowrap">{node.label}</span>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+});
 
 // 5. Precision Control: Multi-Level Document Approval
-const FashionControlAnimation = ({ active }) => {
+const FashionControlAnimation = memo(({ active }) => {
   const levels = [
     { label: 'FACTORY CHECK', icon: '🏭' },
     { label: 'QC AUDIT', icon: '📋' },
@@ -208,12 +218,12 @@ const FashionControlAnimation = ({ active }) => {
   ];
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center p-4">
-      <div className="w-full h-full bg-white/5 rounded-xl border border-white/10 flex flex-col items-center justify-center p-4 gap-6 overflow-hidden">
+    <div className="relative w-full h-full flex items-center justify-center p-2 will-change-transform">
+      <div className="w-full h-full bg-white/5 rounded-xl border border-white/10 flex flex-col items-center justify-center p-2 gap-3 overflow-hidden">
         {/* Document Path Visualization */}
-        <div className="relative w-full flex justify-between items-center px-4">
+        <div className="relative w-full flex justify-between items-center px-2">
           {levels.map((level, i) => (
-            <div key={i} className="flex flex-col items-center gap-2 z-10">
+            <div key={i} className="flex flex-col items-center gap-1 z-10">
               <motion.div
                 animate={active ? { 
                   backgroundColor: i === 0 ? 'rgba(255,215,0,0.2)' : 'rgba(255,255,255,0.05)',
@@ -223,7 +233,7 @@ const FashionControlAnimation = ({ active }) => {
               >
                 <span className="text-sm">{level.icon}</span>
               </motion.div>
-              <span className="text-[7px] text-white/40 font-bold text-center uppercase leading-none w-12">
+              <span className="text-[6px] text-white/40 font-bold text-center uppercase leading-none w-10">
                 {level.label}
               </span>
             </div>
@@ -238,14 +248,14 @@ const FashionControlAnimation = ({ active }) => {
                 opacity: [0, 1, 1, 0]
               }}
               transition={{ duration: 4, repeat: Infinity, times: [0, 0.3, 0.7, 1] }}
-              className="absolute top-3 w-6 h-6 bg-brand-yellow rounded shadow-[0_0_15px_rgba(255,215,0,0.5)] flex items-center justify-center z-20"
+              className="absolute top-2 w-6 h-6 bg-brand-yellow rounded shadow-[0_0_15px_rgba(255,215,0,0.5)] flex items-center justify-center z-20"
             >
               <span className="text-[10px] text-brand-navy font-bold">📄</span>
             </motion.div>
           )}
         </div>
 
-        <div className="w-full flex flex-col gap-2 px-2">
+        <div className="w-full flex flex-col gap-1.5 px-1">
           {levels.map((level, i) => (
             <motion.div
               key={i}
@@ -273,7 +283,7 @@ const FashionControlAnimation = ({ active }) => {
       </div>
     </div>
   );
-};
+});
 
 const featureData = [
   {
@@ -318,66 +328,34 @@ const FeatureCard = ({ feature, index, isActive, onHover, radius }) => {
   const x = Math.cos(angle) * radius;
   const y = Math.sin(angle) * radius;
 
-  // 3D Tilt Effect on Hover
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width;
-    const py = (e.clientY - rect.top) / rect.height;
-    setTilt({ x: (py - 0.5) * 20, y: (px - 0.5) * -20 });
-  };
-
   return (
     <motion.div
       onMouseEnter={() => onHover(feature)}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => setTilt({ x: 0, y: 0 })}
-      initial={{ opacity: 0, scale: 0.8 }}
+      initial={{ opacity: 0 }}
       animate={{ 
         opacity: 1, 
-        scale: isActive ? 1.15 : 1,
         x: x,
         y: y,
-        zIndex: isActive ? 100 : 10,
-        rotateX: tilt.x,
-        rotateY: tilt.y
+        zIndex: isActive ? 100 : 10
       }}
       transition={{ type: "spring", stiffness: 100, damping: 15 }}
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
-      style={{ perspective: "1000px" }}
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
     >
-      {/* Ambient Glow behind active card */}
-      {isActive && (
-        <motion.div 
-          layoutId="ambient-glow"
-          className="absolute inset-0 bg-brand-yellow/20 blur-[40px] rounded-full scale-150 z-0"
-        />
-      )}
-
       <div className={`
-        relative w-32 h-24 md:w-64 md:h-44 rounded-2xl overflow-hidden border bg-[#163563]/20 backdrop-blur-sm transition-all duration-500 z-10
+        relative w-24 h-[72px] md:w-44 md:h-32 rounded-xl overflow-hidden border bg-[#163563]/40 z-10
         ${isActive 
-          ? 'border-brand-yellow/50 shadow-[0_20px_50px_rgba(0,0,0,0.5)] scale-[1.05]' 
-          : 'border-white/10 grayscale-[0.4] opacity-70 group-hover:grayscale-0 group-hover:opacity-100'
+          ? 'border-brand-yellow/50 shadow-[0_8px_24px_rgba(255,215,0,0.15)]' 
+          : 'border-white/10 opacity-80'
         }
       `}>
-        {/* The Image Container with padding to ensure fit */}
-        <div className="absolute inset-0 p-1 bg-gradient-to-b from-white/5 to-transparent flex items-center justify-center">
+        {/* The Image Container */}
+        <div className="absolute inset-0 flex items-center justify-center p-2">
           <img 
             src={feature.image} 
             alt={feature.title} 
-            className="w-full h-full object-contain transform transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+            className="w-full h-full object-contain will-change-transform"
           />
-        </div>
-        
-        {/* Atmospheric Overlays (Reduced opacity to keep image clear) */}
-        <div className={`absolute inset-0 bg-gradient-to-t from-[#0E2545]/60 via-transparent to-transparent transition-opacity duration-300 ${isActive ? 'opacity-40' : 'opacity-80'}`} />
-        
-        {/* Card Header (Light Theme / High Contrast) */}
-        <div className="absolute bottom-0 left-0 right-0 p-2 bg-[#FFFDE7]/95 backdrop-blur-md border-t border-[#FFD84D]/30">
-          <span className="text-[9px] md:text-[11px] font-black text-black uppercase tracking-widest block text-center">
-            {feature.title}
-          </span>
         </div>
 
         {/* Premium Shimmer */}
@@ -393,7 +371,7 @@ const FeatureCard = ({ feature, index, isActive, onHover, radius }) => {
 
 const CentralHub = ({ activeFeature }) => {
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] md:w-[400px] flex flex-col items-center justify-center text-center">
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] md:w-[380px] max-h-[280px] md:max-h-[340px] flex flex-col items-center justify-center text-center overflow-hidden">
       <AnimatePresence mode="wait">
         {activeFeature ? (
           <motion.div
@@ -404,15 +382,15 @@ const CentralHub = ({ activeFeature }) => {
             transition={{ duration: 0.4 }}
             className="flex flex-col items-center"
           >
-            <div className="w-44 h-44 md:w-60 md:h-60 mb-6">
+            <div className="w-28 h-28 md:w-36 md:h-36 mb-4 flex-shrink-0">
               <activeFeature.Animation active={true} />
             </div>
             
             <div className="max-w-[320px]">
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 font-serif tracking-tight">
+              <h3 className="text-lg md:text-xl font-bold text-white mb-2 font-serif tracking-tight">
                 {activeFeature.title}
               </h3>
-              <p className="text-sm md:text-base text-white/50 font-light leading-relaxed">
+              <p className="text-[10px] md:text-xs text-white/50 font-light leading-snug">
                 {activeFeature.desc}
               </p>
             </div>
@@ -446,11 +424,10 @@ const FeaturesSection = () => {
       const h = window.innerHeight;
       const w = window.innerWidth;
       if (w < 768) {
-        setRadius(240); // Increased from 210 to prevent collision
+        setRadius(180);
       } else {
-        // Increased multipliers further to accommodate larger cards and prevent overlap with CentralHub
-        const baseW = w * 0.40; // Increased from 0.34
-        const baseH = h * 0.55; // Increased from 0.46
+        const baseW = w * 0.30;
+        const baseH = h * 0.38;
         setRadius(Math.min(baseW, baseH));
       }
     };
@@ -461,16 +438,16 @@ const FeaturesSection = () => {
 
   return (
     <section 
-      className="relative min-h-[90vh] md:min-h-screen pt-24 md:pt-32 pb-16 md:pb-24 bg-transparent flex flex-col justify-center overflow-hidden" 
+      className="relative min-h-0 h-screen pt-10 md:pt-14 pb-4 md:pb-8 bg-transparent flex flex-col justify-center overflow-hidden" 
       ref={containerRef}
     >
       <div className="max-w-[1400px] mx-auto px-6 w-full">
-        <div className="mb-24 md:mb-40 text-center z-20">
+        <div className="mb-4 md:mb-6 text-center z-20">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-bold tracking-tighter font-serif text-white mb-4"
+            className="text-3xl md:text-5xl font-bold tracking-tighter font-serif text-white mb-2"
           >
             What Makes This Powerful
           </motion.h2>
@@ -486,7 +463,7 @@ const FeaturesSection = () => {
           <div className="h-0.5 w-16 bg-brand-yellow mx-auto mt-6 rounded-full opacity-30" />
         </div>
 
-        <div className="relative h-[600px] md:h-[800px] w-full flex items-center justify-center">
+        <div className="relative mt-12 md:mt-20 h-[380px] md:h-[480px] w-full flex items-center justify-center">
           {isInView && featureData.map((feature, index) => (
             <FeatureCard 
               key={feature.id}
@@ -500,7 +477,7 @@ const FeaturesSection = () => {
 
           <CentralHub activeFeature={activeFeature} />
           
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[800px] h-[600px] md:h-[800px] bg-brand-yellow/[0.02] blur-[120px] rounded-full z-0" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[550px] h-[400px] md:h-[550px] bg-brand-yellow/[0.02] blur-[120px] rounded-full z-0" />
         </div>
       </div>
     </section>
