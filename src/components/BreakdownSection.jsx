@@ -7,28 +7,29 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const DisconnectedFullscreen = () => {
   const blocks = [
-    { label: 'Excel', x: '18%', y: '22%', w: 180, h: 140, dx: -20, dy: -15, rot: -8 },
-    { label: 'Email', x: '62%', y: '15%', w: 160, h: 120, dx: 15, dy: 12, rot: 5 },
-    { label: 'Files', x: '15%', y: '58%', w: 150, h: 110, dx: -12, dy: 18, rot: -4 },
-    { label: 'WhatsApp', x: '65%', y: '55%', w: 170, h: 130, dx: 18, dy: -10, rot: 7 },
+    { label: 'Excel', x: '12%', y: '18%', w: '12vw', h: '16vh', dx: -20, dy: -15, rot: -8 },
+    { label: 'Email', x: '68%', y: '12%', w: '11vw', h: '14vh', dx: 15, dy: 12, rot: 5 },
+    { label: 'Files', x: '10%', y: '62%', w: '10vw', h: '12vh', dx: -12, dy: 18, rot: -4 },
+    { label: 'WhatsApp', x: '72%', y: '60%', w: '11vw', h: '15vh', dx: 18, dy: -10, rot: 7 },
   ];
 
   return (
     <motion.div
       className="absolute inset-0 pointer-events-none overflow-hidden"
-      initial={{ scale: 0.9, opacity: 0 }}
+      initial={{ scale: 1.1, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 1.5, ease: "easeOut" }}
     >
       {blocks.map((b, i) => (
         <motion.div
           key={i}
-          className="absolute rounded-[2.5rem] bg-[#163563]/30 backdrop-blur-3xl border border-white/10 shadow-2xl flex flex-col items-center justify-center gap-4 px-6 overflow-hidden"
-          style={{ left: b.x, top: b.y, width: b.w, height: b.h }}
+          className="absolute rounded-[1.5vw] bg-[#163563]/10 backdrop-blur-3xl border border-white/5 shadow-2xl flex flex-col items-center justify-center gap-2 px-4 overflow-hidden"
+          style={{ left: b.x, top: b.y, width: `max(${b.w}, 120px)`, height: `max(${b.h}, 100px)` }}
           animate={{
             x: [0, b.dx, 0],
             y: [0, b.dy, 0],
             rotate: [0, b.rot, 0],
+            opacity: [0.3, 0.6, 0.3]
           }}
           transition={{ duration: 10 + i * 2, repeat: Infinity, ease: 'easeInOut' }}
         >
@@ -40,7 +41,7 @@ const DisconnectedFullscreen = () => {
             <div className="h-2 bg-white/10 rounded-full w-full" />
             <div className="h-2 bg-white/5 rounded-full w-3/4" />
           </div>
-          <span className="text-white/40 text-[10px] font-black tracking-[0.2em] uppercase mt-2">{b.label}</span>
+          <span className="text-white/20 text-[8px] font-black tracking-[0.2em] uppercase mt-1">{b.label}</span>
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-y-full animate-shimmer" />
         </motion.div>
       ))}
@@ -67,10 +68,10 @@ const DisconnectedFullscreen = () => {
 
 const ScatteredFullscreen = () => {
   const items = [
-    { label: 'Feedback Loop', x: '12%', y: '18%', w: 320, dx: -25, dy: 15 },
-    { label: 'Vendor Sync', x: '68%', y: '15%', w: 280, dx: 20, dy: -12 },
-    { label: 'Sample Tracker', x: '18%', y: '58%', w: 240, dx: -15, dy: -20 },
-    { label: 'Approval Status', x: '62%', y: '55%', w: 300, dx: 35, dy: 15 },
+    { label: 'Feedback Loop', x: '8%', y: '15%', w: '20vw', dx: -25, dy: 15 },
+    { label: 'Vendor Sync', x: '72%', y: '12%', w: '18vw', dx: 20, dy: -12 },
+    { label: 'Sample Tracker', x: '10%', y: '62%', w: '16vw', dx: -15, dy: -20 },
+    { label: 'Approval Status', x: '70%', y: '58%', w: '19vw', dx: 35, dy: 15 },
   ];
 
   return (
@@ -83,12 +84,12 @@ const ScatteredFullscreen = () => {
       {items.map((item, i) => (
         <motion.div
           key={i}
-          className="absolute rounded-[2rem] bg-[#1D4073]/20 backdrop-blur-2xl border border-white/5 shadow-2xl p-6"
-          style={{ left: item.x, top: item.y, width: item.w }}
+          className="absolute rounded-[1.5vw] bg-[#1D4073]/10 backdrop-blur-2xl border border-white/5 shadow-2xl p-4 md:p-6"
+          style={{ left: item.x, top: item.y, width: `max(${item.w}, 200px)` }}
           animate={{
             x: [0, item.dx, 0],
             y: [0, item.dy, 0],
-            opacity: [0.2, 0.5, 0.2],
+            opacity: [0.1, 0.3, 0.1],
           }}
           transition={{ duration: 12 + i * 2, repeat: Infinity, ease: 'easeInOut' }}
         >
@@ -125,23 +126,23 @@ const VisibilityFullscreen = () => {
   const steps = ['Concept', 'Design', 'Sample', 'Production'];
   return (
     <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-      <div className="w-full max-w-6xl flex justify-between px-20 relative">
-        <div className="absolute top-1/2 left-20 right-20 h-px bg-white/5" />
+      <div className="w-full max-w-[90vw] flex justify-between px-6 md:px-20 relative">
+        <div className="absolute top-1/2 left-6 md:left-20 right-6 md:right-20 h-px bg-white/5" />
         {steps.map((s, i) => (
           <motion.div
             key={i}
             animate={{ 
-              opacity: [0.2, 0.8, 0.2],
+              opacity: [0.1, 0.5, 0.1],
               scale: [0.95, 1.05, 0.95]
             }}
             transition={{ duration: 4, repeat: Infinity, delay: i * 1 }}
-            className="flex flex-col items-center gap-6 z-10"
+            className="flex flex-col items-center gap-4 md:gap-6 z-10"
           >
-            <div className="w-24 h-24 md:w-32 md:h-32 rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-xl flex flex-col items-center justify-center gap-3">
-              <div className="w-10 h-10 border border-brand-yellow/30 rounded-xl bg-brand-yellow/5" />
-              <div className="w-12 h-1 bg-white/10 rounded-full" />
+            <div className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-[1.5vw] bg-white/[0.03] border border-white/5 backdrop-blur-xl flex flex-col items-center justify-center gap-2 md:gap-3">
+              <div className="w-6 h-6 md:w-10 md:h-10 border border-brand-yellow/20 rounded-lg bg-brand-yellow/[0.03]" />
+              <div className="w-8 h-0.5 md:w-12 md:h-1 bg-white/5 rounded-full" />
             </div>
-            <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.4em]">{s}</span>
+            <span className="text-[7px] md:text-[10px] font-black text-white/20 uppercase tracking-[0.4em]">{s}</span>
           </motion.div>
         ))}
       </div>
