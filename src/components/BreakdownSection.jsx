@@ -126,23 +126,25 @@ const VisibilityFullscreen = () => {
   const steps = ['Concept', 'Design', 'Sample', 'Production'];
   return (
     <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-      <div className="w-full max-w-[90vw] flex justify-between px-6 md:px-20 relative">
-        <div className="absolute top-1/2 left-6 md:left-20 right-6 md:right-20 h-px bg-white/5" />
+      <div className="w-full max-w-[95vw] md:max-w-[85vw] flex justify-between px-4 md:px-12 relative">
+        <div className="absolute top-1/2 left-4 md:left-12 right-4 md:right-12 h-[2px] bg-white/20 shadow-[0_0_15px_rgba(255,255,255,0.1)]" />
         {steps.map((s, i) => (
           <motion.div
             key={i}
             animate={{
-              opacity: [0.1, 0.5, 0.1],
-              scale: [0.95, 1.05, 0.95]
+              opacity: [0.3, 1, 1, 0.3],
+              scale: [0.95, 1.05, 1.05, 0.95]
             }}
-            transition={{ duration: 4, repeat: Infinity, delay: i * 1 }}
-            className="flex flex-col items-center gap-4 md:gap-6 z-10"
+            transition={{ duration: 5, repeat: Infinity, delay: i * 1.2, times: [0, 0.2, 0.8, 1] }}
+            className="flex flex-col items-center gap-6 md:gap-8 z-10"
           >
-            <div className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-[1.5vw] bg-white/[0.12] border border-white/10 backdrop-blur-xl flex flex-col items-center justify-center gap-2 md:gap-3">
-              <div className="w-6 h-6 md:w-10 md:h-10 border border-brand-yellow/20 rounded-lg bg-brand-yellow/[0.03]" />
-              <div className="w-8 h-0.5 md:w-12 md:h-1 bg-white/5 rounded-full" />
+            <div className="w-14 h-14 sm:w-20 sm:h-20 md:w-28 md:h-28 rounded-2xl md:rounded-[1.5vw] bg-[#163563]/80 border-2 border-white/20 backdrop-blur-xl flex flex-col items-center justify-center gap-2 md:gap-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+              <div className="w-5 h-5 sm:w-6 sm:h-6 md:w-10 md:h-10 border-2 border-brand-yellow/50 rounded-md md:rounded-lg bg-brand-yellow/20 shadow-inner" />
+              <div className="w-6 h-0.5 sm:w-8 sm:h-1 md:w-12 md:h-1.5 bg-white/20 rounded-full" />
             </div>
-            <span className="text-[7px] md:text-[10px] font-black text-white/20 uppercase tracking-[0.4em]">{s}</span>
+            <span className="text-[7px] sm:text-[9px] md:text-[11px] font-black text-white/80 uppercase tracking-widest md:tracking-[0.2em] drop-shadow-md text-center">
+              {s}
+            </span>
           </motion.div>
         ))}
       </div>
@@ -190,6 +192,7 @@ const problems = [
 
 const BreakdownSection = () => {
   const [active, setActive] = useState(null);
+  const [lockedCard, setLockedCard] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
   const hoverTimeoutRef = useRef(null);
@@ -213,28 +216,32 @@ const BreakdownSection = () => {
     };
   }, []);
 
-  const handleActivate = (id) => {
-    // Clear any pending activation or deactivation
+  const handleActivate = (id, isClick = false) => {
+    // Clear any pending activation
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
 
-    if (isMobile) {
-      setActive(prev => prev === id ? null : id);
+    if (isClick || isMobile) {
+      setActive(id); // Intentional tap opens it
+      setLockedCard(null);
     } else {
+      if (lockedCard === id) return;
       if (isScrolling) return;
 
-      // Responsive but intentional delay
+      // Stable hover delay before opening
       hoverTimeoutRef.current = setTimeout(() => {
         setActive(id);
-      }, 150);
+      }, 350);
     }
   };
 
-  const handleDeactivate = () => {
+  const cancelActivation = (id) => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-    if (!isMobile) {
-      // Small delay before closing to allow moving between cards
-      hoverTimeoutRef.current = setTimeout(() => setActive(null), 150);
-    }
+    if (lockedCard === id) setLockedCard(null);
+  };
+
+  const handleClose = () => {
+    setLockedCard(active);
+    setActive(null);
   };
 
   const activeProblem = problems.find(p => p.id === active);
@@ -269,8 +276,8 @@ const BreakdownSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 onMouseEnter={() => !isMobile && handleActivate(problem.id)}
-                onMouseLeave={handleDeactivate}
-                onClick={() => isMobile && handleActivate(problem.id)}
+                onMouseLeave={() => cancelActivation(problem.id)}
+                onClick={() => handleActivate(problem.id, true)}
                 className={`
                   relative p-10 md:p-12 rounded-[3rem] border bg-[#163563]/40 backdrop-blur-xl cursor-pointer select-none
                   transition-all duration-500 group overflow-hidden
@@ -307,13 +314,13 @@ const BreakdownSection = () => {
             exit={{ opacity: 0, scale: 1.05, pointerEvents: 'none' }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }} // Majestic "Slow-Fast-Slow" curve
             onMouseEnter={() => hoverTimeoutRef.current && clearTimeout(hoverTimeoutRef.current)}
-            onMouseLeave={handleDeactivate}
+            onClick={handleClose}
           >
             {/* Explicit Close Button */}
             <motion.button
               onClick={(e) => {
                 e.stopPropagation();
-                setActive(null);
+                handleClose();
               }}
               initial={{ opacity: 0, rotate: -90 }}
               animate={{ opacity: 1, rotate: 0 }}
@@ -328,7 +335,7 @@ const BreakdownSection = () => {
               </svg>
             </motion.button>
 
-            <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 z-0 pointer-events-none">
               {React.createElement(FULLSCREEN_ANIMATIONS[activeProblem.id])}
             </div>
 
@@ -353,9 +360,9 @@ const BreakdownSection = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.2, duration: 1.2 }}
-                className="mt-12 text-white/20 text-[10px] font-black uppercase tracking-[0.5em]"
+                className="mt-12 text-white/20 text-[10px] font-black uppercase tracking-[0.5em] pointer-events-none"
               >
-                Click button or move mouse to exit
+                Click anywhere to exit
               </motion.div>
             </div>
           </motion.div>
