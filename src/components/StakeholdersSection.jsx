@@ -17,9 +17,6 @@ const DesignersAnim = memo(() => (
         d="M35 25 Q50 35 65 25" 
         initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, ease: [0.16, 1, 0.3, 1], repeat: Infinity, repeatType: "reverse", delay: 0.5 }}
       />
-      {/* Dynamic measurement lines */}
-      <motion.line x1="15" y1="95" x2="85" y2="95" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="2 2" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} />
-      <motion.text x="50" y="99" fill="rgba(255,255,255,0.5)" fontSize="4" textAnchor="middle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}>Width: 45cm</motion.text>
     </motion.svg>
   </div>
 ));
