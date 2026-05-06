@@ -337,6 +337,7 @@ const featureData = [
   }
 ];
 
+<<<<<<< HEAD
 const FeaturesSection = () => {
   const [activeFeature, setActiveFeature] = useState(featureData[0]);
 
@@ -349,11 +350,152 @@ const FeaturesSection = () => {
         
         {/* Header */}
         <div className="text-center z-20">
+=======
+const FeatureCard = ({ feature, index, isActive, onHover }) => {
+  const [viewState, setViewState] = useState({ isMobile: false, isShort: false, isWide: false });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setViewState({ 
+        isMobile: window.innerWidth < 1024,
+        isShort: window.innerHeight < 800,
+        isWide: window.innerWidth > 1400
+      });
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Positions based on the user's architectural sketch, with high-fidelity spacing
+  const getPosition = (idx) => {
+    const { isMobile, isShort, isWide } = viewState;
+    if (isMobile) {
+      const mobileOffsets = [
+        { x: 0, y: isShort ? -160 : -220 },    // Top
+        { x: -160, y: -40 },                    // Left Top
+        { x: -160, y: isShort ? 80 : 120 },     // Left Bottom
+        { x: 160, y: -40 },                     // Right Top
+        { x: 160, y: isShort ? 80 : 120 }       // Right Bottom
+      ];
+      return mobileOffsets[idx];
+    }
+    const desktopOffsets = [
+      { x: 0, y: isShort ? -280 : -340 },      // Top Center (moved further up)
+      { x: isWide ? -420 : -380, y: -60 },     // Left Top
+      { x: isWide ? -420 : -380, y: 180 },     // Left Bottom
+      { x: isWide ? 420 : 380, y: -60 },      // Right Top
+      { x: isWide ? 420 : 380, y: 180 }       // Right Bottom
+    ];
+    return desktopOffsets[idx];
+  };
+  
+  const pos = getPosition(index);
+
+  return (
+    <motion.div
+      onMouseEnter={() => onHover(feature)}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ 
+        opacity: 1, 
+        x: pos.x,
+        y: pos.y,
+        zIndex: isActive ? 100 : 10
+      }}
+      transition={{ type: "spring", stiffness: 80, damping: 20 }}
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+    >
+      <div className={`
+        relative w-24 h-20 md:w-52 md:h-40 rounded-2xl md:rounded-[2.2rem] overflow-hidden border transition-all duration-500
+        ${isActive 
+          ? 'bg-white border-brand-yellow shadow-[0_30px_60px_rgba(255,215,0,0.35)] scale-110 z-50' 
+          : 'bg-white/90 backdrop-blur-md border-white/20 opacity-40 grayscale-[0.3] hover:opacity-100 hover:grayscale-0'
+        }
+      `}>
+        {/* The Image Container - Refined for maximum visibility while maintaining surgical focus */}
+        <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+          <div className="relative w-full h-full scale-[1.15] -translate-y-[5%]">
+            <img 
+              src={feature.image} 
+              alt={feature.title} 
+              loading="lazy"
+              className="w-full h-full object-contain will-change-transform"
+            />
+          </div>
+        </div>
+
+        {/* Glossy Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none z-30" />
+      </div>
+    </motion.div>
+  );
+};
+
+const CentralHub = ({ activeFeature }) => {
+  return (
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] md:w-[400px] h-[220px] md:h-[400px] flex flex-col items-center justify-center text-center overflow-hidden bg-white/5 rounded-[2rem] md:rounded-[3.5rem] border border-white/10 backdrop-blur-md shadow-2xl">
+      <AnimatePresence mode="wait">
+        {activeFeature ? (
+          <motion.div
+            key={activeFeature.id}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1 }}
+            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+            className="flex flex-col items-center p-6 md:p-10"
+          >
+            <div className="w-24 h-24 md:w-40 md:h-40 mb-6 md:mb-6 flex-shrink-0">
+              <activeFeature.Animation active={true} />
+            </div>
+            
+            <div className="max-w-[340px]">
+              <h3 className="text-xl md:text-3xl font-bold text-white mb-2 md:mb-3 font-serif tracking-tight">
+                {activeFeature.title}
+              </h3>
+              <p className="text-[10px] md:text-sm text-white/70 font-medium leading-relaxed">
+                {activeFeature.desc}
+              </p>
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="default"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col items-center opacity-10"
+          >
+            <h3 className="text-2xl md:text-4xl font-bold text-white font-serif uppercase tracking-[0.6em]">
+              MODOZO
+            </h3>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const FeaturesSection = () => {
+  const [activeFeature, setActiveFeature] = useState(featureData[0]);
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true, amount: 0.1 });
+
+  return (
+    <section 
+      className="relative h-screen min-h-[700px] md:min-h-[900px] pt-24 md:pt-40 flex flex-col items-center overflow-hidden bg-transparent" 
+      ref={containerRef}
+    >
+      <div className="max-w-[1600px] mx-auto px-6 w-full flex flex-col items-center">
+        <div className="mb-8 md:mb-12 text-center z-20">
+>>>>>>> c68fdfe2ce3766afb60c97e1f8cda2475d81c085
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+<<<<<<< HEAD
             className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter font-serif text-white mb-1"
+=======
+            className="text-4xl md:text-6xl font-bold tracking-tighter font-serif text-white mb-3"
+>>>>>>> c68fdfe2ce3766afb60c97e1f8cda2475d81c085
           >
             What Makes This Powerful
           </motion.h2>
@@ -362,10 +504,15 @@ const FeaturesSection = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
+<<<<<<< HEAD
             className="text-[#8FA3C8] text-sm md:text-base max-w-2xl mx-auto mt-2"
+=======
+            className="text-brand-yellow/60 text-[10px] md:text-sm uppercase tracking-[0.5em] font-black"
+>>>>>>> c68fdfe2ce3766afb60c97e1f8cda2475d81c085
           >
-            Hover through the cards to see the features in detail
+            Hover to explore the precision behind our unified hub
           </motion.p>
+<<<<<<< HEAD
         </div>
 
         {/* TOP FEATURE ROW */}
@@ -393,6 +540,25 @@ const FeaturesSection = () => {
               </motion.div>
             );
           })}
+=======
+          <div className="h-1 w-24 bg-brand-yellow mx-auto mt-6 rounded-full opacity-40 shadow-[0_0_20px_rgba(255,215,0,0.5)]" />
+        </div>
+
+        <div className="relative w-full h-[450px] md:h-[650px] flex items-center justify-center">
+          <CentralHub activeFeature={activeFeature} />
+
+          {isInView && featureData.map((feature, index) => (
+            <FeatureCard 
+              key={feature.id}
+              feature={feature}
+              index={index}
+              isActive={activeFeature?.id === feature.id}
+              onHover={setActiveFeature}
+            />
+          ))}
+          
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[900px] h-[600px] md:h-[900px] bg-brand-yellow/[0.03] blur-[150px] rounded-full -z-10" />
+>>>>>>> c68fdfe2ce3766afb60c97e1f8cda2475d81c085
         </div>
 
         {/* PREVIEW CARD BELOW */}

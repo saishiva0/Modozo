@@ -23,13 +23,13 @@ const DisconnectedFullscreen = () => {
       {blocks.map((b, i) => (
         <motion.div
           key={i}
-          className="absolute rounded-[1.5vw] bg-[#163563]/10 backdrop-blur-3xl border border-white/5 shadow-2xl flex flex-col items-center justify-center gap-2 px-4 overflow-hidden"
+          className="absolute rounded-[1.5vw] bg-[#163563]/40 backdrop-blur-3xl border border-white/10 shadow-2xl flex flex-col items-center justify-center gap-2 px-4 overflow-hidden"
           style={{ left: b.x, top: b.y, width: `max(${b.w}, 120px)`, height: `max(${b.h}, 100px)` }}
           animate={{
             x: [0, b.dx, 0],
             y: [0, b.dy, 0],
             rotate: [0, b.rot, 0],
-            opacity: [0.3, 0.6, 0.3]
+            opacity: [0.5, 0.8, 0.5]
           }}
           transition={{ duration: 10 + i * 2, repeat: Infinity, ease: 'easeInOut' }}
         >
@@ -84,12 +84,12 @@ const ScatteredFullscreen = () => {
       {items.map((item, i) => (
         <motion.div
           key={i}
-          className="absolute rounded-[1.5vw] bg-[#1D4073]/10 backdrop-blur-2xl border border-white/5 shadow-2xl p-4 md:p-6"
+          className="absolute rounded-[1.5vw] bg-[#1D4073]/40 backdrop-blur-2xl border border-white/10 shadow-2xl p-4 md:p-6"
           style={{ left: item.x, top: item.y, width: `max(${item.w}, 200px)` }}
           animate={{
             x: [0, item.dx, 0],
             y: [0, item.dy, 0],
-            opacity: [0.1, 0.3, 0.1],
+            opacity: [0.4, 0.7, 0.4],
           }}
           transition={{ duration: 12 + i * 2, repeat: Infinity, ease: 'easeInOut' }}
         >
@@ -108,7 +108,7 @@ const ScatteredFullscreen = () => {
           </div>
         </motion.div>
       ))}
-      
+
       {[0, 1, 2, 3].map(i => (
         <motion.div
           key={i}
@@ -131,14 +131,14 @@ const VisibilityFullscreen = () => {
         {steps.map((s, i) => (
           <motion.div
             key={i}
-            animate={{ 
+            animate={{
               opacity: [0.1, 0.5, 0.1],
               scale: [0.95, 1.05, 0.95]
             }}
             transition={{ duration: 4, repeat: Infinity, delay: i * 1 }}
             className="flex flex-col items-center gap-4 md:gap-6 z-10"
           >
-            <div className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-[1.5vw] bg-white/[0.03] border border-white/5 backdrop-blur-xl flex flex-col items-center justify-center gap-2 md:gap-3">
+            <div className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-[1.5vw] bg-white/[0.12] border border-white/10 backdrop-blur-xl flex flex-col items-center justify-center gap-2 md:gap-3">
               <div className="w-6 h-6 md:w-10 md:h-10 border border-brand-yellow/20 rounded-lg bg-brand-yellow/[0.03]" />
               <div className="w-8 h-0.5 md:w-12 md:h-1 bg-white/5 rounded-full" />
             </div>
@@ -206,7 +206,7 @@ const BreakdownSection = () => {
     check();
     window.addEventListener('resize', check);
     window.addEventListener('scroll', handleScroll, { passive: true });
-    
+
     return () => {
       window.removeEventListener('resize', check);
       window.removeEventListener('scroll', handleScroll);
@@ -216,7 +216,7 @@ const BreakdownSection = () => {
   const handleActivate = (id) => {
     // Clear any pending activation or deactivation
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-    
+
     if (isMobile) {
       setActive(prev => prev === id ? null : id);
     } else {
@@ -225,7 +225,7 @@ const BreakdownSection = () => {
       // Responsive but intentional delay
       hoverTimeoutRef.current = setTimeout(() => {
         setActive(id);
-      }, 150); 
+      }, 150);
     }
   };
 
@@ -245,7 +245,7 @@ const BreakdownSection = () => {
         {/* Subtle background glow */}
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-brand-yellow/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-brand-yellow/5 rounded-full blur-[120px] pointer-events-none" />
-        
+
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -274,8 +274,8 @@ const BreakdownSection = () => {
                 className={`
                   relative p-10 md:p-12 rounded-[3rem] border bg-[#163563]/40 backdrop-blur-xl cursor-pointer select-none
                   transition-all duration-500 group overflow-hidden
-                  ${active === problem.id 
-                    ? 'border-brand-yellow/50 shadow-[0_20px_50px_rgba(0,0,0,0.5)] scale-[1.02]' 
+                  ${active === problem.id
+                    ? 'border-brand-yellow/50 shadow-[0_20px_50px_rgba(0,0,0,0.5)] scale-[1.02]'
                     : 'border-white/10 shadow-sm hover:border-brand-yellow/30 hover:bg-[#1D4073]/60'
                   }
                 `}
@@ -284,9 +284,9 @@ const BreakdownSection = () => {
                   <h3 className="text-2xl font-black text-white mb-4 tracking-tight group-hover:text-brand-yellow transition-colors">{problem.title}</h3>
                   <p className="text-brand-text-muted font-bold text-sm md:text-base leading-relaxed group-hover:text-white/80 transition-colors">{problem.brief}</p>
                 </div>
-                
+
                 {/* Visual Indicator */}
-                <motion.div 
+                <motion.div
                   className="absolute bottom-0 left-0 right-0 h-2 bg-brand-yellow origin-left"
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: active === problem.id ? 1 : 0 }}
@@ -331,9 +331,9 @@ const BreakdownSection = () => {
             <div className="absolute inset-0 z-0">
               {React.createElement(FULLSCREEN_ANIMATIONS[activeProblem.id])}
             </div>
-            
+
             <div className="relative z-10 text-center px-8 max-w-4xl">
-              <motion.h2 
+              <motion.h2
                 initial={{ opacity: 0, y: 60 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
@@ -341,7 +341,7 @@ const BreakdownSection = () => {
               >
                 {activeProblem.title}
               </motion.h2>
-              <motion.p 
+              <motion.p
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -349,7 +349,7 @@ const BreakdownSection = () => {
               >
                 {activeProblem.description}
               </motion.p>
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.2, duration: 1.2 }}

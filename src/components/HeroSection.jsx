@@ -37,17 +37,17 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
+    // { name: 'Home', href: '#home' },
     { name: 'Workflow Challenges', href: '#challenges' },
     { name: 'Lack of Structure', href: '#structure' },
-    { name: 'Solution', href: '#solution' },
+    // { name: 'Solution', href: '#solution' },
     { name: 'Workflow', href: '#workflow' },
     { name: 'Features', href: '#features' },
     { name: 'Impact', href: '#impact' },
   ];
 
   return (
-    <motion.nav 
+    <motion.nav
       variants={{
         visible: { y: 0 },
         hidden: { y: "-100%" }
@@ -83,12 +83,13 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center gap-3 md:gap-4">
-        <div className="hidden md:flex items-center gap-4 mr-2">
-          <a href="#login" className="text-sm font-bold text-white/80 hover:text-[#FFD84D] transition-colors">Login</a>
-          <a href="#signup" className="text-sm font-bold bg-[#FFD84D] text-[#0E2545] px-5 py-2.5 rounded-full hover:scale-105 transition-transform shadow-sm active:scale-95">Sign Up</a>
+        <div className="hidden md:flex items-center mr-2">
+          <a href="#login" className="text-sm font-bold bg-[#FFD84D] text-[#0E2545] px-6 py-2.5 rounded-full hover:scale-105 transition-transform shadow-sm active:scale-95">
+            Login / Sign Up
+          </a>
         </div>
         <button onClick={scrollToContact}
-          className="hidden sm:block px-4 md:px-6 py-2 md:py-2.5 bg-[#FFD84D] text-[#0E2545] font-semibold text-xs md:text-sm rounded-full shadow-sm hover:scale-105 transition-all duration-300 active:scale-95 whitespace-nowrap">
+          className="hidden sm:block px-4 md:px-6 py-2 md:py-2.5 bg-white/10 text-white border border-white/20 font-semibold text-xs md:text-sm rounded-full shadow-sm hover:bg-white/20 transition-all duration-300 active:scale-95 whitespace-nowrap ml-2">
           Contact Us
         </button>
         <button
@@ -124,9 +125,11 @@ const Navbar = () => {
               </a>
             ))}
             <div className="flex flex-col gap-4 mt-6 md:hidden">
-              <a href="#login" onClick={() => setIsMobileMenuOpen(false)} className="py-4 text-center text-sm font-bold text-white border border-white/10 rounded-full">Login</a>
+              <a href="#login" onClick={() => setIsMobileMenuOpen(false)} className="py-4 text-center text-sm font-bold bg-[#FFD84D] text-[#0E2545] rounded-full shadow-md w-full">
+                Login / Sign Up
+              </a>
               <button onClick={() => { setIsMobileMenuOpen(false); scrollToContact(); }}
-                className="px-6 py-4 bg-[#FFD84D] text-[#0E2545] font-bold text-sm rounded-full shadow-md w-full text-center">
+                className="px-6 py-4 bg-white/10 text-white border border-white/20 font-bold text-sm rounded-full w-full text-center">
                 Contact Us
               </button>
             </div>

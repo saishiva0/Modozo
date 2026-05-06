@@ -8,7 +8,7 @@ const Header = () => {
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious();
-    
+
     // Most users mean "scrolling down the page" when they say "scroll down". 
     // Usually, we HIDE the nav when reading down, and SHOW it when scrolling back up.
     if (latest > previous && latest > 100) {
@@ -24,16 +24,16 @@ const Header = () => {
   });
 
   const navLinks = [
-    { name: "Home", href: "#home" },
+
     { name: "Workflow Challenges", href: "#challenges" },
-    { name: "Solution", href: "#solution" },
+
     { name: "Workflow", href: "#workflow" },
     { name: "Stakeholders", href: "#stakeholders" },
     { name: "Impact", href: "#impact" },
   ];
 
   return (
-    <motion.header 
+    <motion.header
       variants={{
         visible: { y: 0 },
         hidden: { y: "-100%" }
@@ -44,9 +44,9 @@ const Header = () => {
     >
       {/* Left: Logo */}
       <div className="w-1/4 flex justify-start items-center h-8 cursor-pointer">
-        <img 
-          src={logo} 
-          alt="Modozo" 
+        <img
+          src={logo}
+          alt="Modozo"
           className="h-10 md:h-12 w-auto object-contain"
         />
       </div>
@@ -76,7 +76,7 @@ const Header = () => {
       <div className="lg:hidden flex justify-end flex-1">
         <button className="text-brand-navy hover:text-[#FFD700] transition-colors p-2">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
       </div>
