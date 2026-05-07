@@ -16,7 +16,11 @@ import logo4 from '../assets/logo4.png';
 const FashionWorkflowAnimation = memo(({ active }) => (
   <div className="relative w-full h-full flex items-center justify-center p-2 will-change-transform">
     <div className="relative w-full h-full bg-white/5 rounded-xl border border-white/10 flex items-center justify-center overflow-hidden">
-      <svg className="w-20 h-20 md:w-28 md:h-28" viewBox="0 0 100 100">
+      {/* Embedded Faded Background */}
+      <div className="absolute inset-0 p-6 opacity-10 mix-blend-screen pointer-events-none flex items-center justify-center">
+        <img src={featureWorkflow} alt="" className="object-contain w-full h-full" />
+      </div>
+      <svg className="w-20 h-20 md:w-28 md:h-28 relative z-10" viewBox="0 0 100 100">
         <motion.path
           d="M20,25 L35,25 L40,35 L60,35 L65,25 L80,25 L85,45 L75,50 L75,85 L25,85 L25,50 L15,45 Z"
           fill="none"
@@ -41,7 +45,7 @@ const FashionWorkflowAnimation = memo(({ active }) => (
         <motion.div 
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="absolute bottom-3 text-[9px] font-mono text-brand-yellow uppercase tracking-widest"
+          className="absolute bottom-3 text-[9px] font-mono text-brand-yellow uppercase tracking-widest z-10 drop-shadow-md"
         >
           SYNCING TECH-PACK...
         </motion.div>
@@ -53,26 +57,32 @@ const FashionWorkflowAnimation = memo(({ active }) => (
 // 2. Communication: Unified Thread / Chat Flow
 const FashionCommAnimation = memo(({ active }) => (
   <div className="relative w-full h-full flex items-center justify-center p-2 will-change-transform">
-    <div className="relative w-full h-full bg-white/5 rounded-xl border border-white/10 flex flex-col p-4 gap-3 overflow-hidden">
-      {[
-        { user: 'DES', msg: 'Fabric swatch updated', color: 'bg-brand-yellow/20' },
-        { user: 'VND', msg: 'Sample sent for review', color: 'bg-white/5' },
-        { user: 'FAC', msg: 'Production ready', color: 'bg-brand-yellow/40' }
-      ].map((chat, i) => (
-        <motion.div
-          key={i}
-          initial={{ x: -20, opacity: 0 }}
-          animate={active ? { x: 0, opacity: 1 } : {}}
-          transition={{ delay: i * 0.4 }}
-          className={`flex flex-col gap-1 p-3 rounded-lg border border-white/10 ${chat.color} shadow-sm backdrop-blur-sm`}
-        >
-          <div className="flex justify-between items-center mb-1">
-            <span className="text-[10px] font-extrabold text-brand-yellow uppercase tracking-wider drop-shadow-sm">{chat.user}</span>
-            <span className="text-[9px] text-white/50 font-medium">Just now</span>
-          </div>
-          <p className="text-[12px] md:text-[14px] text-white font-medium leading-relaxed drop-shadow-sm">{chat.msg}</p>
-        </motion.div>
-      ))}
+    <div className="relative w-full h-full bg-white/5 rounded-xl border border-white/10 overflow-hidden">
+      {/* Embedded Faded Background */}
+      <div className="absolute inset-0 p-6 opacity-10 mix-blend-screen pointer-events-none flex items-center justify-center">
+        <img src={featureCommunication} alt="" className="object-contain w-full h-full" />
+      </div>
+      <div className="relative w-full h-full flex flex-col p-4 gap-3 z-10">
+        {[
+          { user: 'DES', msg: 'Fabric swatch updated', color: 'bg-brand-yellow/20' },
+          { user: 'VND', msg: 'Sample sent for review', color: 'bg-white/5' },
+          { user: 'FAC', msg: 'Production ready', color: 'bg-brand-yellow/40' }
+        ].map((chat, i) => (
+          <motion.div
+            key={i}
+            initial={{ x: -20, opacity: 0 }}
+            animate={active ? { x: 0, opacity: 1 } : {}}
+            transition={{ delay: i * 0.4 }}
+            className={`flex flex-col gap-1 p-3 rounded-lg border border-white/10 ${chat.color} shadow-sm backdrop-blur-sm`}
+          >
+            <div className="flex justify-between items-center mb-1">
+              <span className="text-[10px] font-extrabold text-brand-yellow uppercase tracking-wider drop-shadow-sm">{chat.user}</span>
+              <span className="text-[9px] text-white/50 font-medium">Just now</span>
+            </div>
+            <p className="text-[12px] md:text-[14px] text-white font-medium leading-relaxed drop-shadow-sm">{chat.msg}</p>
+          </motion.div>
+        ))}
+      </div>
     </div>
   </div>
 ));
@@ -88,40 +98,46 @@ const FashionVisibilityAnimation = memo(({ active }) => {
 
   return (
     <div className="relative w-full h-full flex items-center justify-center p-2 will-change-transform">
-      <div className="w-full h-full bg-white/5 rounded-xl border border-white/10 flex flex-col justify-center p-5 gap-5">
-        {steps.map((step, i) => (
-          <div key={i} className="flex items-center gap-4">
-            <motion.div
-              animate={active ? { 
-                backgroundColor: i <= 2 ? '#FFD700' : 'rgba(255,255,255,0.1)',
-                scale: i === 2 ? [1, 1.15, 1] : 1
-              } : {}}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-[14px] text-brand-navy font-bold shadow-md shrink-0"
-            >
-              {step.icon}
-            </motion.div>
-            <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
+      <div className="relative w-full h-full bg-white/5 rounded-xl border border-white/10 overflow-hidden">
+        {/* Embedded Faded Background */}
+        <div className="absolute inset-0 p-6 opacity-10 mix-blend-screen pointer-events-none flex items-center justify-center">
+          <img src={featureVisibility} alt="" className="object-contain w-full h-full" />
+        </div>
+        <div className="relative w-full h-full flex flex-col justify-center p-5 gap-5 z-10">
+          {steps.map((step, i) => (
+            <div key={i} className="flex items-center gap-4">
               <motion.div
-                initial={{ width: "0%" }}
-                animate={active && i <= 2 ? { width: "100%" } : { width: "0%" }}
-                transition={{ duration: 1, delay: i * 0.3 }}
-                className="h-full bg-brand-yellow/80 shadow-[0_0_10px_rgba(255,215,0,0.5)]"
-              />
+                animate={active ? { 
+                  backgroundColor: i <= 2 ? '#FFD700' : 'rgba(255,255,255,0.1)',
+                  scale: i === 2 ? [1, 1.15, 1] : 1
+                } : {}}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[14px] text-brand-navy font-bold shadow-md shrink-0"
+              >
+                {step.icon}
+              </motion.div>
+              <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: "0%" }}
+                  animate={active && i <= 2 ? { width: "100%" } : { width: "0%" }}
+                  transition={{ duration: 1, delay: i * 0.3 }}
+                  className="h-full bg-brand-yellow/80 shadow-[0_0_10px_rgba(255,215,0,0.5)]"
+                />
+              </div>
+              <span className={`text-[11px] md:text-[12px] uppercase tracking-widest w-24 text-right shrink-0 ${active && i === 2 ? 'text-brand-yellow font-extrabold drop-shadow-md' : 'text-white/40 font-semibold'}`}>
+                {step.label}
+              </span>
             </div>
-            <span className={`text-[11px] md:text-[12px] uppercase tracking-widest w-24 text-right shrink-0 ${active && i === 2 ? 'text-brand-yellow font-extrabold drop-shadow-md' : 'text-white/40 font-semibold'}`}>
-              {step.label}
-            </span>
-          </div>
-        ))}
-        {active && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="mt-3 text-center"
-          >
-            <span className="text-[12px] md:text-[13px] text-brand-yellow animate-pulse font-mono font-bold tracking-widest drop-shadow-md">● LIVE UPDATING</span>
-          </motion.div>
-        )}
+          ))}
+          {active && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="mt-3 text-center"
+            >
+              <span className="text-[12px] md:text-[13px] text-brand-yellow animate-pulse font-mono font-bold tracking-widest drop-shadow-md">● LIVE UPDATING</span>
+            </motion.div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -151,8 +167,12 @@ const FashionCollabAnimation = memo(({ active }) => {
 
   return (
     <div className="relative w-full h-full flex items-center justify-center p-2 will-change-transform">
-      <div className="w-full h-full bg-white/5 rounded-xl flex items-center justify-center overflow-hidden">
-        <div className="relative w-64 h-64">
+      <div className="relative w-full h-full bg-white/5 rounded-xl flex items-center justify-center overflow-hidden">
+        {/* Embedded Faded Background */}
+        <div className="absolute inset-0 p-6 opacity-10 mix-blend-screen pointer-events-none flex items-center justify-center">
+          <img src={featureCollaboration} alt="" className="object-contain w-full h-full" />
+        </div>
+        <div className="relative w-64 h-64 z-10">
           {/* Connection Lines — single SVG layer for perfect alignment */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible" viewBox="0 0 256 256">
             {active && nodePositions.map((node, i) => (
@@ -210,9 +230,13 @@ const FashionControlAnimation = memo(({ active }) => {
 
   return (
     <div className="relative w-full h-full flex items-center justify-center p-2 will-change-transform">
-      <div className="w-full h-full bg-white/5 rounded-xl border border-white/10 flex flex-col items-center justify-center p-4 gap-6 overflow-hidden">
+      <div className="relative w-full h-full bg-white/5 rounded-xl border border-white/10 flex flex-col items-center justify-center p-4 gap-6 overflow-hidden">
+        {/* Embedded Faded Background */}
+        <div className="absolute inset-0 p-6 opacity-10 mix-blend-screen pointer-events-none flex items-center justify-center">
+          <img src={featureControl} alt="" className="object-contain w-full h-full" />
+        </div>
         {/* Document Path Visualization */}
-        <div className="relative w-full flex justify-between items-center px-4">
+        <div className="relative w-full flex justify-between items-center px-4 z-10">
           {levels.map((level, i) => (
             <div key={i} className="flex flex-col items-center gap-2 z-10">
               <motion.div
@@ -246,7 +270,7 @@ const FashionControlAnimation = memo(({ active }) => {
           )}
         </div>
 
-        <div className="w-full flex flex-col gap-3 px-2">
+        <div className="relative w-full flex flex-col gap-3 px-2 z-10">
           {levels.map((level, i) => (
             <motion.div
               key={i}
@@ -398,7 +422,14 @@ const FeaturesSection = () => {
         {/* PREVIEW CARD BELOW */}
         <div className="w-full max-w-5xl mx-auto mt-2">
           {/* Static Preview Container */}
-          <div className="relative w-full bg-[#0B1B33]/60 border border-white/10 rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] backdrop-blur-md h-[550px] md:h-[450px]">
+          <div 
+            className="relative w-full bg-[#0B1B33]/60 border border-white/10 rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] backdrop-blur-md h-[550px] md:h-[450px]"
+            style={{ 
+              transform: 'translateZ(0)',
+              maskImage: 'radial-gradient(white, black)',
+              WebkitMaskImage: '-webkit-radial-gradient(white, black)'
+            }}
+          >
             
             <AnimatePresence mode="wait">
               {/* Dynamic Inner Content */}
@@ -424,16 +455,7 @@ const FeaturesSection = () => {
                 </div>
 
                 {/* Right side: Illustration + Animation */}
-                <div className="w-full md:w-1/2 h-[260px] md:h-full flex items-center justify-center relative">
-                  {/* Subtle Illustration Background */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none transition-opacity duration-500 mix-blend-screen">
-                    <img 
-                      src={activeFeature.image} 
-                      alt="" 
-                      className="object-contain w-full h-full max-h-[120%]"
-                    />
-                  </div>
-                  
+                <div className="w-full md:w-1/2 h-[260px] md:h-full flex items-center justify-center relative overflow-hidden rounded-b-3xl md:rounded-none md:rounded-r-3xl">
                   {/* High Clarity Animation */}
                   <div className="relative z-20 w-full h-full max-w-[320px] max-h-[320px] shadow-2xl rounded-2xl bg-[#0E2545]/40 backdrop-blur-sm border border-white/5">
                     <activeFeature.Animation active={true} />
