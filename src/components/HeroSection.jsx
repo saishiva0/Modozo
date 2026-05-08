@@ -151,7 +151,7 @@ const CarouselItem = ({ src, index, total, baseX, isMobile }) => {
   });
 
   // RESPONSIVE TRANSFORM VALUES
-  const xRange = isMobile ? ["-70vw", "0vw", "70vw"] : ["-50vw", "0vw", "50vw"];
+  const xRange = isMobile ? ["-120vw", "0vw", "120vw"] : ["-80vw", "0vw", "80vw"];
   const yRange = isMobile ? [15, 0, 15] : [30, 0, 30];
   const zRange = isMobile ? [-200, 0, -200] : [-400, 0, -400];
   const rotRange = isMobile ? [45, 0, -45] : [75, 0, -75];
@@ -162,7 +162,7 @@ const CarouselItem = ({ src, index, total, baseX, isMobile }) => {
   const z = useTransform(xPos, [-50, 0, 50], zRange);
   const rotateY = useTransform(xPos, [-50, 0, 50], rotRange);
   const scale = useTransform(xPos, [-50, 0, 50], scaleRange);
-  const opacity = useTransform(xPos, [-50, -40, 0, 40, 50], [0, 1, 1, 1, 0]);
+  const opacity = useTransform(xPos, [-50, -35, 0, 35, 50], [0, 1, 1, 1, 0]);
   const zIndex = useTransform(xPos, [-50, 0, 50], [0, 10, 0]);
 
   return (

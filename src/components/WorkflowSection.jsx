@@ -313,12 +313,12 @@ const WorkflowCard = ({ index, x, y, scale, opacity, isActive, isMobile }) => {
   return (
     <motion.div
       style={{ x, y, scale, opacity, zIndex: 50 - index }}
-      className={`absolute flex flex-col items-center justify-start py-6 px-5 rounded-[2.5rem] shadow-2xl backdrop-blur-xl will-change-transform ${isMobile ? 'w-[200px] h-[320px]' : 'w-[260px] h-[460px]'
+      className={`absolute flex flex-col items-center justify-start py-3 px-2 md:py-6 md:px-5 rounded-3xl md:rounded-[2.5rem] shadow-2xl backdrop-blur-xl will-change-transform ${isMobile ? 'w-[165px] h-[230px]' : 'w-[260px] h-[460px]'
         } shrink-0 overflow-hidden`}
     >
       {/* Premium Glass Background with Gradient Border */}
       <div className="absolute inset-0 bg-[#FFFDE7]/95" />
-      <div className="absolute inset-0 border-2 border-[#FFD84D]/30 rounded-[2.5rem] pointer-events-none" />
+      <div className="absolute inset-0 border-2 border-[#FFD84D]/30 rounded-3xl md:rounded-[2.5rem] pointer-events-none" />
 
       {/* Scroll-Triggered Shimmer Effect */}
       <motion.div
@@ -328,22 +328,24 @@ const WorkflowCard = ({ index, x, y, scale, opacity, isActive, isMobile }) => {
       />
 
       <div className="relative z-30 flex flex-col items-center w-full h-full">
-        <div className="px-3 py-1 bg-brand-navy/5 rounded-full border border-brand-navy/20 mb-2 md:mb-4">
-          <span className="font-black text-[11px] uppercase tracking-[0.2em] text-black">
+        <div className="px-3 py-1 bg-brand-navy/5 rounded-full border border-brand-navy/20 mb-1 md:mb-4">
+          <span className="font-black text-[9px] md:text-[11px] uppercase tracking-[0.2em] text-black">
             Step {index + 1}
           </span>
         </div>
 
-        <h3 className="text-xl md:text-3xl font-black text-black leading-tight mb-2 md:mb-3 text-center tracking-tighter">
+        <h3 className="text-[13px] md:text-3xl font-black text-black leading-tight mb-1 md:mb-3 text-center tracking-tighter px-1">
           {content.title}
         </h3>
 
-        <p className="text-black font-semibold text-[12px] md:text-[13px] leading-relaxed text-center px-1 h-12 flex items-center justify-center">
+        <p className="text-black font-semibold text-[9px] md:text-[13px] leading-tight text-center px-1 h-8 md:h-12 flex items-center justify-center">
           {content.desc}
         </p>
 
-        <div className="w-full flex-1 flex items-center justify-center min-h-[100px] md:min-h-[160px] mt-2 md:mt-4 bg-brand-navy/[0.03] rounded-3xl border border-brand-navy/10">
-          <Anim active={isActive} />
+        <div className="w-full flex-1 flex items-center justify-center mt-1 md:mt-4 bg-brand-navy/[0.03] rounded-2xl md:rounded-3xl border border-brand-navy/10 overflow-hidden">
+          <div className="flex items-center justify-center w-full h-full origin-center scale-[0.55] md:scale-100">
+            <Anim active={isActive} />
+          </div>
         </div>
       </div>
     </motion.div>
@@ -399,12 +401,17 @@ const WorkflowSection = () => {
           {workflowSteps.map((_, i) => {
             let targetX, targetY, endScale = 1;
 
-            if (isSmallMobile) {
-              targetX = 0;
-              targetY = (i - 2.5) * 280;
-            } else if (isMobile) {
-              targetX = (i % 2 - 0.5) * 220;
-              targetY = (Math.floor(i / 2) - 1) * 340;
+            if (isMobile) {
+              const col = i % 2;
+              const row = Math.floor(i / 2);
+              
+              const xSpacing = isSmallMobile ? 85 : 90;
+              const ySpacing = isSmallMobile ? 240 : 250;
+
+              targetX = (col === 0 ? -1 : 1) * xSpacing;
+              targetY = (row - 1) * ySpacing;
+              
+              endScale = 1;
             } else {
               const baseCardWidth = 260;
               const targetGap = 24;
@@ -426,7 +433,7 @@ const WorkflowSection = () => {
             const y = useTransform(dispersion, [0, 1], [startY, targetY]);
 
             const opacity = useTransform(dispersion, [0, 0.15], [i === 0 ? 1 : 0, 1]);
-            const scale = useTransform(dispersion, [0, 1], [isMobile ? 0.5 : (endScale * 0.85), endScale]);
+            const scale = useTransform(dispersion, [0, 1], [isMobile ? (endScale * 0.95) : (endScale * 0.85), endScale]);
 
             return (
               <WorkflowCard
