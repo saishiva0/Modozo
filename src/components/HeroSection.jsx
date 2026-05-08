@@ -84,7 +84,7 @@ const Navbar = () => {
 
       <div className="flex items-center gap-3 md:gap-4">
         <div className="hidden md:flex items-center mr-2">
-          <a href="#login" className="text-sm font-bold bg-[#FFD84D] text-[#0E2545] px-6 py-2.5 rounded-full hover:scale-105 transition-transform shadow-sm active:scale-95">
+          <a href="#login" className="px-4 md:px-6 py-2 md:py-2.5 text-xs md:text-sm font-semibold border border-transparent bg-[#FFD84D] text-[#0E2545] rounded-full hover:scale-105 transition-transform shadow-sm active:scale-95 whitespace-nowrap">
             Login / Sign Up
           </a>
         </div>
@@ -125,11 +125,11 @@ const Navbar = () => {
               </a>
             ))}
             <div className="flex flex-col gap-4 mt-6 md:hidden">
-              <a href="#login" onClick={() => setIsMobileMenuOpen(false)} className="py-4 text-center text-sm font-bold bg-[#FFD84D] text-[#0E2545] rounded-full shadow-md w-full">
+              <a href="#login" onClick={() => setIsMobileMenuOpen(false)} className="px-6 py-4 border border-transparent text-center text-sm font-bold bg-[#FFD84D] text-[#0E2545] rounded-full shadow-md w-full">
                 Login / Sign Up
               </a>
               <button onClick={() => { setIsMobileMenuOpen(false); scrollToContact(); }}
-                className="px-6 py-4 bg-white/10 text-white border border-white/20 font-bold text-sm rounded-full w-full text-center">
+                className="px-6 py-4 border border-white/20 bg-white/10 text-white font-bold text-sm rounded-full w-full text-center shadow-md">
                 Contact Us
               </button>
             </div>
